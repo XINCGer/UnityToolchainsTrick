@@ -1,0 +1,15 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "ExampleAssets.asset",menuName = "CustomeAssets/ExampleAsstes")]
+public class ExampleScriptableObject : ScriptableObject
+{
+    [Tooltip("姓名")]
+    public string Name;
+
+    [Tooltip("年龄")]
+    public int Age;
+}
