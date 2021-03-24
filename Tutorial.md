@@ -8,7 +8,7 @@
 8.MissingComponent查找
 9.AvatarPreview实现
 10.TimeControl实现
-11.AvatarPreview和TimeControl组合实现简单技能编辑器
+11.EditorWindow的showButton使用
 12.Preference拓展实现
 13.Gizmos的用法
 14.编辑器下读取Excel表格共享的问题
@@ -28,4 +28,3 @@
 28.代码锁定场景物体不可点击选中
 29.获取动画曲线的预览
 30.复合枚举实现UnityEditor中下多选下拉栏
-31.窗口中绘制网格背景
