@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Example_11_ShowButtonEditorWindow : EditorWindow
+namespace ToolKits
 {
-    private static Example_11_ShowButtonEditorWindow _window;
-    private static readonly Vector2 MIN_SIZE = new Vector2(300,200);
-
-    [MenuItem("Tools/ShowButtonWindow", priority = 11)]
-    private static void PopUp()
+    public class Example_11_ShowButtonEditorWindow : EditorWindow
     {
-        _window = GetWindow<Example_11_ShowButtonEditorWindow>();
-        _window.minSize = MIN_SIZE;
-        _window.Show();
-    }
+        private static Example_11_ShowButtonEditorWindow _window;
+        private static readonly Vector2 MIN_SIZE = new Vector2(300, 200);
 
-    private void ShowButton(Rect rect)
-    {
-        if (GUI.Button(rect, EditorGUIUtility.IconContent("BuildSettings.Editor")))
+        [MenuItem("Tools/ShowButtonWindow", priority = 11)]
+        private static void PopUp()
         {
-            Application.OpenURL("https://www.baidu.com");
+            _window = GetWindow<Example_11_ShowButtonEditorWindow>();
+            _window.minSize = MIN_SIZE;
+            _window.Show();
+        }
+
+        private void ShowButton(Rect rect)
+        {
+            if (GUI.Button(rect, EditorGUIUtility.IconContent("BuildSettings.Editor")))
+            {
+                Application.OpenURL("https://www.baidu.com");
+            }
         }
     }
 }

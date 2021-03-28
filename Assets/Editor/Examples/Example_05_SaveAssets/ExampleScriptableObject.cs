@@ -4,12 +4,13 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ExampleAssets.asset",menuName = "CustomeAssets/ExampleAsstes")]
-public class ExampleScriptableObject : ScriptableObject
+namespace ToolKits
 {
-    [Tooltip("姓名")]
-    public string Name;
+    [CreateAssetMenu(fileName = "ExampleAssets.asset", menuName = "CustomeAssets/ExampleAsstes")]
+    public class ExampleScriptableObject : ScriptableObject
+    {
+        [Tooltip("姓名")] public string Name;
 
-    [Tooltip("年龄")]
-    public int Age;
+        [Tooltip("年龄")] public int Age;
+    }
 }
