@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
+using UnityEditor.Animations;
 
 namespace ToolKits
 {
@@ -68,7 +69,7 @@ namespace ToolKits
             get
             {
                 if (Animator && Animator.isHuman)
-                    return Animator.bodyPositionInternal;
+                    return _reflectionHelper.Animator.GetBodyPosition(Animator);
 
                 if (m_PreviewInstance != null)
                     return GameObjectInspector.GetRenderableCenterRecurse(m_PreviewInstance, 1, 8);
@@ -136,6 +137,8 @@ namespace ToolKits
         private float m_ZoomFactor = 1.0f;
         private Vector3 m_PivotPositionOffset = Vector3.zero;
 
+        private ReflectionHelper _reflectionHelper;
+
         private class Styles
         {
             public GUIContent speedScale = EditorGUIUtility.TrIconContent("SpeedScale", "Changes animation preview speed");
@@ -171,7 +174,7 @@ namespace ToolKits
             if (clip)
                 return clip;
 
-            Animations.BlendTree blendTree = motion as Animations.BlendTree;
+            BlendTree blendTree = motion as BlendTree;
             if (blendTree)
             {
                 AnimationClip[] clips = blendTree.GetAnimationClipsFlattened();
@@ -450,6 +453,7 @@ namespace ToolKits
 
         public AvatarPreview(Animator previewObjectInScene, Motion objectOnSameAsset)
         {
+            _reflectionHelper = new ReflectionHelper();
             InitInstance(previewObjectInScene, objectOnSameAsset);
         }
 
