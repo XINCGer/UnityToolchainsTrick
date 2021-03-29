@@ -161,11 +161,11 @@ namespace ToolKits
         void SetPreviewCharacterEnabled(bool enabled, bool showReference)
         {
             if (m_PreviewInstance != null)
-                PreviewRenderUtility.SetEnabledRecursive(m_PreviewInstance, enabled);
-            PreviewRenderUtility.SetEnabledRecursive(m_ReferenceInstance, showReference && enabled);
-            PreviewRenderUtility.SetEnabledRecursive(m_DirectionInstance, showReference && enabled);
-            PreviewRenderUtility.SetEnabledRecursive(m_PivotInstance, showReference && enabled);
-            PreviewRenderUtility.SetEnabledRecursive(m_RootInstance, showReference && enabled);
+                GameObjectInspector.SetEnabledRecursive(m_PreviewInstance, enabled);
+            GameObjectInspector.SetEnabledRecursive(m_ReferenceInstance, showReference && enabled);
+            GameObjectInspector.SetEnabledRecursive(m_DirectionInstance, showReference && enabled);
+            GameObjectInspector.SetEnabledRecursive(m_PivotInstance, showReference && enabled);
+            GameObjectInspector.SetEnabledRecursive(m_RootInstance, showReference && enabled);
         }
 
         static AnimationClip GetFirstAnimationClipFromMotion(Motion motion)
