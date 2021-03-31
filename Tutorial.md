@@ -1,4 +1,4 @@
-1.Clone一份UnityCsReference并时长回顾
+1.Clone一份UnityCsReference并时常回顾
 2.使用Odin Inspector插件
 3.EditorIcons
 4.GUIStylesPreview
