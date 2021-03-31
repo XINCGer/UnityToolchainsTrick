@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 
@@ -21,6 +22,28 @@ namespace ToolKits
         public float playbackSpeed = 1.0f;
         private float m_DeltaTime = 0.0f;
         private bool m_DeltaTimeSet = false;
+        
+        class Styles2
+        {
+            public GUIStyle timelineTick = "AnimationTimelineTick";
+            public GUIStyle labelTickMarks = "CurveEditorLabelTickMarks";
+            public GUIStyle playhead = "AnimationPlayHead";
+        }
+
+        static Styles2 timeAreaStyles;
+
+        public Action<bool> PlayStatusChanged
+        {
+            get;
+            set;
+        }
+
+        public Action OnPlayEnd
+        {
+            get;
+            set;
+        }
+        
         public float deltaTime
         {
             get { return m_DeltaTime; }
@@ -42,7 +65,6 @@ namespace ToolKits
                     // Start Playing
                     if (value)
                     {
-                        EditorApplication.update += InspectorWindow.RepaintAllInspectors;
                         m_LastFrameEditorTime = EditorApplication.timeSinceStartup;
 
                         if (m_ResetOnPlay)
@@ -54,8 +76,9 @@ namespace ToolKits
                     // Stop Playing
                     else
                     {
-                        EditorApplication.update -= InspectorWindow.RepaintAllInspectors;
                     }
+                    
+                    PlayStatusChanged?.Invoke(value);
                 }
 
                 m_Playing = value;
@@ -128,6 +151,7 @@ namespace ToolKits
                             if (m_MouseDrag > scrubberRect.width)
                             {
                                 currentTime -= (stopTime - startTime);
+                                OnPlayEnd?.Invoke();
                             }
                             else if (m_MouseDrag < 0)
                             {
@@ -177,7 +201,7 @@ namespace ToolKits
 
             // Current time indicator
             float normalizedPosition = Mathf.Lerp(scrubberRect.x, scrubberRect.xMax, normalizedTime);
-            TimeArea.DrawPlayhead(normalizedPosition, scrubberRect.yMin, scrubberRect.yMax, 2f, (EditorGUIUtility.keyboardControl == id) ? 1f : 0.5f);
+            DrawPlayhead(normalizedPosition, scrubberRect.yMin, scrubberRect.yMax, 2f, (EditorGUIUtility.keyboardControl == id) ? 1f : 0.5f);
         }
 
         public void OnDisable()
@@ -207,12 +231,17 @@ namespace ToolKits
             bool wrap = loop && playing && !m_NextCurrentTimeSet;
             if (wrap)
             {
+                if (normalizedTime >= 1f)
+                {
+                    OnPlayEnd?.Invoke();
+                }
                 normalizedTime = Mathf.Repeat(normalizedTime, 1.0f);
             }
             else
             {
                 if (normalizedTime > 1)
                 {
+                    OnPlayEnd?.Invoke();
                     playing = false;
                     m_ResetOnPlay = true;
                 }
@@ -221,6 +250,68 @@ namespace ToolKits
 
             m_DeltaTimeSet = false;
             m_NextCurrentTimeSet = false;
+        }
+        
+        public static void DrawPlayhead(float x, float yMin, float yMax, float thickness, float alpha)
+        {
+            if (Event.current.type != EventType.Repaint)
+                return;
+            InitStyles();
+            float halfThickness = thickness * 0.5f;
+            Color lineColor = AlphaMultiplied(timeAreaStyles.playhead.normal.textColor,alpha);
+            if (thickness > 1f)
+            {
+                Rect labelRect = Rect.MinMaxRect(x - halfThickness, yMin, x + halfThickness, yMax);
+                EditorGUI.DrawRect(labelRect, lineColor);
+            }
+            else
+            {
+                DrawVerticalLine(x, yMin, yMax, lineColor);
+            }
+        }
+        
+        private static void InitStyles()
+        {
+            if (timeAreaStyles == null)
+                timeAreaStyles = new Styles2();
+        }
+        
+        private static Color AlphaMultiplied(Color color,float multiplier) { return new Color(color.r, color.g, color.b, color.a * multiplier); }
+        
+        public static void DrawVerticalLine(float x, float minY, float maxY, Color color)
+        {
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            Color backupCol = Handles.color;
+
+            ReflectionHelper.Instance.HandleUtility.ApplyWireMaterial();
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+                GL.Begin(GL.QUADS);
+            else
+                GL.Begin(GL.LINES);
+            DrawVerticalLineFast(x, minY, maxY, color);
+            GL.End();
+
+            Handles.color = backupCol;
+        }
+
+        public static void DrawVerticalLineFast(float x, float minY, float maxY, Color color)
+        {
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                GL.Color(color);
+                GL.Vertex(new Vector3(x - 0.5f, minY, 0));
+                GL.Vertex(new Vector3(x + 0.5f, minY, 0));
+                GL.Vertex(new Vector3(x + 0.5f, maxY, 0));
+                GL.Vertex(new Vector3(x - 0.5f, maxY, 0));
+            }
+            else
+            {
+                GL.Color(color);
+                GL.Vertex(new Vector3(x, minY, 0));
+                GL.Vertex(new Vector3(x, maxY, 0));
+            }
         }
     }
 }
