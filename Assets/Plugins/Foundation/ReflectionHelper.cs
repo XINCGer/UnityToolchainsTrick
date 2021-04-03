@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace ToolKits
@@ -11,6 +12,7 @@ namespace ToolKits
     {
         public ReflectAnimator Animator;
         public RefHandleUtility HandleUtility;
+        public RefBlendTree BlendTree;
 
         private static ReflectionHelper _instance;
 
@@ -31,6 +33,7 @@ namespace ToolKits
         {
             Animator = new ReflectAnimator();
             HandleUtility = new RefHandleUtility();
+            BlendTree = new RefBlendTree();
         }
     }
 
@@ -76,6 +79,29 @@ namespace ToolKits
             {
                 _applyWireMaterial.Invoke(null, null);
             }
+        }
+    }
+
+    public class RefBlendTree
+    {
+        private Type _type;
+        private MethodInfo _getAnimationClipsFlattened;
+
+        public RefBlendTree()
+        {
+            _type = typeof(BlendTree);
+            _getAnimationClipsFlattened = _type.GetMethod("GetAnimationClipsFlattened",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+        }
+
+        public AnimationClip[] GetAnimationClipsFlattened(BlendTree blendTree)
+        {
+            if (null != _getAnimationClipsFlattened)
+            {
+                return _getAnimationClipsFlattened.Invoke(blendTree, null) as AnimationClip[];
+            }
+
+            return null;
         }
     }
 }
