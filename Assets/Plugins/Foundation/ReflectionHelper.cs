@@ -13,6 +13,7 @@ namespace ToolKits
         public ReflectAnimator Animator;
         public RefHandleUtility HandleUtility;
         public RefBlendTree BlendTree;
+        public RefModelImporter ModelImporter;
 
         private static ReflectionHelper _instance;
 
@@ -34,6 +35,7 @@ namespace ToolKits
             Animator = new ReflectAnimator();
             HandleUtility = new RefHandleUtility();
             BlendTree = new RefBlendTree();
+            ModelImporter = new RefModelImporter();
         }
     }
 
@@ -102,6 +104,29 @@ namespace ToolKits
             }
 
             return null;
+        }
+    }
+
+    public class RefModelImporter
+    {
+        private Type _type;
+        private MethodInfo _calculateBestFittingPreviewGameObject;
+
+        public RefModelImporter()
+        {
+            _type = typeof(ModelImporter);
+            _calculateBestFittingPreviewGameObject = _type.GetMethod("CalculateBestFittingPreviewGameObject",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+        }
+
+        public string CalculateBestFittingPreviewGameObject()
+        {
+            if (null != _calculateBestFittingPreviewGameObject)
+            {
+                return _calculateBestFittingPreviewGameObject.Invoke(null, null) as string;
+            }
+
+            return string.Empty;
         }
     }
 }
