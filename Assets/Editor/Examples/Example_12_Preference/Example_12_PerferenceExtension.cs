@@ -9,19 +9,17 @@ namespace ToolKits
     {
         private static bool loaded = false;
         private static string context = "";
+        private static bool sceneviewSwitch;
         private const string KEY = "__ToolChainsTrick_Context__";
-    
+
 #if UNITY_2019_1_OR_NEWER
         [SettingsProvider]
         private static SettingsProvider ToolChainsTrickSetting()
         {
             var provider = new SettingsProvider("Preferences/ToolChainsTrick", SettingsScope.User)
             {
-                guiHandler = (string key) =>
-                {
-                    PreferenceGUI();
-                },
-                keywords = new string[]{"Tool","Chains","Trick"},
+                guiHandler = (string key) => { PreferenceGUI(); },
+                keywords = new string[] {"Tool", "Chains", "Trick"},
             };
             return provider;
         }
@@ -34,19 +32,28 @@ namespace ToolKits
             {
                 Load();
             }
+
             EditorGUI.BeginChangeCheck();
-            context = EditorGUILayout.TextField(new GUIContent("文本配置"),context);
+            context = EditorGUILayout.TextField(new GUIContent("文本配置"), context);
             if (EditorGUI.EndChangeCheck())
             {
-                EditorPrefs.SetString(KEY,context);
+                EditorPrefs.SetString(KEY, context);
+            }
+
+            EditorGUI.BeginChangeCheck();
+            sceneviewSwitch = EditorGUILayout.Toggle("SceneView拓展开关", sceneviewSwitch);
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorPrefs.SetBool(Constants.SCENE_VIEW_EXTENSITON_SWITH, sceneviewSwitch);
+                SceneViewExtension.EditorInitialize();
             }
         }
 
         private static void Load()
         {
             context = EditorPrefs.GetString(KEY, "");
+            sceneviewSwitch = EditorPrefs.GetBool(Constants.SCENE_VIEW_EXTENSITON_SWITH, false);
             loaded = true;
         }
     }
 }
-
