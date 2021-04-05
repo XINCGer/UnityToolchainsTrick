@@ -11,6 +11,7 @@ namespace ToolKits
         private static string context = "";
         private static bool sceneviewSwitch;
         private const string KEY = "__ToolChainsTrick_Context__";
+        private static bool globalInputEventEnable = false;
 
 #if UNITY_2019_1_OR_NEWER
         [SettingsProvider]
@@ -46,6 +47,14 @@ namespace ToolKits
             {
                 EditorPrefs.SetBool(Constants.SCENE_VIEW_EXTENSITON_SWITH, sceneviewSwitch);
                 SceneViewExtension.EditorInitialize();
+            }
+            
+            EditorGUI.BeginChangeCheck();
+            globalInputEventEnable = EditorGUILayout.Toggle("是否开启全局检测事件", globalInputEventEnable);
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorPrefs.SetBool(Constants.GLOBAL_INPUT_ENEVT_ENABLE,globalInputEventEnable);
+                GlobalInputEvent.EditorInitialize();
             }
         }
 
