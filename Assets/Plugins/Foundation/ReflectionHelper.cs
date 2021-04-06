@@ -14,6 +14,7 @@ namespace ToolKits
         public RefHandleUtility HandleUtility;
         public RefBlendTree BlendTree;
         public RefModelImporter ModelImporter;
+        public RefCamera Camera;
 
         private static ReflectionHelper _instance;
 
@@ -127,6 +128,32 @@ namespace ToolKits
             }
 
             return string.Empty;
+        }
+    }
+
+    public class RefCamera
+    {
+        private Type _type;
+        private FieldInfo _fieldInfo;
+        private const int kPreviewCullingLayer = 31;
+
+        public RefCamera()
+        {
+            _type = typeof(Camera);
+            _fieldInfo = _type.GetField("PreviewCullingLayer", BindingFlags.Static | BindingFlags.NonPublic);
+        }
+
+        public int PreviewCullingLayer
+        {
+            get
+            {
+                if (null != _fieldInfo)
+                {
+                    return (int) _fieldInfo.GetValue(null);
+                }
+
+                return kPreviewCullingLayer;
+            }
         }
     }
 }
