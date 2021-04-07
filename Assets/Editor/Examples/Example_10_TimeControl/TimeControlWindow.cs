@@ -30,7 +30,10 @@ namespace ToolKits
         private void OnGUI()
         {
             _timeControl.DoTimeControl(TIME_RECR);
-            _timeControl.Update();
+            if (Event.current.type == EventType.Repaint)
+            {
+                _timeControl.Update();
+            }
             Repaint();
         }
     }
