@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ToolKits
 {
@@ -15,6 +16,8 @@ namespace ToolKits
         public RefBlendTree BlendTree;
         public RefModelImporter ModelImporter;
         public RefCamera Camera;
+        public RefEditorUtility EditorUtility;
+        public RefAvatarPreviewSelection AvatarPreviewSelection;
 
         private static ReflectionHelper _instance;
 
@@ -37,6 +40,9 @@ namespace ToolKits
             HandleUtility = new RefHandleUtility();
             BlendTree = new RefBlendTree();
             ModelImporter = new RefModelImporter();
+            Camera = new RefCamera();
+            EditorUtility = new RefEditorUtility();
+            AvatarPreviewSelection = new RefAvatarPreviewSelection();
         }
     }
 
@@ -153,6 +159,49 @@ namespace ToolKits
                 }
 
                 return kPreviewCullingLayer;
+            }
+        }
+    }
+
+    public class RefEditorUtility
+    {
+        private Type _type;
+        private MethodInfo _methodInfo;
+
+        public RefEditorUtility()
+        {
+            _type = typeof(EditorUtility);
+            _methodInfo = _type.GetMethod("InstantiateForAnimatorPreview",
+                BindingFlags.Static | BindingFlags.NonPublic);
+        }
+
+        public GameObject InstantiateForAnimatorPreview(Object original)
+        {
+            if (null != _methodInfo)
+            {
+                return _methodInfo.Invoke(null, new[] {original}) as GameObject;
+            }
+
+            return null;
+        }
+    }
+
+    public class RefAvatarPreviewSelection
+    {
+        private Type _type;
+        private MethodInfo _methodInfo;
+
+        public RefAvatarPreviewSelection()
+        {
+            _type = Type.GetType("UnityEditor.RefAvatarPreviewSelection,UnityEditor");
+            _methodInfo = _type.GetMethod("SetPreview", BindingFlags.Static | BindingFlags.Public);
+        }
+
+        public void SetPreview(ModelImporterAnimationType type, GameObject go)
+        {
+            if (null != _methodInfo)
+            {
+                _methodInfo.Invoke(null, new object[] {type, go});
             }
         }
     }

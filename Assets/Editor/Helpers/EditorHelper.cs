@@ -79,4 +79,20 @@ public class EditorHelper
 
         return asset;
     }
+    
+    public static GameObject InstantiateGoByPrefab(GameObject prefab, GameObject parent)
+    {
+        if (null == prefab) return null;
+        GameObject obj = GameObject.Instantiate(prefab);
+        if (null == obj) return null;
+        obj.name = prefab.name;
+        if (null != parent)
+        {
+            obj.transform.SetParent(parent.transform, false);
+        }
+        obj.transform.localPosition = prefab.transform.localPosition;
+        obj.transform.localRotation = prefab.transform.localRotation;
+        obj.transform.localScale = prefab.transform.localScale;
+        return obj;
+    }
 }
