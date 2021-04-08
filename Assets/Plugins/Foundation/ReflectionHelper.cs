@@ -79,7 +79,7 @@ namespace ToolKits
         public RefHandleUtility()
         {
             _type = typeof(HandleUtility);
-            _applyWireMaterial = _type.GetMethod("ApplyWireMaterial", BindingFlags.NonPublic | BindingFlags.Static);
+            _applyWireMaterial = _type.GetMethod("ApplyWireMaterial", new Type[]{});
         }
 
         public void ApplyWireMaterial()
@@ -193,7 +193,7 @@ namespace ToolKits
 
         public RefAvatarPreviewSelection()
         {
-            _type = Type.GetType("UnityEditor.RefAvatarPreviewSelection,UnityEditor");
+            _type = Type.GetType("UnityEditor.AvatarPreviewSelection,UnityEditor");
             _methodInfo = _type.GetMethod("SetPreview", BindingFlags.Static | BindingFlags.Public);
         }
 

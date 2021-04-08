@@ -72,11 +72,11 @@ namespace ToolKits
         {
             get
             {
-                if (Animator && Animator.isHuman)
-                    return _reflectionHelper.Animator.GetBodyPosition(Animator);
-
                 if (m_PreviewInstance != null)
                     return GameObjectInspector.GetRenderableCenterRecurse(m_PreviewInstance, 1, 8);
+                
+                if (Animator && Animator.isHuman)
+                    return _reflectionHelper.Animator.GetBodyPosition(Animator);
 
                 return Vector3.zero;
             }
@@ -305,6 +305,7 @@ namespace ToolKits
             GameObject go =
                 CalculatePreviewGameObject(m_SourceScenePreviewAnimator, m_SourcePreviewMotion, animationClipType);
             SetupBounds(go);
+            Object.DestroyImmediate(go);
         }
 
         void SetupBounds(GameObject go)
@@ -338,6 +339,7 @@ namespace ToolKits
             {
                 GameObject go = CalculatePreviewGameObject(scenePreviewObject, motion, animationClipType);
                 SetupBounds(go);
+                Object.DestroyImmediate(go);
             }
 
             if (timeControl == null)
@@ -459,6 +461,24 @@ namespace ToolKits
                 m_PreviewUtility.Cleanup();
                 m_PreviewUtility = null;
             }
+
+            if (timeControl != null)
+                timeControl.OnDisable();
+        }
+
+        public void OnDestroy()
+        {
+            if (m_PreviewUtility != null)
+            {
+                m_PreviewUtility.Cleanup();
+                m_PreviewUtility = null;
+            }
+
+            Object.DestroyImmediate(m_PreviewInstance);
+            Object.DestroyImmediate(m_ReferenceInstance);
+            Object.DestroyImmediate(m_DirectionInstance);
+            Object.DestroyImmediate(m_PivotInstance);
+            Object.DestroyImmediate(m_RootInstance);
 
             if (timeControl != null)
                 timeControl.OnDisable();
