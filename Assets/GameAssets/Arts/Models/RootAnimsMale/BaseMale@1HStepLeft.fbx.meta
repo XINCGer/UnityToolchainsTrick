@@ -1,0 +1,184 @@
+fileFormatVersion: 2
+guid: 51f31ea232b102d4885d6980f2edb96a
+timeCreated: 1487283378
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Bowstring
+    100004: Head
+    100006: Hips
+    100008: L Calf
+    100010: L Clavicle
+    100012: L Finger0
+    100014: L Finger01
+    100016: L Finger02
+    100018: L Finger1
+    100020: L Finger11
+    100022: L Finger12
+    100024: L Finger2
+    100026: L Finger21
+    100028: L Finger22
+    100030: L Finger3
+    100032: L Finger31
+    100034: L Finger32
+    100036: L Finger4
+    100038: L Finger41
+    100040: L Finger42
+    100042: L Foot
+    100044: L Forearm
+    100046: L Hand
+    100048: L Thigh
+    100050: L Toe0
+    100052: L UpperArm
+    100054: L Weapon
+    100056: Neck
+    100058: Origin
+    100060: R Calf
+    100062: R Clavicle
+    100064: R Finger0
+    100066: R Finger01
+    100068: R Finger02
+    100070: R Finger1
+    100072: R Finger11
+    100074: R Finger12
+    100076: R Finger2
+    100078: R Finger21
+    100080: R Finger22
+    100082: R Finger3
+    100084: R Finger31
+    100086: R Finger32
+    100088: R Finger4
+    100090: R Finger41
+    100092: R Finger42
+    100094: R Foot
+    100096: R Forearm
+    100098: R Hand
+    100100: R Thigh
+    100102: R Toe0
+    100104: R UpperArm
+    100106: R Weapon
+    100108: ROOT
+    100110: Spine
+    100112: Spine1
+    400000: //RootNode
+    400002: Bowstring
+    400004: Head
+    400006: Hips
+    400008: L Calf
+    400010: L Clavicle
+    400012: L Finger0
+    400014: L Finger01
+    400016: L Finger02
+    400018: L Finger1
+    400020: L Finger11
+    400022: L Finger12
+    400024: L Finger2
+    400026: L Finger21
+    400028: L Finger22
+    400030: L Finger3
+    400032: L Finger31
+    400034: L Finger32
+    400036: L Finger4
+    400038: L Finger41
+    400040: L Finger42
+    400042: L Foot
+    400044: L Forearm
+    400046: L Hand
+    400048: L Thigh
+    400050: L Toe0
+    400052: L UpperArm
+    400054: L Weapon
+    400056: Neck
+    400058: Origin
+    400060: R Calf
+    400062: R Clavicle
+    400064: R Finger0
+    400066: R Finger01
+    400068: R Finger02
+    400070: R Finger1
+    400072: R Finger11
+    400074: R Finger12
+    400076: R Finger2
+    400078: R Finger21
+    400080: R Finger22
+    400082: R Finger3
+    400084: R Finger31
+    400086: R Finger32
+    400088: R Finger4
+    400090: R Finger41
+    400092: R Finger42
+    400094: R Foot
+    400096: R Forearm
+    400098: R Hand
+    400100: R Thigh
+    400102: R Toe0
+    400104: R UpperArm
+    400106: R Weapon
+    400108: ROOT
+    400110: Spine
+    400112: Spine1
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

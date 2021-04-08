@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &101100000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FemaleUpperBody
+  m_Mask: 00000000010000000000000000000000000000000000000001000000000000000100000000000000000000000000000000000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: ROOT
+    m_Weight: 0
+  - m_Path: ROOT/Hips
+    m_Weight: 0
+  - m_Path: ROOT/Hips/L Thigh
+    m_Weight: 0
+  - m_Path: ROOT/Hips/L Thigh/L Calf
+    m_Weight: 0
+  - m_Path: ROOT/Hips/L Thigh/L Calf/L Foot
+    m_Weight: 0
+  - m_Path: ROOT/Hips/L Thigh/L Calf/L Foot/L Toe0
+    m_Weight: 0
+  - m_Path: ROOT/Hips/R Thigh
+    m_Weight: 0
+  - m_Path: ROOT/Hips/R Thigh/R Calf
+    m_Weight: 0
+  - m_Path: ROOT/Hips/R Thigh/R Calf/R Foot
+    m_Weight: 0
+  - m_Path: ROOT/Hips/R Thigh/R Calf/R Foot/R Toe0
+    m_Weight: 0
+  - m_Path: ROOT/Hips/Spine
+    m_Weight: 0
+  - m_Path: ROOT/Hips/Spine/Spine1
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger0
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger0/L
+      Finger01
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger0/L
+      Finger01/L Finger02
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger1
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger1/L
+      Finger11
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger1/L
+      Finger11/L Finger12
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger2
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger2/L
+      Finger21
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger2/L
+      Finger21/L Finger22
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger3
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger3/L
+      Finger31
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger3/L
+      Finger31/L Finger32
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger4
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger4/L
+      Finger41
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Finger4/L
+      Finger41/L Finger42
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Weapon
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/L Clavicle/L UpperArm/L Forearm/L Hand/L Weapon/Bowstring
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/Neck
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/Neck/Head
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger0
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger0/R
+      Finger01
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger0/R
+      Finger01/R Finger02
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger1
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger1/R
+      Finger11
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger1/R
+      Finger11/R Finger12
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger2
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger2/R
+      Finger21
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger2/R
+      Finger21/R Finger22
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger3
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger3/R
+      Finger31
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger3/R
+      Finger31/R Finger32
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger4
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger4/R
+      Finger41
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Finger4/R
+      Finger41/R Finger42
+    m_Weight: 1
+  - m_Path: ROOT/Hips/Spine/Spine1/R Clavicle/R UpperArm/R Forearm/R Hand/R Weapon
+    m_Weight: 1
