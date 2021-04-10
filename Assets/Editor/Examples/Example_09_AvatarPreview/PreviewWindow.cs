@@ -46,6 +46,7 @@ namespace ToolKits
             {
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AVATAR_PATH);
                 PreviewInstance = EditorHelper.InstantiateGoByPrefab(prefab, null);
+                PreviewInstance.hideFlags = HideFlags.HideAndDontSave;
                 _previewAnimator = AssetDatabase.LoadAssetAtPath<AnimatorController>(PREVIEW_ANIMCONTROLLER_PATH);
                 _animationClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(CLIP_PATH);
                 var states = _previewAnimator.layers[0].stateMachine.states;
