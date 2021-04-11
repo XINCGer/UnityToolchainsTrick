@@ -29,7 +29,7 @@ namespace AllTrickOverView.Examples
 
         private static readonly Vector2 MIN_SIZE = new Vector2(600, 400);
 
-        private static readonly Rect PREVIEW_RECT = new Rect(0, 50, 500, 300);
+        private static readonly Rect PREVIEW_RECT = new Rect(10, 60, 500, 300);
 
         private const string PREVIEW_ANIMCONTROLLER_PATH =
             "Assets/GameAssets/Arts/AnimatorControllers/PreviewController.controller";
@@ -79,6 +79,7 @@ namespace AllTrickOverView.Examples
 
             if (null != _avatarPreview)
             {
+                GUILayout.Label("", GUILayout.Height(300), GUILayout.Width(500));
                 if (Event.current.type == EventType.Repaint)
                 {
                     _avatarPreview.timeControl.loop = true;
@@ -121,7 +122,9 @@ namespace AllTrickOverView.Examples
                 _avatarPreview = null;
             }
 
-            GameObject.DestroyImmediate(PreviewInstance);
+            if (PreviewInstance != null)
+                GameObject.DestroyImmediate(PreviewInstance);
+            
             PreviewInstance = null;
             _animationClip = null;
             _animator = null;
