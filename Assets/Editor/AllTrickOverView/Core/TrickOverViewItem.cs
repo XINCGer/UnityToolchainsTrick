@@ -11,7 +11,7 @@ using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
     public class TrickOverViewItem
     {
@@ -36,6 +36,11 @@ namespace Plugins.AllTrickOverView.Core
         public readonly string Name;
         public readonly string Description;
 
+        public AExample_Base GetExample()
+        {
+            return m_TrickOverViewPreviewDrawer.ExampleInfo.PreviewObject as AExample_Base;
+        }
+        
         public TrickOverViewItem(Type type)
         {
             this.DrawCodeExample = true;

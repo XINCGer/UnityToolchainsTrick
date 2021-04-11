@@ -6,16 +6,21 @@
 
 using System;
 using System.Reflection;
-using Plugins.AllTrickOverView.Core;
+using AllTrickOverView.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Examples
+namespace AllTrickOverView.Examples
 {
     public class Example_AnimationCurvePreview : AExample_Base
     {
-        public static TrickOverViewInfo TrickOverViewInfo = new TrickOverViewInfo("AnimationCurvePreview", "直观的动画曲线预览。",
-            "EditorWindow", "", typeof(Example_AnimationCurvePreview));
+        public static TrickOverViewInfo TrickOverViewInfo = new TrickOverViewInfo(
+            "AnimationCurvePreview", 
+            "直观的动画曲线预览。",
+            "EditorWindow",
+            "",
+            "Assets/Editor/Examples/Example_29_AnimationCurvePreview", 
+            typeof(Example_AnimationCurvePreview));
 
         private AnimationCurve _curve = new AnimationCurve();
         private MethodInfo _methodInfo;

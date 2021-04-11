@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
     /// <summary>
     /// 使用此特性标记的类会被收集到TreeView

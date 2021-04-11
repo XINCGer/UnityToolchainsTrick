@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
     /// <summary>
     /// Example的基类
@@ -15,20 +15,23 @@ namespace Plugins.AllTrickOverView.Core
     public abstract class AExample_Base
     {
         public static TrickOverViewInfo TrickOverViewInfo = new TrickOverViewInfo();
-        
+
         public virtual TrickOverViewInfo GetTrickOverViewInfo()
         {
             return TrickOverViewInfo;
         }
 
-        public virtual void DrawUI(Rect rect)
-        {
-
-        }
-
         public virtual void Init()
         {
+        }
 
+        public virtual void DrawUI(Rect rect)
+        {
+        }
+
+        public virtual void Destroy()
+        {
+            
         }
     }
 }
