@@ -80,6 +80,7 @@ namespace Plugins.AllTrickOverView.Core
 					padding = new RectOffset(0, 0, 0, 0)
 				};
 			}
+
 			GUILayout.BeginVertical(TrickOverViewPreview.exampleGroupStyle, new GUILayoutOption[0]);
 			GUILayout.Label("Preview：", SirenixGUIStyles.BoldTitle, new GUILayoutOption[0]);
 			GUILayout.BeginVertical(TrickOverViewPreview.previewStyle, GUILayoutOptions.ExpandWidth(true));
@@ -105,6 +106,8 @@ namespace Plugins.AllTrickOverView.Core
 				{
 					this.showRaw = !this.showRaw;
 				}
+				GUILayout.FlexibleSpace();
+				EditorGUILayoutExtension.LinkFileLabelField("点击此处定位到脚本目录", this.ExampleInfo.CodePath);
 				GUILayout.FlexibleSpace();
 				if (SirenixEditorGUI.ToolbarButton("Copy", false))
 				{

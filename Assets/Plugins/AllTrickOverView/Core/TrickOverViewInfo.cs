@@ -40,6 +40,7 @@ namespace Plugins.AllTrickOverView.Core
                     this.previewObject = Activator.CreateInstance(ExampleType);
                     (this.previewObject as AExample_Base).Init();
                 }
+
                 return this.previewObject;
             }
         }
@@ -65,18 +66,28 @@ namespace Plugins.AllTrickOverView.Core
         public string Code;
 
         /// <summary>
+        /// Raw code of the example.
+        /// </summary>
+        // Token: 0x04000422 RID: 1058
+        public string CodePath;
+
+        /// <summary>
         /// Sorting value of the example. Examples with lower order values should come before examples with higher order values.
         /// </summary>
         // Token: 0x04000423 RID: 1059
         public int Order;
 
-        public TrickOverViewInfo(string name,string description, string category, string code, Type type)
+        public TrickOverViewInfo(string name, string description, string category, string code, string codePath,
+            Type type)
         {
             this.Name = name;
             this.Description = description;
             this.Category = category;
+
+            this.Code =
+                "using System;\nusing UnityEditor;\nusing UnityEngine;\n\n    public class ColorCodeWindow : EditorWindow\n    {\n        [MenuItem(\"Tools/ColorCodeWindow\")]\n        private static void ShowWindow()\n        {\n            var window = GetWindow<ColorCodeWindow>();\n            window.titleContent = new GUIContent(\"ColorCodeWindow\");\n            window.Show();\n        }\n\n        private string colorCode = \"\";\n        private void OnEnable()\n        {\n            SourceColorer sourceColorer = new SourceColorer();\n            sourceColorer.AddStyleDefinition = false;\n            sourceColorer.AddPreTags = false;\n            colorCode = System.IO.File.ReadAllText(System.IO.Path.Combine(Application.dataPath,\"8.ColorCode/Editor/ColorCodeWindow.cs\"));\n            string code = \"\npublic class Test{\n    public int a;\n}\";\n            code = code.Replace(\"\n\", \"\\n\");\n            UnityEngine.Debug.LogError(code);\n            colorCode = colorCode.Replace(\"\n\", \"\\n\");\n            //colorCode = sourceColorer.Highlight(colorCode);\n            UnityEngine.Debug.LogError(colorCode);\n        }\n\n        private void OnGUI()\n        {\n            GUIStyle sytle = new GUIStyle();\n            sytle.richText = true;\n            EditorGUILayout.LabelField(colorCode,sytle);\n        }\n    }";
+            this.CodePath = codePath;
             this.ExampleType = type;
-            this.Code = "using System;\nusing UnityEditor;\nusing UnityEngine;\n\n    public class ColorCodeWindow : EditorWindow\n    {\n        [MenuItem(\"Tools/ColorCodeWindow\")]\n        private static void ShowWindow()\n        {\n            var window = GetWindow<ColorCodeWindow>();\n            window.titleContent = new GUIContent(\"ColorCodeWindow\");\n            window.Show();\n        }\n\n        private string colorCode = \"\";\n        private void OnEnable()\n        {\n            SourceColorer sourceColorer = new SourceColorer();\n            sourceColorer.AddStyleDefinition = false;\n            sourceColorer.AddPreTags = false;\n            colorCode = System.IO.File.ReadAllText(System.IO.Path.Combine(Application.dataPath,\"8.ColorCode/Editor/ColorCodeWindow.cs\"));\n            string code = \"\npublic class Test{\n    public int a;\n}\";\n            code = code.Replace(\"\n\", \"\\n\");\n            UnityEngine.Debug.LogError(code);\n            colorCode = colorCode.Replace(\"\n\", \"\\n\");\n            //colorCode = sourceColorer.Highlight(colorCode);\n            UnityEngine.Debug.LogError(colorCode);\n        }\n\n        private void OnGUI()\n        {\n            GUIStyle sytle = new GUIStyle();\n            sytle.richText = true;\n            EditorGUILayout.LabelField(colorCode,sytle);\n        }\n    }";
         }
 
         public TrickOverViewInfo()

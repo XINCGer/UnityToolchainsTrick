@@ -18,7 +18,12 @@ namespace Plugins.AllTrickOverView.Examples
     public class Example_DrawArrowLine : AExample_Base
     {
         public static TrickOverViewInfo TrickOverViewInfo =
-            new TrickOverViewInfo("DrawArrowLine", "绘制两条箭头。", "EditorWindow", "", typeof(Example_DrawArrowLine));
+            new TrickOverViewInfo("DrawArrowLine", 
+                "绘制两条箭头。", 
+                "EditorWindow", 
+                "", 
+                "Assets/Editor/Examples/Example_06_DrawArrowLine",
+                typeof(Example_DrawArrowLine));
         
         private const int LABEL_SIZE = 25;
 
