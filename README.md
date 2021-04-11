@@ -37,4 +37,8 @@
 ### [33.ProjectWindowItemOnGUI使用:显示文件大小和后缀](Assets/Editor/Examples/Example_33_ProjectWindowItemOnGUI)
 ### [34.LinkField:可链接工程文件和URL](Assets/Editor/Examples/Example_34_LinkField)
 ### [35.SetObjectIcon:设置Object图标](Assets/Editor/Examples/Example_35_SetObjectIcon)
-### [36.进入开发者模式](Assets/Editor/Examples/Example_36_DeveloperMode)
+### [36.进入开发者模式](Assets/Editor/Examples/Example_36_DeveloperMode)  
+
+## QQ技术交流群  
+群号：996526739  
+![](./QQGroupQR.jpg)  
