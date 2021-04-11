@@ -39,3 +39,7 @@
 ### [35.SetObjectIcon:设置Object图标](Assets/Editor/Examples/Example_35_SetObjectIcon)
 ### [36.进入开发者模式](Assets/Editor/Examples/Example_36_DeveloperMode)
 ### [37.在EditorWindow中显示WebView](Assets/Editor/Examples/Example_37_WebViewEditorWindow)
+
+## QQ技术交流群  
+群号：996526739  
+![](./QQGroupQR.jpg)  
