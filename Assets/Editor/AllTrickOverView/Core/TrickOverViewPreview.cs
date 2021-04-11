@@ -11,7 +11,7 @@ using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
     internal class TrickOverViewPreview
     {

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
     /// <summary>
     /// 一个示例条目的信息

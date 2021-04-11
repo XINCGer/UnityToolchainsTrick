@@ -11,7 +11,7 @@ using System.Reflection;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
     public static class AllTrickOverViewUtilities
     {

@@ -6,11 +6,11 @@
 
 using System;
 using System.Reflection;
-using Plugins.AllTrickOverView.Core;
+using AllTrickOverView.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Examples
+namespace AllTrickOverView.Examples
 {
     public class Example_AnimationCurvePreview : AExample_Base
     {

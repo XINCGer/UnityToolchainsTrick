@@ -5,7 +5,7 @@
 //------------------------------------------------------------
 
 using System.Collections.Generic;
-using Plugins.AllTrickOverView.Core;
+using AllTrickOverView.Core;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEditor;
 
 
-namespace Plugins.AllTrickOverView.Examples
+namespace AllTrickOverView.Examples
 {
     public class Example_DrawArrowLine : AExample_Base
     {
@@ -24,13 +24,13 @@ namespace Plugins.AllTrickOverView.Examples
                 "", 
                 "Assets/Editor/Examples/Example_06_DrawArrowLine",
                 typeof(Example_DrawArrowLine));
-        
-        private const int LABEL_SIZE = 25;
 
         public override TrickOverViewInfo GetTrickOverViewInfo()
         {
             return TrickOverViewInfo;
         }
+        
+        private const int LABEL_SIZE = 25;
 
         public override void DrawUI(Rect rect)
         {

@@ -5,19 +5,21 @@
 //------------------------------------------------------------
 
 using System;
-using System.Linq;
-using Plugins.AllTrickOverView.Core;
+using AllTrickOverView.Core;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
-namespace Plugins.AllTrickOverView
+namespace AllTrickOverView
 {
     public class AllTrickOverViewEditorWindow : OdinMenuEditorWindow
     {
+        private TrickOverViewItem exampleItem;
+
+        private Vector2 scrollPosition;
+        
         [MenuItem("Tools/AllTrickOverView")]
         public static void PopUp()
         {
@@ -43,6 +45,8 @@ namespace Plugins.AllTrickOverView
 
         private void SelectionChanged(SelectionChangedType selectionChangedType)
         {
+            exampleItem?.GetExample().Destroy();
+
             this.exampleItem = null;
 
             if (base.MenuTree.Selection.SelectedValue is Type type)
@@ -63,9 +67,13 @@ namespace Plugins.AllTrickOverView
             GUILayout.EndScrollView();
             GUILayout.EndArea();
         }
-        
-        private TrickOverViewItem exampleItem;
 
-        private Vector2 scrollPosition;
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            
+            exampleItem?.GetExample().Destroy();
+            this.exampleItem = null;
+        }
     }
 }

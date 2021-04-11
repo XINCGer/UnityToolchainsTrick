@@ -6,7 +6,7 @@ using Sirenix.Utilities;
 using Sirenix.Utilities.Editor.Expressions;
 using UnityEngine;
 
-namespace Plugins.AllTrickOverView.Core
+namespace AllTrickOverView.Core
 {
 	// Token: 0x020001A7 RID: 423
 	internal class SyntaxHighlighter
