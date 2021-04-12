@@ -43,6 +43,8 @@
 ### [36.进入开发者模式](Assets/Editor/Examples/Example_36_DeveloperMode)
 ### [37.在EditorWindow中显示WebView](Assets/Editor/Examples/Example_37_WebViewEditorWindow)
 ### [38.在EditorWindow中播放VideoClip](Assets/Editor/Examples/Example_38_VideoEditorWindow)
+### [39.SceneVisibility](Assets/Editor/Examples/Example_39_SceneVisibility)
+### [40.使用NotKeyable避免动画误操作修改参数](Assets/Editor/Examples/Example_40_NotKeyable)
 
 ## QQ技术交流群  
 群号：996526739  
