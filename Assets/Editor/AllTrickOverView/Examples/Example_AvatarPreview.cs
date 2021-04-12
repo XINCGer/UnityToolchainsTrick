@@ -12,6 +12,9 @@ using UnityEngine;
 
 namespace AllTrickOverView.Examples
 {
+    /// <summary>
+    /// 注意这个示例如果处于打开状态，进行了编译操作/进入PlayMode就会因为引用丢失导致内存泄漏，Trick做法是封装一个OnLostFoucs方法由EditorWindow传递过来，立即进行Destroy操作
+    /// </summary>
     public class Example_AvatarPreview : AExample_Base
     {
         public static TrickOverViewInfo TrickOverViewInfo =
@@ -43,6 +46,22 @@ namespace AllTrickOverView.Examples
         private AnimatorController _previewAnimator;
         private GameObject PreviewInstance;
         private AnimatorState _animatorState;
+
+        public override void Init()
+        {
+            if (null != _avatarPreview)
+            {
+                _avatarPreview.OnDestroy();
+                _avatarPreview = null;
+            }
+
+            GameObject.DestroyImmediate(PreviewInstance);
+            PreviewInstance = null;
+            _animationClip = null;
+            _animator = null;
+            _previewAnimator = null;
+            _animatorState = null;
+        }
 
         public override void DrawUI(Rect rect)
         {
@@ -92,7 +111,7 @@ namespace AllTrickOverView.Examples
                     _avatarPreview.Animator.Play(0, 0, normalizedTime);
                     _avatarPreview.Animator.Update(_avatarPreview.timeControl.deltaTime);
                 }
-
+                
                 _avatarPreview.DoAvatarPreview(PREVIEW_RECT, Constants.preBackgroundSolid);
             }
         }
@@ -122,9 +141,7 @@ namespace AllTrickOverView.Examples
                 _avatarPreview = null;
             }
 
-            if (PreviewInstance != null)
-                GameObject.DestroyImmediate(PreviewInstance);
-            
+            GameObject.DestroyImmediate(PreviewInstance);
             PreviewInstance = null;
             _animationClip = null;
             _animator = null;
