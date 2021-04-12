@@ -30,9 +30,6 @@ namespace AllTrickOverView.Core
         // Token: 0x04000434 RID: 1076
         private static Color previewBackgroundColorLight = new Color32(194, 194, 194, byte.MaxValue);
 
-        // Token: 0x04000435 RID: 1077
-        public TrickOverViewInfo ExampleInfo;
-
         // Token: 0x04000436 RID: 1078
         private PropertyTree tree;
 
@@ -47,18 +44,20 @@ namespace AllTrickOverView.Core
         // Token: 0x04000439 RID: 1081
         private bool showRaw;
 
-        public TrickOverViewPreview(TrickOverViewInfo exampleInfo)
+        private AExample_Base m_Example;
+
+        public TrickOverViewPreview(AExample_Base aExampleBase)
         {
-            this.ExampleInfo = exampleInfo;
-            this.m_DrawCallbaclAction = (this.ExampleInfo.PreviewObject as AExample_Base).DrawUI;
-            try
+	        m_Example = aExampleBase;
+	        this.m_DrawCallbaclAction = m_Example.DrawUI;
+	        try
             {
-                this.highlightedCode = SyntaxHighlighter.Parse(this.ExampleInfo.Code);
+                this.highlightedCode = SyntaxHighlighter.Parse(m_Example.GetTrickOverViewInfo().Code);
             }
             catch (Exception exception)
             {
                 Debug.LogException(exception);
-                this.highlightedCode = this.ExampleInfo.Code;
+                this.highlightedCode = m_Example.GetTrickOverViewInfo().Code;
                 this.showRaw = true;
             }
         }
@@ -90,12 +89,12 @@ namespace AllTrickOverView.Core
 			GUILayout.Space(8f);
 			
 			m_DrawCallbaclAction.Invoke(rect);
-			this.tree = (this.tree ?? PropertyTree.Create(this.ExampleInfo.PreviewObject));
+			this.tree = (this.tree ?? PropertyTree.Create(m_Example));
 			this.tree.Draw(false);
 			
 			GUILayout.Space(8f);
 			GUILayout.EndVertical();
-			if (drawCodeExample && this.ExampleInfo.Code != null)
+			if (drawCodeExample && m_Example.GetTrickOverViewInfo().Code != null)
 			{
 				GUILayout.Space(12f);
 				GUILayout.Label("Code", SirenixGUIStyles.BoldTitle, new GUILayoutOption[0]);
@@ -107,11 +106,11 @@ namespace AllTrickOverView.Core
 					this.showRaw = !this.showRaw;
 				}
 				GUILayout.FlexibleSpace();
-				EditorGUILayoutExtension.LinkFileLabelField("点击此处定位到脚本目录", this.ExampleInfo.CodePath);
+				EditorGUILayoutExtension.LinkFileLabelField("点击此处定位到脚本目录", this.m_Example.GetTrickOverViewInfo().CodePath);
 				GUILayout.FlexibleSpace();
 				if (SirenixEditorGUI.ToolbarButton("Copy", false))
 				{
-					Clipboard.Copy<string>(this.ExampleInfo.Code);
+					Clipboard.Copy<string>(this.m_Example.GetTrickOverViewInfo().Code);
 				}
 				SirenixEditorGUI.EndToolbarBoxHeader();
 				if (TrickOverViewPreview.codeTextStyle == null)
@@ -122,7 +121,7 @@ namespace AllTrickOverView.Core
 					TrickOverViewPreview.codeTextStyle.focused.textColor = SyntaxHighlighter.TextColor;
 					TrickOverViewPreview.codeTextStyle.wordWrap = false;
 				}
-				GUIContent content = GUIHelper.TempContent(this.showRaw ? this.ExampleInfo.Code.TrimEnd(new char[]
+				GUIContent content = GUIHelper.TempContent(this.showRaw ? this.m_Example.GetTrickOverViewInfo().Code.TrimEnd(new char[]
 				{
 					'\n',
 					'\r'
@@ -139,7 +138,7 @@ namespace AllTrickOverView.Core
 				Rect rect3 = GUILayoutUtility.GetRect(vector.x + 50f, vector.y).AddXMin(4f).AddY(2f);
 				if (this.showRaw)
 				{
-					EditorGUI.SelectableLabel(rect3, this.ExampleInfo.Code, TrickOverViewPreview.codeTextStyle);
+					EditorGUI.SelectableLabel(rect3, this.m_Example.GetTrickOverViewInfo().Code, TrickOverViewPreview.codeTextStyle);
 					GUILayout.Space(-14f);
 				}
 				else

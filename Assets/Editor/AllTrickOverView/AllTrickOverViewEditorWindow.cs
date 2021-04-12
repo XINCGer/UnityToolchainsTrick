@@ -48,10 +48,11 @@ namespace AllTrickOverView
             exampleItem?.GetExample().Destroy();
 
             this.exampleItem = null;
-
             if (base.MenuTree.Selection.SelectedValue is Type type)
             {
                 this.exampleItem = AllTrickOverViewUtilities.GetItemByType(type);
+                //每次选择的TreeView变化时都要进行Init
+                this.exampleItem.GetExample().Init();
             }
         }
 

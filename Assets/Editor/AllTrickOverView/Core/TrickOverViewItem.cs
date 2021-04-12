@@ -13,6 +13,10 @@ using UnityEngine;
 
 namespace AllTrickOverView.Core
 {
+    /// <summary>
+    /// 主要用于绘制与TreeViewItem数据本身关联不大的UI，更加核心的部分例如TreeViewItem数据，TreeViewItem的自定义绘制会在TrickOverViewPreview中进行
+    /// TreeViewItem会调用TrickOverViewPreview的绘制函数
+    /// </summary>
     public class TrickOverViewItem
     {
         public bool DrawCodeExample { get; set; }
@@ -32,36 +36,30 @@ namespace AllTrickOverView.Core
         // Token: 0x0400042D RID: 1069
         private GUITabGroup tabGroup;
 
-        // Token: 0x0400042E RID: 1070
-        public readonly string Name;
-        public readonly string Description;
-
+        private AExample_Base m_Example;
+        
         public AExample_Base GetExample()
         {
-            return m_TrickOverViewPreviewDrawer.ExampleInfo.PreviewObject as AExample_Base;
+            return this.m_Example;
         }
         
-        public TrickOverViewItem(Type type)
+        public TrickOverViewItem(AExample_Base aExampleBase)
         {
             this.DrawCodeExample = true;
-            AExample_Base aExampleBase =
-                AllTrickOverViewUtilities.GetExampleByType(type);
             if (aExampleBase == null)
             {
+                Debug.LogError("AExampleBase数据为空，请检查类型");
                 return;
             }
-            
-            TrickOverViewInfo trickOverViewInfo = aExampleBase.GetTrickOverViewInfo();
-            this.Name = trickOverViewInfo.Name;
-            this.Description = trickOverViewInfo.Description;
-            
-            this.m_TrickOverViewPreviewDrawer = new TrickOverViewPreview(trickOverViewInfo);
+            m_Example = aExampleBase;
+
+            this.m_TrickOverViewPreviewDrawer = new TrickOverViewPreview(m_Example);
             this.tabGroup = new GUITabGroup
             {
                 ToolbarHeight = 30f
             };
 
-            this.tabGroup.RegisterTab(trickOverViewInfo.Name);
+            this.tabGroup.RegisterTab(m_Example.GetTrickOverViewInfo().Name);
         }
 
         // Token: 0x06000A23 RID: 2595 RVA: 0x00030DD4 File Offset: 0x0002EFD4
@@ -83,13 +81,13 @@ namespace AllTrickOverView.Core
 
             TrickOverViewItem.tabGroupStyle = guistyle2;
             GUILayout.BeginVertical(TrickOverViewItem.headerGroupStyle, new GUILayoutOption[0]);
-            GUILayout.Label(this.Name, SirenixGUIStyles.SectionHeader, new GUILayoutOption[0]);
+            GUILayout.Label(this.m_Example.GetTrickOverViewInfo().Name, SirenixGUIStyles.SectionHeader, new GUILayoutOption[0]);
 
             SirenixEditorGUI.DrawThickHorizontalSeparator(4f, 10f);
 
-            if (!string.IsNullOrEmpty(this.Description))
+            if (!string.IsNullOrEmpty(this.m_Example.GetTrickOverViewInfo().Description))
             {
-                GUILayout.Label(this.Description, SirenixGUIStyles.MultiLineLabel, new GUILayoutOption[0]);
+                GUILayout.Label(this.m_Example.GetTrickOverViewInfo().Description, SirenixGUIStyles.MultiLineLabel, new GUILayoutOption[0]);
                 SirenixEditorGUI.DrawThickHorizontalSeparator(10f, 10f);
             }
             
@@ -100,7 +98,7 @@ namespace AllTrickOverView.Core
                 this.tabGroup.BeginGroup(true, TrickOverViewItem.tabGroupStyle);
                 GUI.backgroundColor = color;
 
-                GUITabPage guitabPage = this.tabGroup.RegisterTab(this.m_TrickOverViewPreviewDrawer.ExampleInfo.Name);
+                GUITabPage guitabPage = this.tabGroup.RegisterTab(this.m_Example.GetTrickOverViewInfo().Name);
                 if (guitabPage.BeginPage())
                 {
                     m_TrickOverViewPreviewDrawer.Draw(this.DrawCodeExample);

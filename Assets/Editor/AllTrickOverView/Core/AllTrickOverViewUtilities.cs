@@ -10,17 +10,26 @@ using System.Linq;
 using System.Reflection;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
+using UnityEditor;
 
 namespace AllTrickOverView.Core
 {
     public static class AllTrickOverViewUtilities
     {
-        private static readonly Dictionary<Type, AExample_Base> AllTrickOverViews =
+        private static readonly Dictionary<Type, AExample_Base> AllTrickOverViewExamples =
             new Dictionary<Type, AExample_Base>();
+
+        private static readonly Dictionary<Type, TrickOverViewItem> AllTrickOverViewItems =
+            new Dictionary<Type, TrickOverViewItem>();
 
         private static readonly AllTrickOverViewUtilities.CategoryComparer CategorySorter =
             new AllTrickOverViewUtilities.CategoryComparer();
 
+        public static void Init()
+        {
+            
+        }
+        
         static AllTrickOverViewUtilities()
         {
             Assembly assembly = Assembly.GetAssembly(typeof(AllTrickOverViewUtilities));
@@ -34,13 +43,15 @@ namespace AllTrickOverView.Core
                     continue;
                 }
 
-                AllTrickOverViews.Add(type, Activator.CreateInstance(type) as AExample_Base);
+                AExample_Base temp = Activator.CreateInstance(type) as AExample_Base;
+                AllTrickOverViewExamples.Add(type, temp);
+                AllTrickOverViewItems.Add(type, new TrickOverViewItem(temp));
             }
         }
 
         public static void BuildMenuTree(OdinMenuTree tree)
         {
-            foreach (var allTrickOverViewInfo in AllTrickOverViews)
+            foreach (var allTrickOverViewInfo in AllTrickOverViewExamples)
             {
                 TrickOverViewInfo trickOverViewInfo = (allTrickOverViewInfo.Value).GetTrickOverViewInfo();
                 OdinMenuItem menuItem =
@@ -109,12 +120,17 @@ namespace AllTrickOverView.Core
 
         public static TrickOverViewItem GetItemByType(Type type)
         {
-            return new TrickOverViewItem(type);
+            if (AllTrickOverViewItems.TryGetValue(type, out var trickOverViewItem))
+            {
+                return trickOverViewItem;
+            }
+
+            return null;
         }
 
         public static AExample_Base GetExampleByType(Type type)
         {
-            if (AllTrickOverViews.TryGetValue(type, out var aExampleBase))
+            if (AllTrickOverViewExamples.TryGetValue(type, out var aExampleBase))
             {
                 return aExampleBase;
             }
