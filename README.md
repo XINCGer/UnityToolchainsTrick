@@ -1,5 +1,8 @@
 # UnityToolchainsTrick
-提供一些UnityEditor工具链开发的常用小技巧与示例(Provides some common tips and examples for developing the UnityEditor toolchain)
+提供一些UnityEditor工具链开发的常用小技巧与示例(Provides some common tips and examples for developing the UnityEditor toolchain)  
+
+## 视频教程  
+* [Unity编辑器开发常用小技巧(B站)](https://www.bilibili.com/video/BV1nh411U7iU)  
 
 ## OverView  
 ### 1.Clone一份UnityCsReference并时常回顾  
