@@ -43,4 +43,4 @@
 
 ## QQ技术交流群  
 群号：996526739  
-![](./QQGroupQR.jpg)  
+<img src="https://github.com/XINCGer/UnityToolchainsTrick/blob/main/QQGroupQR.jpg" width="150" height="230" alt="加群二维码"/><br/>  
