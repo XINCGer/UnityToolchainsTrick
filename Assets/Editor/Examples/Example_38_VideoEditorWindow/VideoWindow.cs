@@ -21,7 +21,7 @@ public class VideoWindow : EditorWindow
 
     private void OnEnable()
     {
-        m_PlayingClip = AssetDatabase.LoadAssetAtPath<VideoClip>("Assets/Editor/Examples/Example_38_VideoEditorWindow/Test.MP4");
+        m_PlayingClip = AssetDatabase.LoadAssetAtPath<VideoClip>("Assets/Editor/Examples/Example_15_SubWindowDock/SubWindowDockVideo.mp4");
         m_PreviewID = VideoUtil.PlayPreview(m_PlayingClip);
     }
 
