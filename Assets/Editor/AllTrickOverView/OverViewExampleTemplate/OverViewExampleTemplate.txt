@@ -1,0 +1,22 @@
+﻿using AllTrickOverView.Core;
+
+namespace AllTrickOverView.Examples
+{
+    public class Example_$EXAMPLE_NAME$ : AExample_Base
+    {
+        public static TrickOverViewInfo TrickOverViewInfo =
+            new TrickOverViewInfo("$EXAMPLE_NAME$",
+                "$EXAMPLE_DESCRIPTION$",
+                "$EXAMPLE_CATEGORY$",
+                "$CODE$",
+                "$CODE_PATH$",
+                typeof(Example_$EXAMPLE_NAME$),
+                picPath : "$PIC_PATH$",
+                videoPath : "$VIDEO_PATH$");
+
+        public override TrickOverViewInfo GetTrickOverViewInfo()
+        {
+            return TrickOverViewInfo;
+        }
+    }
+}

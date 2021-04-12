@@ -5,9 +5,6 @@
 //------------------------------------------------------------
 
 using AllTrickOverView.Core;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Video;
 
 namespace AllTrickOverView.Examples
 {
