@@ -89,7 +89,7 @@ namespace AllTrickOverView.Core.ExampleFactory
         /// <returns></returns>
         private static string CodeEscape(string originCode)
         {
-            string finalCode = originCode.Replace("\r\n", "\\n");
+            string finalCode = originCode.Replace(System.Environment.NewLine, "\\n");
             return finalCode.Replace("\"","\\\"");
         }
     }
