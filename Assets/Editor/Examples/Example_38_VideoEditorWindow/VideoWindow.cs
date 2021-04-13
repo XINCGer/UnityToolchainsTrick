@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Video;
@@ -7,35 +6,50 @@ using Object = System.Object;
 
 public class VideoWindow : EditorWindow
 {
-    private Object m_PreviewID;
-    private VideoClip m_PlayingClip;
+    private Object previewID;
+    private VideoClip playingClip;
 
-    [MenuItem("Tools/VideoEditorWindow", priority = 38)]
-    private static void ShowWindow()
+    private static VideoWindow instance = null;
+
+    public const float videoClipSizeScale = 0.8f;
+
+    private Action onVideoWindowClosed = null;
+    
+    void Update()
     {
-        var window = GetWindow<VideoWindow>();
-        window.titleContent = new GUIContent("VideoWindow");
-
-        window.Show();
+        if (EditorWindow.focusedWindow != this)
+        {
+            onVideoWindowClosed?.Invoke();
+            this.Close();
+        }
     }
 
-    private void OnEnable()
+    public static void ShowVideo(string videoAssetPath, Action onVideoWindowClose = null)
     {
-        m_PlayingClip = AssetDatabase.LoadAssetAtPath<VideoClip>("Assets/Editor/Examples/Example_15_SubWindowDock/SubWindowDockVideo.mp4");
-        m_PreviewID = VideoUtil.PlayPreview(m_PlayingClip);
+        var window = (VideoWindow) ScriptableObject.CreateInstance<VideoWindow>();
+        window.playingClip = AssetDatabase.LoadAssetAtPath<VideoClip>(videoAssetPath);
+        window.previewID = VideoUtil.PlayPreview(window.playingClip);
+        Vector2 size = new Vector2(window.playingClip.width * videoClipSizeScale, window.playingClip.height * videoClipSizeScale);
+        window.maxSize = window.minSize = size;
+        window.position = VideoUtil.GetMainWindowCenteredPosition(size);
+        window.titleContent = new GUIContent("VideoWindow");
+        window.ShowPopup();
+        window.Focus();
+        window.onVideoWindowClosed = onVideoWindowClose;
+        instance = window;
     }
 
     private void OnDestroy()
     {
-        VideoUtil.StopPreview(m_PreviewID);
+        VideoUtil.StopPreview(previewID);
     }
 
     private void OnGUI()
     {
-        Texture image = VideoUtil.GetPreviewTexture(m_PreviewID);
+        Texture image = VideoUtil.GetPreviewTexture(previewID);
         if (image != null)
         {
-            EditorGUI.DrawTextureTransparent(new Rect(0, 0, image.width, image.height), image, ScaleMode.ScaleToFit);
+            EditorGUI.DrawTextureTransparent(new Rect(0, 0, image.width * videoClipSizeScale, image.height * videoClipSizeScale), image, ScaleMode.ScaleToFit);
         }
 
         Repaint();
