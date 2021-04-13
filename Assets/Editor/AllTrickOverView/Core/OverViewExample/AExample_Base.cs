@@ -75,6 +75,7 @@ namespace AllTrickOverView.Core
                     EditorGUI.DrawPreviewTexture(videoRect, image);
                     Rect playIconRect = new Rect(videoRect.center - new Vector2(25, 25), new Vector2(50, 50));
                     GUI.DrawTexture(playIconRect, m_PlayVideoIcon);
+                    EditorGUIUtility.AddCursorRect(videoRect, MouseCursor.Link);
                 }
 
                 return;
