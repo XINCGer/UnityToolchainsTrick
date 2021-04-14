@@ -50,6 +50,8 @@
 ### [38.在EditorWindow中播放VideoClip](Assets/Editor/Examples/Example_38_VideoEditorWindow)
 ### [39.SceneVisibility](Assets/Editor/Examples/Example_39_SceneVisibility)
 ### [40.使用NotKeyable避免动画误操作修改参数](Assets/Editor/Examples/Example_40_NotKeyable)
+### [41.打开文件拓展](Assets/Editor/Examples/Example_41_OpenExtension)
+### [42.BoundsHandle](Assets/Editor/Examples/Example_42_BoundsHandle)
 
 ## QQ技术交流群  
 群号：996526739  
