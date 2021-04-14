@@ -11,7 +11,9 @@
 ### 1.Clone一份UnityCsReference并时常回顾  
 ### 2.使用Odin Inspector插件
 ### [3.EditorIcons](Assets/Editor/Examples/Example_03_EditorIcons)  
+<img src="https://github.com/XINCGer/UnityToolchainsTrick/blob/main/Preview/Example_03_EditorIcons.png" width="200" height="200"/><br/>  
 ### [4.GUIStylesPreview](Assets/Editor/Examples/Example_04_GUIStyles)  
+<img src="https://github.com/XINCGer/UnityToolchainsTrick/blob/main/Preview/Example_04_GUIStyles.png" width="200" height="200"/><br/>  
 ### [5.编辑下通过代码修改保存资产的方法](Assets/Editor/Examples/Example_05_SaveAssets)  
 ### [6.EditorWindow上画一条带有箭头的线](Assets/Editor/Examples/Example_06_DrawArrowLine)  
 ### [7.MissingPrefab查找](Assets/Editor/Examples/Example_07_MissingPrefabChecker)  
@@ -48,6 +50,8 @@
 ### [38.在EditorWindow中播放VideoClip](Assets/Editor/Examples/Example_38_VideoEditorWindow)
 ### [39.SceneVisibility](Assets/Editor/Examples/Example_39_SceneVisibility)
 ### [40.使用NotKeyable避免动画误操作修改参数](Assets/Editor/Examples/Example_40_NotKeyable)
+### [41.打开文件拓展](Assets/Editor/Examples/Example_41_OpenExtension)
+### [42.BoundsHandle](Assets/Editor/Examples/Example_42_BoundsHandle)
 
 ## QQ技术交流群  
 群号：996526739  
