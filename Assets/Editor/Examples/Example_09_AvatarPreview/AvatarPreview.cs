@@ -269,6 +269,7 @@ namespace ToolKits
 
             // Use selected preview
             GameObject selected = EditorHelper.InstantiateGoByPrefab(selectedAnimator.gameObject, null);
+            selected.tag = Constants.PREVIRE_TAG;
             InitInstantiatedPreviewRecursive(selected);
             if (IsValidPreviewGameObject(selected, ModelImporterAnimationType.None))
                 return selected;
@@ -315,6 +316,7 @@ namespace ToolKits
             if (go != null)
             {
                 m_PreviewInstance = ReflectionHelper.Instance.EditorUtility.InstantiateForAnimatorPreview(go);
+                m_PreviewInstance.tag = Constants.PREVIRE_TAG;
                 previewUtility.AddSingleGO(m_PreviewInstance);
 
                 Bounds bounds = new Bounds(m_PreviewInstance.transform.position, Vector3.zero);
@@ -351,6 +353,7 @@ namespace ToolKits
             {
                 GameObject referenceGO = (GameObject) EditorGUIUtility.Load("Avatar/dial_flat.prefab");
                 m_ReferenceInstance = (GameObject) Object.Instantiate(referenceGO, Vector3.zero, Quaternion.identity);
+                m_ReferenceInstance.tag = Constants.PREVIRE_TAG;
                 InitInstantiatedPreviewRecursive(m_ReferenceInstance);
                 previewUtility.AddSingleGO(m_ReferenceInstance);
             }
@@ -359,6 +362,7 @@ namespace ToolKits
             {
                 GameObject directionGO = (GameObject) EditorGUIUtility.Load("Avatar/arrow.fbx");
                 m_DirectionInstance = (GameObject) Object.Instantiate(directionGO, Vector3.zero, Quaternion.identity);
+                m_DirectionInstance.tag = Constants.PREVIRE_TAG;
                 InitInstantiatedPreviewRecursive(m_DirectionInstance);
                 previewUtility.AddSingleGO(m_DirectionInstance);
             }
@@ -367,6 +371,7 @@ namespace ToolKits
             {
                 GameObject pivotGO = (GameObject) EditorGUIUtility.Load("Avatar/root.fbx");
                 m_PivotInstance = (GameObject) Object.Instantiate(pivotGO, Vector3.zero, Quaternion.identity);
+                m_PivotInstance.tag = Constants.PREVIRE_TAG;
                 InitInstantiatedPreviewRecursive(m_PivotInstance);
                 previewUtility.AddSingleGO(m_PivotInstance);
             }
@@ -375,6 +380,7 @@ namespace ToolKits
             {
                 GameObject rootGO = (GameObject) EditorGUIUtility.Load("Avatar/root.fbx");
                 m_RootInstance = (GameObject) Object.Instantiate(rootGO, Vector3.zero, Quaternion.identity);
+                m_RootInstance.tag = Constants.PREVIRE_TAG;
                 InitInstantiatedPreviewRecursive(m_RootInstance);
                 previewUtility.AddSingleGO(m_RootInstance);
             }
@@ -456,14 +462,7 @@ namespace ToolKits
 
         public void OnDisable()
         {
-            if (m_PreviewUtility != null)
-            {
-                m_PreviewUtility.Cleanup();
-                m_PreviewUtility = null;
-            }
-
-            if (timeControl != null)
-                timeControl.OnDisable();
+            OnDestroy();
         }
 
         public void OnDestroy()
@@ -1159,6 +1158,17 @@ namespace ToolKits
                 Renderer renderer = componentsInChildren[i];
                 renderer.enabled = enabled;
             }
+        }
+
+        [UnityEditor.Callbacks.DidReloadScripts]
+        private static void OnScriptsReloaded()
+        {
+            var gameobjects = GameObject.FindGameObjectsWithTag(Constants.PREVIRE_TAG);
+            foreach (var item in gameobjects)
+            {
+                GameObject.DestroyImmediate(item);
+            }
+            
         }
     }
 }

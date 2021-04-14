@@ -47,6 +47,7 @@ namespace ToolKits
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AVATAR_PATH);
                 PreviewInstance = EditorHelper.InstantiateGoByPrefab(prefab, null);
                 PreviewInstance.hideFlags = HideFlags.HideAndDontSave;
+                PreviewInstance.tag = Constants.PREVIRE_TAG;
                 _previewAnimator = AssetDatabase.LoadAssetAtPath<AnimatorController>(PREVIEW_ANIMCONTROLLER_PATH);
                 _animationClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(CLIP_PATH);
                 var states = _previewAnimator.layers[0].stateMachine.states;
@@ -124,6 +125,14 @@ namespace ToolKits
             _animator = null;
             _previewAnimator = null;
             _animatorState = null;
+        }
+
+        private void OnDisable()
+        {
+            if (null != _avatarPreview)
+            {
+                _avatarPreview.OnDisable();
+            }
         }
     }
 }

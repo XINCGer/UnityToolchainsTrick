@@ -10,5 +10,6 @@ namespace ToolKits
         public const string GLOBAL_INPUT_ENEVT_ENABLE = "__GLOBAL_INPUT_ENEVT_ENABLE__";
         
         public static readonly GUIStyle preBackgroundSolid = "PreBackgroundSolid";
+        public const string PREVIRE_TAG = "PREVIRE_TAG";
     }
 }
