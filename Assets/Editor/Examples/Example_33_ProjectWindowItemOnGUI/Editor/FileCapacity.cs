@@ -5,6 +5,14 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
+public class FileCapacityPostprocessor : AssetPostprocessor
+{
+    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+    {
+        FileCapacity.RefreshFileCapacity();
+    }
+}
+
 public static class FileCapacity
 {
     private const string REMOVE_STR = "Assets";
@@ -39,7 +47,9 @@ public static class FileCapacity
     private static void InitializeOnLoadMethod()
     {
         Init();
+#if UNITY_2018_1_OR_NEWER
         EditorApplication.projectChanged += GetPropjectDirs;
+#endif
         EditorApplication.projectWindowItemOnGUI += OnGUI;
     }
 
@@ -49,6 +59,11 @@ public static class FileCapacity
         GetPropjectDirs();
     }
 
+    public static void RefreshFileCapacity()
+    {
+        GetPropjectDirs();
+    }
+    
     private static void GetPropjectDirs()
     {
         Init();
