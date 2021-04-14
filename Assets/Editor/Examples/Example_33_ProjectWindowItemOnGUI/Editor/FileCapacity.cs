@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEditor;
@@ -67,7 +68,7 @@ public static class FileCapacity
 
     private static void OnGUI(string guid, Rect selectionRect)
     {
-        if (FileSizeEnable == false) return;
+        if (FileSizeEnable == false || selectionRect.height > 16) return;
         var dataPath = Application.dataPath;
         var startIndex = dataPath.LastIndexOf(REMOVE_STR);
         var dir = dataPath.Remove(startIndex, mRemoveCount);
@@ -81,7 +82,7 @@ public static class FileCapacity
         {
             var fileInfo = new FileInfo(path);
             var fileSize = fileInfo.Length;
-            text = GetFormatSizeString((int)fileSize);
+            text = GetFormatSizeString(fileSize);
         }
         else
         {
@@ -106,17 +107,17 @@ public static class FileCapacity
         GUI.Label(pos, text);
     }
 
-    private static string GetFormatSizeString(int size)
+    private static string GetFormatSizeString(long size)
     {
         return GetFormatSizeString(size, 1024);
     }
 
-    private static string GetFormatSizeString(int size, int p)
+    private static string GetFormatSizeString(long size, int p)
     {
         return GetFormatSizeString(size, p, "#,##0.##");
     }
 
-    private static string GetFormatSizeString(int size, int p, string specifier)
+    private static string GetFormatSizeString(long size, int p, string specifier)
     {
         var suffix = new[] { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
         int index = 0;
