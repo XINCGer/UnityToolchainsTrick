@@ -26,9 +26,11 @@ namespace AllTrickOverView.Core
         private VideoClip m_PlayingClip;
         private Texture2D m_PreviewPic;
         private Texture m_PlayVideoIcon;
+
         public virtual void Init()
         {
-            m_PlayVideoIcon = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Editor/AllTrickOverView/EditorResources/Video.png");
+            m_PlayVideoIcon =
+                AssetDatabase.LoadAssetAtPath<Texture>("Assets/Editor/AllTrickOverView/EditorResources/Video.png");
             if (!string.IsNullOrEmpty(this.GetTrickOverViewInfo().VideoPath))
             {
                 m_PlayingClip = AssetDatabase.LoadAssetAtPath<VideoClip>(this.GetTrickOverViewInfo().VideoPath);
@@ -44,7 +46,7 @@ namespace AllTrickOverView.Core
             }
         }
 
-        Texture GetAssetPreviewTexture(VideoClip target)
+        Texture GetAssetPreviewTexture(UnityEngine.Object target)
         {
             Texture tex = null;
             tex = AssetPreview.GetAssetPreview(target);
@@ -52,9 +54,10 @@ namespace AllTrickOverView.Core
             {
                 tex = AssetPreview.GetMiniThumbnail(target);
             }
+
             return tex;
         }
-        
+
         public virtual void DrawUI(Rect rect)
         {
             if (m_PlayingClip != null)
@@ -67,11 +70,10 @@ namespace AllTrickOverView.Core
                     Rect videoRect = new Rect(rect.x + 10, rect.y + 10, targetVideoSize.x, targetVideoSize.y);
                     if (GUI.Button(videoRect, ""))
                     {
-                        VideoWindow.ShowVideo(this.GetTrickOverViewInfo().VideoPath, delegate
-                        {
-                            Resources.FindObjectsOfTypeAll<AllTrickOverViewEditorWindow>()[0].Focus();
-                        });
+                        MediaPreviewWindow.ShowVideo(this.GetTrickOverViewInfo().VideoPath,
+                            delegate { Resources.FindObjectsOfTypeAll<AllTrickOverViewEditorWindow>()[0].Focus(); });
                     }
+
                     EditorGUI.DrawPreviewTexture(videoRect, image);
                     Rect playIconRect = new Rect(videoRect.center - new Vector2(25, 25), new Vector2(50, 50));
                     GUI.DrawTexture(playIconRect, m_PlayVideoIcon);
@@ -83,11 +85,23 @@ namespace AllTrickOverView.Core
 
             if (m_PreviewPic != null)
             {
-                GetImageAppropriateSize(m_PreviewPic, out var targetVideoSize);
-                GUILayout.Label("", GUILayout.Width(targetVideoSize.x), GUILayout.Height(targetVideoSize.y));
-                EditorGUI.DrawTextureTransparent(
-                    new Rect(rect.x + 10, rect.y + 10, targetVideoSize.x, targetVideoSize.y), m_PreviewPic,
-                    ScaleMode.ScaleToFit);
+                Texture image = GetAssetPreviewTexture(m_PreviewPic);
+                if (image != null)
+                {
+                    GetImageAppropriateSize(image, out var targetPicSize);
+                    GUILayout.Label("", GUILayout.Width(targetPicSize.x), GUILayout.Height(targetPicSize.y));
+                    Rect videoRect = new Rect(rect.x + 10, rect.y + 10, targetPicSize.x, targetPicSize.y);
+                    if (GUI.Button(videoRect, ""))
+                    {
+                        MediaPreviewWindow.ShowPic(this.GetTrickOverViewInfo().PicPath,
+                            delegate { Resources.FindObjectsOfTypeAll<AllTrickOverViewEditorWindow>()[0].Focus(); });
+                    }
+
+                    EditorGUI.DrawPreviewTexture(videoRect, image);
+                    Rect playIconRect = new Rect(videoRect.center - new Vector2(25, 25), new Vector2(50, 50));
+                    GUI.DrawTexture(playIconRect, m_PlayVideoIcon);
+                    EditorGUIUtility.AddCursorRect(videoRect, MouseCursor.Link);
+                }
             }
         }
 
