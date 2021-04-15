@@ -3,20 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ToolKits
 {
     public class TitleModifier
     {
+        private const int Delay = 2000;
+        
         [InitializeOnLoadMethod]
         private static void Init()
         {
-            ModifyTitle();
+            ModifyTitleAsync();
         }
 
-        static void ModifyTitle()
+        private static async void ModifyTitleAsync()
+        {
+            await Task.Delay(Delay);
+            ModifyTitle();
+        }
+        
+        private static void ModifyTitle()
         {
             Type tEditorApplication = typeof(EditorApplication);
             Type tApplicationTitleDescriptor = tEditorApplication.Assembly.GetTypes()
@@ -44,5 +54,6 @@ namespace ToolKits
             var str = fieldInfo.GetValue(desc) as string;
             fieldInfo.SetValue(desc, str + "【分支】：release");
         }
+        
     }
 }
