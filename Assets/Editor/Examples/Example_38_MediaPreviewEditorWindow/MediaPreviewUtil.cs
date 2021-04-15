@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using Object = System.Object;
 
-public static class VideoUtil
+public static class MediaPreviewUtil
 {
     //获取Preview Texture
     public static Texture GetPreviewTexture(Object previewID)
