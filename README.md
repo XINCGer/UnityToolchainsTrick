@@ -7,7 +7,15 @@
 ## 博客  
 * [Unity编辑器拓展Wiki开源项目，装得下，世界都是你的-By 烟雨](https://zhuanlan.zhihu.com/p/364250160)  
 
-## OverView  
+## OverViewWindow
+本项目提供了一个用于预览所有编辑器拓展样式的EditorWindow，可通过Tools-AllTrickOverView进行打开，使用教程参见[Unity编辑器拓展Wiki开源项目，装得下，世界都是你的-By 烟雨](https://zhuanlan.zhihu.com/p/364250160)
+
+**注意，此插件基于Odin进行制作，所以需要项目中导入Odin插件，Odin官网：[https://odininspector.com/](https://odininspector.com/)**
+
+如果不需要此预览插件，前往并删除 **Assets/Editor/AllTrickOverView** 目录即可
+![](./ReadmePngs/OverViewWindow.png)
+
+## 效果列表  
 ### 1.Clone一份UnityCsReference并时常回顾  
 ### 2.使用Odin Inspector插件
 ### [3.EditorIcons](Assets/Editor/Examples/Example_03_EditorIcons)  
@@ -52,6 +60,7 @@
 ### [40.使用NotKeyable避免动画误操作修改参数](Assets/Editor/Examples/Example_40_NotKeyable)
 ### [41.打开文件拓展](Assets/Editor/Examples/Example_41_OpenExtension)
 ### [42.BoundsHandle](Assets/Editor/Examples/Example_42_BoundsHandle)
+### [43.MoreInspector](Assets/Editor/Examples/Example_43_MoreInspector)
 
 ## QQ技术交流群  
 群号：996526739  
