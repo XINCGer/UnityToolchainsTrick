@@ -124,6 +124,19 @@ public class ResizableArea
         return enabledSides.HasFlag(_direction);
     }
 
+    void Reload(Rect _rect)
+    {
+        foreach (var direction in Directions)
+        {
+            if (enabledSides.HasFlag(direction))
+            {
+                float offset = 0;
+                SideOffset.TryGetValue(direction, out offset);
+                Sides[direction] = GetSide(_rect, direction, side, offset);
+            }
+        }
+    }
+
     public virtual Rect OnGUI(Rect _rect)
     {
         Reload(_rect);
@@ -152,7 +165,7 @@ public class ResizableArea
                     EditorGUIUtility.AddCursorRect(Sides[UIDirection.BottomRight], MouseCursor.ResizeUpLeft);
 
                 if (IsEnabled(UIDirection.MiddleCenter) && isDragging && sideDirection == UIDirection.MiddleCenter)
-                    EditorGUIUtility.AddCursorRect(GetSide(_rect, UIDirection.MiddleCenter, side), MouseCursor.MoveArrow);
+                    EditorGUIUtility.AddCursorRect(Sides[UIDirection.MiddleCenter], MouseCursor.MoveArrow);
                 break;
             case EventType.MouseDown:
                 foreach (var direction in Directions)
