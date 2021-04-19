@@ -130,8 +130,7 @@ public static class PathUtility
 
   public static string GetAssetDirectoryName(string assetPath)
   {
-    int index = assetPath.LastIndexOf(Path.DirectorySeparatorChar);
-    return assetPath.Substring(0, index);
+    return System.IO.Path.GetDirectoryName(assetPath);
   }
 
   public static string[] GetProgressiveAssetFolderPath(string assetFolderPath)
