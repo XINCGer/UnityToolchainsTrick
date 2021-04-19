@@ -106,18 +106,21 @@ public class SelectAssetReferenceWindow : AdvancedDropdown
         //获取child的递进式父级文件夹相对路径
         string[] childProgressiveAssetFolderPath = PathUtility.GetProgressiveAssetFolderPath(childFolderPath);
         AssetReferenceDropdownFolderItem lastParent = root;
-        for (int i = 0; i < childProgressiveAssetFolderPath.Length; i++)
+        if (childProgressiveAssetFolderPath != null)
         {
-            AssetReferenceDropdownFolderItem advancedDropdownItem = GetParentDropdownItem(lastParent, childProgressiveAssetFolderPath[i]);
-            if (advancedDropdownItem == null)
+            for (int i = 0; i < childProgressiveAssetFolderPath.Length; i++)
             {
-                var parent = new AssetReferenceDropdownFolderItem(childProgressiveAssetFolderPath[i], false);
-                lastParent.AddFolder(parent);
-                lastParent = parent;
-            }
-            else
-            {
-                lastParent = advancedDropdownItem;
+                AssetReferenceDropdownFolderItem advancedDropdownItem = GetParentDropdownItem(lastParent, childProgressiveAssetFolderPath[i]);
+                if (advancedDropdownItem == null)
+                {
+                    var parent = new AssetReferenceDropdownFolderItem(childProgressiveAssetFolderPath[i], false);
+                    lastParent.AddFolder(parent);
+                    lastParent = parent;
+                }
+                else
+                {
+                    lastParent = advancedDropdownItem;
+                }
             }
         }
 
