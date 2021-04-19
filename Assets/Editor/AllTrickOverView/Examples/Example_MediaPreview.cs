@@ -10,7 +10,7 @@ namespace AllTrickOverView.Examples
                 "多媒体预览",
                 "Media",
                 "using System;\nusing UnityEditor;\nusing UnityEngine;\n\npublic class MediaPreviewWindowDemo : EditorWindow\n{\n    private static MediaPreviewWindowDemo _window;\n    private static readonly Vector2 MIN_SIE = new Vector2(400, 300);\n\n    [MenuItem(\"Tools/多媒体预览\", priority = 38)]\n    private static void PopUp()\n    {\n        _window = GetWindow<MediaPreviewWindowDemo>(\"多媒体预览\");\n        _window.minSize = MIN_SIE;\n        _window.Show();\n    }\n\n    private void OnGUI()\n    {\n        if (GUILayout.Button(\"显示图片预览\"))\n        {\n            MediaPreviewWindow.ShowPic(\"Assets/Editor/Examples/Example_16_MoreSceneView/MoreSceneViewPreviewPng.png\",\n                Resources.FindObjectsOfTypeAll<MediaPreviewWindowDemo>()[0].Focus);\n        }\n\n        if (GUILayout.Button(\"显示视频预览\"))\n        {\n            MediaPreviewWindow.ShowVideo(\"Assets/Editor/Examples/Example_15_SubWindowDock/SubWindowDockVideo.mp4\",\n                Resources.FindObjectsOfTypeAll<MediaPreviewWindowDemo>()[0].Focus);\n        }\n    }\n}",
-                "$CODE_PATH$",
+                "Assets/Editor/Examples/Example_38_MediaPreviewEditorWindow",
                 typeof(Example_MediaPreview),
                 picPath : "",
                 videoPath : "");
