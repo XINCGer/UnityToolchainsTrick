@@ -135,7 +135,7 @@ public static class PathUtility
 
   public static string[] GetProgressiveAssetFolderPath(string assetFolderPath)
   {
-    if (assetFolderPath.Contains("/"))
+    if (assetFolderPath.IndexOf(Path.DirectorySeparatorChar) != -1)
     {
       string[] folderName = assetFolderPath.Split(Path.DirectorySeparatorChar);
       string[] result = new string[folderName.Length];
