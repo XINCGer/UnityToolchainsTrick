@@ -1,152 +1,22 @@
-﻿//------------------------------------------------------------
-// Author: 烟雨迷离半世殇
-// Mail: 1778139321@qq.com
-// Data: 2021年4月11日 15:56:33
-//------------------------------------------------------------
-
 using AllTrickOverView.Core;
-using ToolKits;
-using UnityEditor;
-using UnityEditor.Animations;
-using UnityEngine;
 
 namespace AllTrickOverView.Examples
 {
-    /// <summary>
-    /// 注意这个示例如果处于打开状态，进行了编译操作/进入PlayMode就会因为引用丢失导致内存泄漏，Trick做法是封装一个OnLostFoucs方法由EditorWindow传递过来，立即进行Destroy操作
-    /// </summary>
     public class Example_AvatarPreview : AExample_Base
     {
         public static TrickOverViewInfo TrickOverViewInfo =
             new TrickOverViewInfo("AvatarPreview",
-                "预览动画",
-                "EditorWindow",
-                "",
+                "动画预览",
+                "Animation",
+                "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing UnityEditor;\nusing UnityEditor.Animations;\nusing UnityEngine;\n\nnamespace ToolKits\n{\n    public class PreviewWindow : EditorWindow\n    {\n        private static PreviewWindow _window;\n        private static readonly Vector2 MIN_SIZE = new Vector2(600, 400);\n\n        private static readonly Rect PREVIEW_RECT = new Rect(0, 50, 500, 300);\n\n        private const string PREVIEW_ANIMCONTROLLER_PATH =\n            \"Assets/GameAssets/Arts/AnimatorControllers/PreviewController.controller\";\n\n        private const string AVATAR_PATH = \"Assets/GameAssets/Arts/Prefabs/Warrior.prefab\";\n        private const string CLIP_PATH = \"Assets/GameAssets/Arts/Models/AnimationClips/Female/1HCombatRunF.anim\";\n\n        private AvatarPreview _avatarPreview;\n        private AnimationClip _animationClip;\n        private Animator _animator;\n        private AnimatorController _previewAnimator;\n        private GameObject PreviewInstance;\n        private AnimatorState _animatorState;\n\n        [MenuItem(\"Tools/PreviewWindow\", priority = 9)]\n        private static void PopUp()\n        {\n            _window = GetWindow<PreviewWindow>(\"预览窗口\");\n            _window.minSize = MIN_SIZE;\n            _window.Init();\n            _window.Show();\n        }\n\n        private void Init()\n        {\n        }\n\n        private void OnGUI()\n        {\n            if (GUILayout.Button(\"加载预览\"))\n            {\n                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AVATAR_PATH);\n                PreviewInstance = EditorHelper.InstantiateGoByPrefab(prefab, null);\n                PreviewInstance.hideFlags = HideFlags.HideAndDontSave;\n                PreviewInstance.tag = Constants.PREVIRE_TAG;\n                _previewAnimator = AssetDatabase.LoadAssetAtPath<AnimatorController>(PREVIEW_ANIMCONTROLLER_PATH);\n                _animationClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(CLIP_PATH);\n                var states = _previewAnimator.layers[0].stateMachine.states;\n                foreach (var item in states)\n                {\n                    if (item.state.name == \"Preview\")\n                    {\n                        _animatorState = item.state;\n                        break;\n                    }\n                }\n\n                InitController();\n\n                _avatarPreview = new AvatarPreview(_animator, _animationClip);\n                _avatarPreview.OnAvatarChangeFunc = SetPreviewAvatar;\n                _avatarPreview.fps = Mathf.RoundToInt(_animationClip.frameRate);\n                _avatarPreview.ShowIKOnFeetButton = (_animationClip as Motion).isHumanMotion;\n                _avatarPreview.ResetPreviewFocus();\n\n                // force an update on timeControl if AvatarPreviewer is closed when creating/editing animation curves\n                // prevent from having a nomralizedTime == -inf\n                if (_avatarPreview.timeControl.currentTime == Mathf.NegativeInfinity)\n                    _avatarPreview.timeControl.Update();\n            }\n\n            if (null != _avatarPreview)\n            {\n                if (Event.current.type == EventType.Repaint)\n                {\n                    _avatarPreview.timeControl.loop = true;\n                    _avatarPreview.timeControl.Update();\n                    AnimationClipSettings previewInfo = AnimationUtility.GetAnimationClipSettings(_animationClip);\n                    float normalizedTime = previewInfo.stopTime - previewInfo.startTime != 0\n                        ? (_avatarPreview.timeControl.currentTime - previewInfo.startTime) /\n                          (previewInfo.stopTime - previewInfo.startTime)\n                        : 0.0f;\n                    _avatarPreview.Animator.Play(0, 0, normalizedTime);\n                    _avatarPreview.Animator.Update(_avatarPreview.timeControl.deltaTime);\n                }\n                _avatarPreview.DoAvatarPreview(PREVIEW_RECT, Constants.preBackgroundSolid);\n            }\n\n            Repaint();\n        }\n\n        private void SetPreviewAvatar()\n        {\n            DestroyController();\n            InitController();\n        }\n\n        private void InitController()\n        {\n            _animator = PreviewInstance.GetComponent<Animator>();\n            _animatorState.motion = _animationClip;\n            _animator.runtimeAnimatorController = _previewAnimator;\n        }\n\n        private void DestroyController()\n        {\n        }\n\n        private void OnDestroy()\n        {\n            if (null != _avatarPreview)\n            {\n                _avatarPreview.OnDestroy();\n                _avatarPreview = null;\n            }\n\n            GameObject.DestroyImmediate(PreviewInstance);\n            PreviewInstance = null;\n            _animationClip = null;\n            _animator = null;\n            _previewAnimator = null;\n            _animatorState = null;\n        }\n\n        private void OnDisable()\n        {\n            if (null != _avatarPreview)\n            {\n                _avatarPreview.OnDisable();\n            }\n        }\n    }\n}",
                 "Assets/Editor/Examples/Example_09_AvatarPreview",
-                typeof(Example_AvatarPreview));
+                typeof(Example_AvatarPreview),
+                picPath: "Assets/Editor/Examples/Example_09_AvatarPreview/QQ截图20210419154043.png",
+                videoPath: "");
 
         public override TrickOverViewInfo GetTrickOverViewInfo()
         {
             return TrickOverViewInfo;
-        }
-
-        private static readonly Vector2 MIN_SIZE = new Vector2(600, 400);
-
-        private static readonly Rect PREVIEW_RECT = new Rect(10, 60, 500, 300);
-
-        private const string PREVIEW_ANIMCONTROLLER_PATH =
-            "Assets/GameAssets/Arts/AnimatorControllers/PreviewController.controller";
-
-        private const string AVATAR_PATH = "Assets/GameAssets/Arts/Prefabs/Warrior.prefab";
-        private const string CLIP_PATH = "Assets/GameAssets/Arts/Models/AnimationClips/Female/1HCombatRunF.anim";
-
-        private AvatarPreview _avatarPreview;
-        private AnimationClip _animationClip;
-        private Animator _animator;
-        private AnimatorController _previewAnimator;
-        private GameObject PreviewInstance;
-        private AnimatorState _animatorState;
-
-        public override void Init()
-        {
-            if (null != _avatarPreview)
-            {
-                _avatarPreview.OnDestroy();
-                _avatarPreview = null;
-            }
-
-            GameObject.DestroyImmediate(PreviewInstance);
-            PreviewInstance = null;
-            _animationClip = null;
-            _animator = null;
-            _previewAnimator = null;
-            _animatorState = null;
-        }
-
-        public override void DrawUI(Rect rect)
-        {
-            if (GUILayout.Button("加载预览"))
-            {
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(AVATAR_PATH);
-                PreviewInstance = EditorHelper.InstantiateGoByPrefab(prefab, null);
-                PreviewInstance.hideFlags = HideFlags.HideAndDontSave;
-                _previewAnimator = AssetDatabase.LoadAssetAtPath<AnimatorController>(PREVIEW_ANIMCONTROLLER_PATH);
-                _animationClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(CLIP_PATH);
-                var states = _previewAnimator.layers[0].stateMachine.states;
-                foreach (var item in states)
-                {
-                    if (item.state.name == "Preview")
-                    {
-                        _animatorState = item.state;
-                        break;
-                    }
-                }
-
-                InitController();
-
-                _avatarPreview = new AvatarPreview(_animator, _animationClip);
-                _avatarPreview.OnAvatarChangeFunc = SetPreviewAvatar;
-                _avatarPreview.fps = Mathf.RoundToInt(_animationClip.frameRate);
-                _avatarPreview.ShowIKOnFeetButton = (_animationClip as Motion).isHumanMotion;
-                _avatarPreview.ResetPreviewFocus();
-
-                // force an update on timeControl if AvatarPreviewer is closed when creating/editing animation curves
-                // prevent from having a nomralizedTime == -inf
-                if (_avatarPreview.timeControl.currentTime == Mathf.NegativeInfinity)
-                    _avatarPreview.timeControl.Update();
-            }
-
-            if (null != _avatarPreview)
-            {
-                GUILayout.Label("", GUILayout.Height(300), GUILayout.Width(500));
-                if (Event.current.type == EventType.Repaint)
-                {
-                    _avatarPreview.timeControl.loop = true;
-                    _avatarPreview.timeControl.Update();
-                    AnimationClipSettings previewInfo = AnimationUtility.GetAnimationClipSettings(_animationClip);
-                    float normalizedTime = previewInfo.stopTime - previewInfo.startTime != 0
-                        ? (_avatarPreview.timeControl.currentTime - previewInfo.startTime) /
-                          (previewInfo.stopTime - previewInfo.startTime)
-                        : 0.0f;
-                    _avatarPreview.Animator.Play(0, 0, normalizedTime);
-                    _avatarPreview.Animator.Update(_avatarPreview.timeControl.deltaTime);
-                }
-                
-                _avatarPreview.DoAvatarPreview(PREVIEW_RECT, Constants.preBackgroundSolid);
-            }
-        }
-
-        private void SetPreviewAvatar()
-        {
-            DestroyController();
-            InitController();
-        }
-
-        private void InitController()
-        {
-            _animator = PreviewInstance.GetComponent<Animator>();
-            _animatorState.motion = _animationClip;
-            _animator.runtimeAnimatorController = _previewAnimator;
-        }
-
-        private void DestroyController()
-        {
-        }
-
-        public override void Destroy()
-        {
-            if (null != _avatarPreview)
-            {
-                _avatarPreview.OnDestroy();
-                _avatarPreview = null;
-            }
-
-            GameObject.DestroyImmediate(PreviewInstance);
-            PreviewInstance = null;
-            _animationClip = null;
-            _animator = null;
-            _previewAnimator = null;
-            _animatorState = null;
         }
     }
 }

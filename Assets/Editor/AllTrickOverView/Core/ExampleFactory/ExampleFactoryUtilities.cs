@@ -16,7 +16,8 @@ namespace AllTrickOverView.Core.ExampleFactory
         /// <summary>
         /// 模板文件所在目录
         /// </summary>
-        private const string c_TemplatePath = "Assets/Editor/AllTrickOverView/OverViewExampleTemplate/OverViewExampleTemplate.txt";
+        private const string c_TemplatePath =
+            "Assets/Editor/AllTrickOverView/OverViewExampleTemplate/OverViewExampleTemplate.txt";
 
         /// <summary>
         /// 输出目录
@@ -35,9 +36,9 @@ namespace AllTrickOverView.Core.ExampleFactory
                 string finalFileName = $"{c_DesPath}/Example_{exampleTemplate.Name}.cs";
 
                 exampleTemplate.Code = CodeEscape(exampleTemplate.Code);
-                
+
                 Dictionary<string, string> replaceMap = GetReplaceMap(exampleTemplate);
-                
+
                 foreach (var kParam in replaceMap)
                 {
                     temp = temp.Replace(kParam.Key, kParam.Value);
@@ -47,7 +48,7 @@ namespace AllTrickOverView.Core.ExampleFactory
                 {
                     Directory.CreateDirectory(c_DesPath);
                 }
-                
+
                 while (File.Exists(finalFileName))
                 {
                     finalFileName = finalFileName.Replace(".cs", $"_1.cs");
@@ -79,7 +80,7 @@ namespace AllTrickOverView.Core.ExampleFactory
             ReplaceMap["$CODE_PATH$"] = exampleTemplate.CodePath;
             ReplaceMap["$PIC_PATH$"] = exampleTemplate.PicPath;
             ReplaceMap["$VIDEO_PATH$"] = exampleTemplate.VideoPath;
-            
+
             return ReplaceMap;
         }
 
@@ -89,8 +90,10 @@ namespace AllTrickOverView.Core.ExampleFactory
         /// <returns></returns>
         private static string CodeEscape(string originCode)
         {
+            //TODO 支持更多转义操作，目前会因为源代码内有转义内容而报错
             string finalCode = originCode.Replace(System.Environment.NewLine, "\\n");
-            return finalCode.Replace("\"","\\\"");
+            finalCode = finalCode.Replace("\"", "\\\"");
+            return finalCode;
         }
     }
 }
