@@ -124,19 +124,6 @@ public class ResizableArea
         return enabledSides.HasFlag(_direction);
     }
 
-    void Reload(Rect _rect)
-    {
-        foreach (var direction in Directions)
-        {
-            if (IsEnabled(direction))
-            {
-                float offset = 0;
-                SideOffset.TryGetValue(direction, out offset);
-                Sides[direction] = GetSide(_rect, direction, side, offset);
-            }
-        }
-    }
-
     public virtual Rect OnGUI(Rect _rect)
     {
         Reload(_rect);
@@ -190,99 +177,63 @@ public class ResizableArea
                         case UIDirection.Top:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaY = evt.delta.y;
-                                if (_rect.y + deltaY > _rect.y + _rect.height)
-                                    deltaY = 0;
-                                _rect.y += deltaY;
-                                _rect.height -= deltaY;
+                                _rect.y += evt.delta.y;
+                                _rect.height -= evt.delta.y;
                             }
                             break;
                         case UIDirection.Bottom:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaY = evt.delta.y;
-                                if (_rect.height + deltaY < minSize.y)
-                                    deltaY = 0;
-                                _rect.height += deltaY;
+                                _rect.height += evt.delta.y;
                             }
                             break;
                         case UIDirection.Left:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaX = evt.delta.x;
-                                if (_rect.x + deltaX > _rect.x + _rect.width)
-                                    deltaX = 0;
-                                _rect.x += deltaX;
-                                _rect.width -= deltaX;
+                                _rect.x += evt.delta.x;
+                                _rect.width -= evt.delta.x;
                             }
                             break;
                         case UIDirection.Right:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaX = evt.delta.x;
-                                if (_rect.width + deltaX < minSize.x)
-                                    deltaX = 0;
                                 _rect.width += evt.delta.x;
                             }
                             break;
                         case UIDirection.TopLeft:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaY = evt.delta.y;
-                                if (_rect.y + deltaY > _rect.y + _rect.height)
-                                    deltaY = 0;
-                                _rect.y += deltaY;
-                                _rect.height -= deltaY;
+                                _rect.y += evt.delta.y;
+                                _rect.height -= evt.delta.y;
 
-                                float deltaX = evt.delta.x;
-                                if (_rect.x + deltaX > _rect.x + _rect.width)
-                                    deltaX = 0;
-                                _rect.x += deltaX;
-                                _rect.width -= deltaX;
+                                _rect.x += evt.delta.x;
+                                _rect.width -= evt.delta.x;
                             }
                             break;
                         case UIDirection.TopRight:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaY = evt.delta.y;
-                                if (_rect.y + deltaY > _rect.y + _rect.height)
-                                    deltaY = 0;
-                                _rect.y += deltaY;
-                                _rect.height -= deltaY;
+                                _rect.y += evt.delta.y;
+                                _rect.height -= evt.delta.y;
 
-                                float deltaX = evt.delta.x;
-                                if (_rect.width + deltaX < minSize.x)
-                                    deltaX = 0;
-                                _rect.width += deltaX;
+                                _rect.width += evt.delta.x;
                             }
                             break;
                         case UIDirection.BottomLeft:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaY = evt.delta.y;
-                                if (_rect.height + deltaY < minSize.y)
-                                    deltaY = 0;
-                                _rect.height += deltaY;
+                                _rect.height += evt.delta.y;
 
-                                float deltaX = evt.delta.x;
-                                if (_rect.x + deltaX > _rect.x + _rect.width)
-                                    deltaX = 0;
-                                _rect.x += deltaX;
-                                _rect.width -= deltaX;
+                                _rect.x += evt.delta.x;
+                                _rect.width -= evt.delta.x;
                             }
                             break;
                         case UIDirection.BottomRight:
                             if (IsEnabled(sideDirection))
                             {
-                                float deltaY = evt.delta.y;
-                                if (_rect.height + deltaY < minSize.y)
-                                    deltaY = 0;
-                                _rect.height += deltaY;
+                                _rect.height += evt.delta.y;
 
-                                float deltaX = evt.delta.x;
-                                if (_rect.width + deltaX < minSize.x)
-                                    deltaX = 0;
-                                _rect.width += deltaX;
+                                _rect.width += evt.delta.x;
                             }
                             break;
                         case UIDirection.MiddleCenter:
@@ -297,6 +248,9 @@ public class ResizableArea
             default:
                 break;
         }
+
+        _rect.width = Mathf.Max(_rect.width, minSize.x);
+        _rect.height = Mathf.Max(_rect.height, minSize.y);
 
         if (maxSize != Vector2.zero)
         {
