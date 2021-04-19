@@ -76,7 +76,7 @@ namespace AllTrickOverView.Core.ExampleFactory
             ReplaceMap["$EXAMPLE_DESCRIPTION$"] = exampleTemplate.Description;
             ReplaceMap["$EXAMPLE_CATEGORY$"] = exampleTemplate.Category;
             ReplaceMap["$CODE$"] = exampleTemplate.Code;
-            ReplaceMap["$CODEPATH$"] = exampleTemplate.CodePath;
+            ReplaceMap["$CODE_PATH$"] = exampleTemplate.CodePath;
             ReplaceMap["$PIC_PATH$"] = exampleTemplate.PicPath;
             ReplaceMap["$VIDEO_PATH$"] = exampleTemplate.VideoPath;
             
