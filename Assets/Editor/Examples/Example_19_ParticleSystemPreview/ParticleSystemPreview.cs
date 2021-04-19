@@ -476,6 +476,7 @@ namespace ToolKits
 
         private void DestroyPreviewInstances()
         {
+            m_Loaded = false;
             if (m_PreviewInstance == null)
             {
                 return;

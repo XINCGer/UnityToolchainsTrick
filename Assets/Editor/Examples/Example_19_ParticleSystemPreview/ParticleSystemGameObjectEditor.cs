@@ -52,7 +52,11 @@ namespace ToolKits
         void OnDisable()
         {
             preview.OnDestroy();
-            //DestroyImmediate(baseEditor);
+            if (null != baseEditor)
+            {
+                DestroyImmediate(baseEditor);
+                baseEditor = null;
+            }
         }
 
         private bool HasParticleSystemPreview()
