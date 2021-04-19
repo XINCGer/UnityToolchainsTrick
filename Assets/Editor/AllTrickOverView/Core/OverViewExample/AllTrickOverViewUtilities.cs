@@ -58,7 +58,7 @@ namespace AllTrickOverView.Core
                     new OdinMenuItem(tree, trickOverViewInfo.Name, allTrickOverViewInfo.Key)
                     {
                         Value = allTrickOverViewInfo.Key,
-                        SearchString = trickOverViewInfo.Name
+                        SearchString = trickOverViewInfo.Name + trickOverViewInfo.Description
                     };
                 tree.AddMenuItemAtPath(trickOverViewInfo.Category, menuItem);
             }
