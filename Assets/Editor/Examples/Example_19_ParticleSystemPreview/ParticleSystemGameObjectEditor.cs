@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 
@@ -52,7 +53,7 @@ namespace ToolKits
         void OnDisable()
         {
             preview.OnDestroy();
-            if (null != baseEditor)
+            if (null != baseEditor&& IsPreviewCacheNotNull)
             {
                 DestroyImmediate(baseEditor);
                 baseEditor = null;
@@ -164,6 +165,22 @@ namespace ToolKits
             if (onSceneDragMi != null)
             {
                 onSceneDragMi.Invoke(baseEditor, new object[1] {sceneView});
+            }
+        }
+
+        private bool IsPreviewCacheNotNull
+        {
+            get
+            {
+                System.Type t = baseEditor.GetType();
+                var fieldInfo = t.GetField("m_PreviewCache", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (null != fieldInfo)
+                {
+                    var value = fieldInfo.GetValue(baseEditor);
+                    return null != value;
+                }
+
+                return false;
             }
         }
     }
