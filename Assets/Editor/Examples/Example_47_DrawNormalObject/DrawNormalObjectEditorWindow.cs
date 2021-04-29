@@ -2,51 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using CZToolKit.Core;
 using CZToolKit.Core.Editors;
 
 public class DrawNormalObjectEditorWindow : EditorWindow
 {
-	[MenuItem("Tools/DrawNormalObject")]
-	public static void Open()
-	{
-		GetWindow<DrawNormalObjectEditorWindow>();
-	}
-	
+    [MenuItem("Tools/DrawNormalObject")]
+    public static void Open()
+    {
+        GetWindow<DrawNormalObjectEditorWindow>();
+    }
     TestData data = new TestData();
-	void OnGUI()
-	{
+
+    void OnGUI()
+    {
         EditorGUILayoutExtension.DrawFields(data);
-	}
+    }
 }
 
 public class TestData
 {
-    public int i;
     public float f;
-    public string s;
-    public long l;
-    public Vector3 v3;
-    public Vector4 v4;
-    public GameObject gameObject;
-    public StructData s1;
-    public TestDataB internalB;
-    public List<TestDataB> bs;
+    [FloatRange(0, 1)]
+    public List<float> sliders;
 }
 
-public class TestDataB
+public class FloatRangeAttribute : ObjectDrawerAttribute
 {
-    public int i;
-    public float f;
-    public string s;
-    public long l;
-    public Vector3 v3;
-    public Vector4 v4;
-    public GameObject gameObject;
-    public StructData s1;
-
+    public float minLimit, maxLimit;
+    public FloatRangeAttribute(float _minLimit, float _maxLimit)
+    {
+        minLimit = _minLimit;
+        maxLimit = _maxLimit;
+    }
 }
 
-public struct StructData
+[CustomObjectDrawer(typeof(FloatRangeAttribute))]
+public class FloatRangeDrawer : ObjectDrawer
 {
-    public int i;
+    public override void OnGUI(GUIContent label)
+    {
+        FloatRangeAttribute rangeAttribute = attribute as FloatRangeAttribute;
+        value = EditorGUILayout.Slider(label, (float)value, rangeAttribute.minLimit, rangeAttribute.maxLimit);
+    }
 }
