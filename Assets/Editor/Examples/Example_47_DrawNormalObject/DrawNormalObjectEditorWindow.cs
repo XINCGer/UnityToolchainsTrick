@@ -16,7 +16,7 @@ public class DrawNormalObjectEditorWindow : EditorWindow
 
     void OnGUI()
     {
-        EditorGUILayoutExtension.DrawFields(data);
+        CZToolKit.Core.Editors.EditorGUILayoutExtension.DrawFields(data);
     }
 }
 
