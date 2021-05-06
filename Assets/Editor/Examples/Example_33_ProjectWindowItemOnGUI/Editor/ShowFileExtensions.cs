@@ -47,9 +47,18 @@ public static class ShowFileExtensions
                 else
                 {
                     // we overpaint the filename here, does look a bit dirty and might need adjustment of the offset
-                    var labelRect = rect.Translate(new Vector2(19.5f, 0f));
-                    var fileName = Path.GetFileName(assetPath);
-                    GUI.Label(labelRect, fileName);
+                    var font = GUI.skin.font;
+                    var fonSize = GUI.skin.label.fontSize;
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(assetPath);
+                    var width = 18.0f;
+                    foreach (var t in fileNameWithoutExtension)
+                    {
+                        font.GetCharacterInfo(t, out var characterInfo, fonSize);
+                        width += characterInfo.advance;
+                    }
+
+                    var labelRect = rect.Translate(new Vector2(width, -1.5f));
+                    GUI.Label(labelRect, Path.GetExtension(assetPath));
                 }
             }
 
