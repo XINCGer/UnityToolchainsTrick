@@ -16,7 +16,12 @@ public class DrawNormalObjectEditorWindow : EditorWindow
 
     void OnGUI()
     {
-        CZToolKit.Core.Editors.EditorGUILayoutExtension.DrawFields(data);
+        EditorGUILayoutExtension.DrawFields(data);
+
+        if (GUILayout.Button("绘制一个普通对象到Inspector"))
+        {
+            EditorGUILayoutExtension.DrawFieldsInInspector("Test", data);
+        }
     }
 }
 
@@ -37,12 +42,12 @@ public class FloatRangeAttribute : ObjectDrawerAttribute
     }
 }
 
-[CustomObjectDrawer(typeof(FloatRangeAttribute))]
-public class FloatRangeDrawer : ObjectDrawer
+[CustomFieldDrawer(typeof(FloatRangeAttribute))]
+public class FloatRangeDrawer : FieldDrawer
 {
     public override void OnGUI(GUIContent label)
     {
-        FloatRangeAttribute rangeAttribute = attribute as FloatRangeAttribute;
-        value = EditorGUILayout.Slider(label, (float)value, rangeAttribute.minLimit, rangeAttribute.maxLimit);
+        FloatRangeAttribute rangeAttribute = Attribute as FloatRangeAttribute;
+        Value = EditorGUILayout.Slider(label, (float)Value, rangeAttribute.minLimit, rangeAttribute.maxLimit);
     }
 }
