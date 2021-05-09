@@ -61,6 +61,7 @@
 ### [41.打开文件拓展](Assets/Editor/Examples/Example_41_OpenExtension)
 ### [42.BoundsHandle](Assets/Editor/Examples/Example_42_BoundsHandle)
 ### [43.MoreInspector](Assets/Editor/Examples/Example_43_MoreInspector)
+### [44.自动处理九宫格工具](https://github.com/kyubuns/Auto9Slicer)
 
 ## QQ技术交流群  
 群号：996526739  
