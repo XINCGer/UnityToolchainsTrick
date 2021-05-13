@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using CZToolKit.Core;
 using CZToolKit.Core.Editors;
+using ToolKits;
 
 public class DrawNormalObjectEditorWindow : EditorWindow
 {
@@ -18,7 +19,7 @@ public class DrawNormalObjectEditorWindow : EditorWindow
     {
         EditorGUILayoutExtension.DrawFields(data);
 
-        if (GUILayout.Button("绘制一个普通对象到Inspector"))
+        if (GUILayout.Button("缁樺埗涓�涓櫘閫氬璞″埌Inspector"))
         {
             EditorGUILayoutExtension.DrawFieldsInInspector("Test", data);
         }
