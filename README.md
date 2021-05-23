@@ -65,7 +65,8 @@
 ### [45.仿Odin的左侧树型菜单](Assets/Editor/Examples/Example_45_MenuEditorWindow)  
 ### [46.查找代码内的中文](Assets/Editor/Examples/Example_46_FindChinese)  
 ### [47.一行代码绘制普通对象的功能](Assets/Editor/Examples/Example_47_DrawNormalObject)  
-### [48.自动处理九宫格工具](https://github.com/kyubuns/Auto9Slicer)
+### [48.自动处理九宫格工具](https://github.com/kyubuns/Auto9Slicer)  
+### [49.利用友元访问内部api](Assets/Editor/Examples/Example_49_Friend)  
 
 ## QQ技术交流群  
 群号：996526739  
