@@ -67,6 +67,7 @@
 ### [47.一行代码绘制普通对象的功能](Assets/Editor/Examples/Example_47_DrawNormalObject)  
 ### [48.自动处理九宫格工具](https://github.com/kyubuns/Auto9Slicer)  
 ### [49.利用友元访问内部api](Assets/Editor/Examples/Example_49_Friend)  
+### [50.监听Unity编辑器聚焦/失焦](Assets/Editor/Examples/Example_50_UnityEditorFocus)
 
 ## QQ技术交流群  
 群号：996526739  
