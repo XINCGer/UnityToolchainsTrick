@@ -1,0 +1,6 @@
+﻿Shader 数量：3
+ShaderFile, VariantCount
+Assets/GameAssets/Shaders/NewImageEffectShader.shader,1
+Assets/GameAssets/Shaders/NewSurfaceShader 1.shader,55
+Assets/GameAssets/Shaders/NewUnlitShader.shader,1
+Shader Variant Total Amount: 57
