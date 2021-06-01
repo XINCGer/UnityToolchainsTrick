@@ -57,7 +57,7 @@ namespace AllTrickOverView.Core
             }
             catch (Exception exception)
             {
-                Debug.LogException(exception);
+                Debug.LogError($"条目{aExampleBase.GetTrickOverViewInfo().Name}的代码块高亮失败，原因是：{exception}");
                 this.highlightedCode = m_Example.GetTrickOverViewInfo().Code;
                 this.showRaw = true;
             }
