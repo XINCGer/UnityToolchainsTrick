@@ -51,6 +51,7 @@ namespace ToolKits
 
             graphics = GameObject.FindObjectsOfType<MaskableGraphic>();
 
+            EditorGUI.BeginChangeCheck();
             using (GUILayout.ScrollViewScope scrollViewScope = new GUILayout.ScrollViewScope(scrollPosition))
             {
                 scrollPosition = scrollViewScope.scrollPosition;
@@ -64,9 +65,12 @@ namespace ToolKits
                 }
             }
 
-            foreach (var item in graphics)
+            if (EditorGUI.EndChangeCheck())
             {
-                EditorUtility.SetDirty(item);
+                foreach (var item in graphics)
+                {
+                    EditorUtility.SetDirty(item);
+                }
             }
 
             Repaint();
