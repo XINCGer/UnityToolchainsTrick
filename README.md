@@ -70,7 +70,8 @@
 ### [50.监听Unity编辑器聚焦/失焦](Assets/Editor/Examples/Example_50_UnityEditorFocus)
 ### [51.射线检测](Assets/Editor/Examples/Example_51_RaycastTargetChecker)
 ### [52.反射信息缓存](Assets/Editor/Examples/Example_52_Utility_TypeCache_Attribute)
-### [53.自定义资产图标](Assets/Editor/Examples/Example_53_CustomAssetsIcon)
+### [53.自定义资产图标](Assets/Editor/Examples/Example_53_CustomAssetsIcon)  
+### [54.Unity 引用查找工具-ReferenceFinder](https://github.com/blueberryzzz/ReferenceFinder)  
 
 ## QQ技术交流群  
 群号：996526739  
