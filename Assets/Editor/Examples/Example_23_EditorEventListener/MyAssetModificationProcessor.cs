@@ -6,6 +6,11 @@ using UnityEditor;
 
 namespace ToolKits
 {
+
+    /// <summary>
+    /// AssetModificationProcessor
+    /// 官方文档：https://docs.unity3d.com/2019.4/Documentation/ScriptReference/AssetModificationProcessor.html
+    /// </summary>
     public class MyAssetModificationProcessor :UnityEditor.AssetModificationProcessor
     {
         // [InitializeOnLoadMethod]
