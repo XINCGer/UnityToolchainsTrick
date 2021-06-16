@@ -72,6 +72,7 @@
 ### [52.反射信息缓存](Assets/Editor/Examples/Example_52_Utility_TypeCache_Attribute)
 ### [53.自定义资产图标](Assets/Editor/Examples/Example_53_CustomAssetsIcon)  
 ### [54.Unity 引用查找工具-ReferenceFinder](https://github.com/blueberryzzz/ReferenceFinder)  
+### [55.在EditorWindow上调用Inspector的绘制](/Assets/Editor/Examples/Example_55_DrawInspectorOnEditWinow)  
 
 ## QQ技术交流群  
 群号：996526739  
