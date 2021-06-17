@@ -34,7 +34,7 @@ namespace CZToolKit.Examples
                 yield return null;
             }
         }
-
+        
         private void OnGUI()
         {
             easingType = (EasingType)EditorGUILayout.EnumPopup(easingType);
