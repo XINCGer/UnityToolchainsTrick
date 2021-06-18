@@ -8,6 +8,7 @@ namespace CZToolKit.Core.Editors
     public abstract class BasicEditor : Editor
     {
         Dictionary<string, UnityAction<SerializedProperty>> customDrawers;
+        CoroutineMachineController CoroutineMachineController = new CoroutineMachineController();
 
         protected virtual void OnEnable()
         {
@@ -21,35 +22,19 @@ namespace CZToolKit.Core.Editors
             EditorApplication.update -= Update;
         }
 
-        Stack<EditorCoroutine> coroutineStack = new Stack<EditorCoroutine>();
-
         protected virtual void Update()
         {
-            int count = coroutineStack.Count;
-            while (count-- > 0)
-            {
-                EditorCoroutine coroutine = coroutineStack.Pop();
-                if (!coroutine.IsRunning) continue;
-                ICondition condition = coroutine.Current as ICondition;
-                if (condition == null || condition.Result(coroutine))
-                {
-                    if (!coroutine.MoveNext())
-                        continue;
-                }
-                coroutineStack.Push(coroutine);
-            }
+            CoroutineMachineController.Update();
         }
 
         public EditorCoroutine StartCoroutine(IEnumerator _coroutine)
         {
-            EditorCoroutine coroutine = new EditorCoroutine(_coroutine);
-            coroutineStack.Push(coroutine);
-            return coroutine;
+            return CoroutineMachineController.StartCoroutine(_coroutine);
         }
 
         public void StopCoroutine(EditorCoroutine _coroutine)
         {
-            _coroutine.Stop();
+            CoroutineMachineController.StopCoroutine(_coroutine);
         }
 
         protected void RegisterDrawer(string propertyPath, UnityAction<SerializedProperty> drawer)
