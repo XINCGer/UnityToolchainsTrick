@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -55,46 +53,21 @@ namespace CZToolKit.Core.Editors
                 AssetDatabase.OpenAsset(MonoScript);
         }
 
-        Stack<EditorCoroutine> coroutineStack;
-        Stack<EditorCoroutine> CoroutineStack
-        {
-            get
-            {
-                if (coroutineStack == null)
-                    coroutineStack = new Stack<EditorCoroutine>();
-                return coroutineStack;
-            }
-        }
+        CoroutineMachineController CoroutineMachine = new CoroutineMachineController();
 
-        /// <summary> 实现了一个协程 </summary>
         protected virtual void Update()
         {
-            int count = CoroutineStack.Count;
-            while (count-- > 0)
-            {
-                EditorCoroutine coroutine = CoroutineStack.Pop();
-                if (!coroutine.IsRunning) continue;
-                ICondition condition = coroutine.Current as ICondition;
-                if (condition == null || condition.Result(coroutine))
-                {
-                    if (!coroutine.MoveNext())
-                        continue;
-                }
-                CoroutineStack.Push(coroutine);
-            }
+            CoroutineMachine.Update();
         }
-
 
         public EditorCoroutine StartCoroutine(IEnumerator _coroutine)
         {
-            EditorCoroutine coroutine = new EditorCoroutine(_coroutine);
-            CoroutineStack.Push(coroutine);
-            return coroutine;
+            return CoroutineMachine.StartCoroutine(_coroutine);
         }
 
         public void StopCoroutine(EditorCoroutine _coroutine)
         {
-            _coroutine.Stop();
+            CoroutineMachine.StopCoroutine(_coroutine);
         }
     }
 }

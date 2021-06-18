@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,10 +10,10 @@ namespace CZToolKit.Core.Editors
     }
 
     [InitializeOnLoad]
-    public class GlobalEditorCoroutine
+    public class GlobalEditorCoroutineMachine
     {
         #region Perference
-        static string Name = nameof(GlobalEditorCoroutine);
+        static string Name = nameof(GlobalEditorCoroutineMachine);
         static string key = "GlobalEditorCoroutine.Settings";
 
 #if UNITY_2019_1_OR_NEWER
@@ -39,7 +38,7 @@ namespace CZToolKit.Core.Editors
             if (EditorGUI.EndChangeCheck())
             {
                 EditorPrefs.SetString(key, JsonUtility.ToJson(Settings));
-                UpdateStatus(); 
+                UpdateStatus();
 
             }
         }
@@ -70,42 +69,26 @@ namespace CZToolKit.Core.Editors
                 EditorApplication.update -= Update;
         }
 
-        
-        static GlobalEditorCoroutine()
+        static CoroutineMachineController CoroutineMachine = new CoroutineMachineController();
+
+        static GlobalEditorCoroutineMachine()
         {
             UpdateStatus();
         }
 
-        static Stack<EditorCoroutine> coroutineStack = new Stack<EditorCoroutine>();
-
         static void Update()
         {
-            int count = coroutineStack.Count;
-            while (count-- > 0)
-            {
-                EditorCoroutine coroutine = coroutineStack.Pop();
-                if (!coroutine.IsRunning) continue;
-                ICondition condition = coroutine.Current as ICondition;
-                if (condition == null || condition.Result(coroutine))
-                {
-                    if (!coroutine.MoveNext())
-                        continue;
-                }
-                coroutineStack.Push(coroutine);
-            }
+            CoroutineMachine.Update();
         }
 
         public static EditorCoroutine StartCoroutine(IEnumerator _coroutine)
         {
-
-            EditorCoroutine coroutine = new EditorCoroutine(_coroutine);
-            coroutineStack.Push(coroutine);
-            return coroutine;
+            return CoroutineMachine.StartCoroutine(_coroutine);
         }
 
         public static void StopCoroutine(EditorCoroutine _coroutine)
         {
-            _coroutine.Stop();
+            CoroutineMachine.StopCoroutine(_coroutine);
         }
     }
 }
