@@ -69,7 +69,7 @@ namespace CZToolKit.Core
             out AttributeType _attribute)
             where AttributeType : Attribute
         {
-            return TryGetFieldInfoAttribute(Utility_Refelection.GetFieldInfo(_type, _fieldName), out _attribute);
+            return TryGetFieldInfoAttribute(Utility_Reflection.GetFieldInfo(_type, _fieldName), out _attribute);
         }
 
         /// <summary> 尝试获取目标类型的目标字段的所有特性 </summary>
@@ -126,7 +126,7 @@ namespace CZToolKit.Core
             out AttributeType _attribute)
             where AttributeType : Attribute
         {
-            return TryGetMethodInfoAttribute(Utility_Refelection.GetMethodInfo(_type, _methodName), out _attribute);
+            return TryGetMethodInfoAttribute(Utility_Reflection.GetMethodInfo(_type, _methodName), out _attribute);
         }
 
         /// <summary> 尝试获取目标类型的目标字段的所有特性 </summary>
@@ -158,7 +158,7 @@ namespace CZToolKit.Core
         public static bool TryGetMethodAttributes(Type _type, string _methodName,
             out Attribute[] _attributes)
         {
-            return TryGetMethodInfoAttributes(Utility_Refelection.GetMethodInfo(_type, _methodName), out _attributes);
+            return TryGetMethodInfoAttributes(Utility_Reflection.GetMethodInfo(_type, _methodName), out _attributes);
         }
         #endregion
     }

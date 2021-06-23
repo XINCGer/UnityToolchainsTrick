@@ -4,20 +4,20 @@ using System.Reflection;
 
 namespace CZToolKit.Core
 {
-
-    public static partial class Utility_Refelection
+    public static partial class Utility_Reflection
     {
         static readonly Dictionary<string, Assembly> AssemblyCache = new Dictionary<string, Assembly>();
         static readonly Dictionary<string, Type> FullNameTypeCache = new Dictionary<string, Type>();
         static readonly List<Type> AllTypeCache = new List<Type>();
         static readonly Dictionary<Type, IEnumerable<Type>> ChildrenTypeCache = new Dictionary<Type, IEnumerable<Type>>();
 
-        static Utility_Refelection()
+        static Utility_Reflection()
         {
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.FullName.StartsWith("Unity")) continue;
                 if (!assembly.FullName.Contains("Version=0.0.0")) continue;
+                AssemblyCache[assembly.FullName] = assembly;
                 AllTypeCache.AddRange(assembly.GetTypes());
             }
         }
@@ -134,21 +134,35 @@ namespace CZToolKit.Core
             }
         }
 
+        static Dictionary<Type, List<MethodInfo>> TypeMethodInfoCache = new Dictionary<Type, List<MethodInfo>>();
+
         /// <summary> 获取方法，包括基类的私有方法 </summary>
         public static MethodInfo GetMethodInfo(Type _type, string _methodName)
         {
-            // 如果第一次没有找到，那么这个变量可能是基类的私有字段
-            MethodInfo method = _type.GetMethod(_methodName,
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            // 只搜索基类的私有方法
-            while (method == null && (_type = _type.BaseType) != null)
-            {
-                method = _type.GetMethod(_methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            }
-
-            return method;
+            return GetMethodInfos(_type).Find(f => f.Name == _methodName);
         }
 
+        public static List<MethodInfo> GetMethodInfos(Type _type)
+        {
+            if (TypeMethodInfoCache.TryGetValue(_type, out List<MethodInfo> methodInfos))
+                return methodInfos;
+            TypeMethodInfoCache[_type] = methodInfos = new List<MethodInfo>(_type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            // 获取类包含的所有方法(包含私有)
+            while ((_type = _type.BaseType) != null)
+            {
+                methodInfos.InsertRange(0, _type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            }
+            return methodInfos;
+        }
+
+        public static IEnumerable<MethodInfo> GetMethodInfos(Type _type, Func<MethodInfo, bool> _patern)
+        {
+            foreach (var method in GetMethodInfos(_type))
+            {
+                if (_patern(method))
+                    yield return method;
+            }
+        }
         #endregion
     }
 }
