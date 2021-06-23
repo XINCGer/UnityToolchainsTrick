@@ -75,6 +75,7 @@
 ### [55.在EditorWindow上调用Inspector的绘制](/Assets/Editor/Examples/Example_55_DrawInspectorOnEditWinow)  
 ### [56.编辑器协程与动画实现](Assets/Editor/Examples/Example_56_EditorCoroutineAndAnimation)  
 ### [57.RX流式编程](/Assets/Scripts/Example_57_ReactiveX)    
+### [58.对话分析器](/Assets/Scripts/Example_58_ConversationResolver)    
 
 ## QQ技术交流群  
 群号：996526739  
