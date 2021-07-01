@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ToolKits
 {
-    [CreateAssetMenu(fileName = "ExampleAssets.asset", menuName = "CustomeAssets/ExampleAsstes")]
+    [CreateAssetMenu(fileName = "ExampleAssets.asset", menuName = "CustomAssets/ExampleAsstes")]
     public class ExampleScriptableObject : ScriptableObject
     {
         [Tooltip("姓名")] public string Name;

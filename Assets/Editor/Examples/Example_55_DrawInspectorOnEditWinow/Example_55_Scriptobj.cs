@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ToolKits
 {
-    [CreateAssetMenu(fileName = "Example_55_Scriptobj.asset", menuName = "CustomeAssets/Example_55_Scriptobj")]
+    [CreateAssetMenu(fileName = "Example_55_Scriptobj.asset", menuName = "CustomAssets/Example_55_Scriptobj")]
     public class Example_55_Scriptobj : ScriptableObject
     {
         public string Name;
