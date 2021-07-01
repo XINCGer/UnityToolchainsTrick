@@ -1,5 +1,7 @@
 # UnityToolchainsTrick
 提供一些UnityEditor工具链开发的常用小技巧与示例(Provides some common tips and examples for developing the UnityEditor toolchain)  
+本项目由[JetBranins](https://www.jetbrains.com/?from=Unity3DTraining)赞助相关开发工具  
+<a href="https://www.jetbrains.com/?from=Unity3DTraining"><img src="https://github.com/XINCGer/Unity3DTraining/blob/master/Doc/images/jetbrains.png" width = "150" height = "150" div align=center /></a>
 
 ## 视频教程  
 * [Unity编辑器开发常用小技巧(B站)](https://www.bilibili.com/video/BV1nh411U7iU)  
