@@ -78,7 +78,8 @@
 ### [56.编辑器协程与动画实现](Assets/Editor/Examples/Example_56_EditorCoroutineAndAnimation)  
 ### [57.RX流式编程](/Assets/Scripts/Example_57_ReactiveX)    
 ### [58.对话分析器](/Assets/Scripts/Example_58_ConversationResolver)    
-### [59.运行时Gizmos](https://github.com/popcron/gizmos)
+### [59.运行时Gizmos](https://github.com/popcron/gizmos)  
+### [60.HideScriptObjectName-Inspector上隐藏ScriptableObject的脚本名称](Assets/Editor/Examples/Example_60_HideScriptObjectName)  
 
 ## QQ技术交流群  
 群号：996526739  
