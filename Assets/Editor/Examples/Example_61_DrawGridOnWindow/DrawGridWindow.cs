@@ -13,6 +13,8 @@ namespace ToolKits
 
         private Color backgroundColor;
         private Color gridColor;
+        private Vector2 drag;
+        private Vector2 offset;
 
         [MenuItem("Tools/绘制网格的示例窗口", priority = 61)]
         private static void PopUp()
@@ -31,9 +33,11 @@ namespace ToolKits
 
         private void OnGUI()
         {
+            ProcessEvents(Event.current);
             DrawBackground();
             DrawGrid(10, 0.2f);
             DrawGrid(50, 0.4f);
+            if (GUI.changed) Repaint();
         }
 
         private void DrawBackground()
@@ -47,8 +51,6 @@ namespace ToolKits
             int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
             Handles.BeginGUI();
             Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
-            var drag = Vector2.one;
-            var offset = Vector2.one;
             offset += drag * 0.5f;
             Vector3 newOffset = new Vector3(offset.x % gridSpacing, offset.y % gridSpacing, 0);
             for (int i = 0; i < widthDivs; i++)
@@ -65,6 +67,27 @@ namespace ToolKits
 
             Handles.color = Color.white;
             Handles.EndGUI();
+        }
+
+        private void ProcessEvents(Event e)
+        {
+            drag = Vector2.zero;
+            switch (e.type)
+            {
+                case EventType.MouseDrag:
+                    if (e.button == 0)
+                    {
+                        OnDrag(e.delta);
+                    }
+
+                    break;
+            }
+        }
+
+        private void OnDrag(Vector2 delta)
+        {
+            drag = delta;
+            GUI.changed = true;
         }
     }
 }
