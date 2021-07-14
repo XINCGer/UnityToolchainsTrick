@@ -156,7 +156,8 @@ namespace CZToolKit.Core.Editors
         {
             base.RowGUI(args);
             CZMenuTreeViewItem item = args.item as CZMenuTreeViewItem;
-            item.itemDrawer?.Invoke(args.rowRect, item);
+			if(item != null)
+				item.itemDrawer?.Invoke(args.rowRect, item);
         }
     }
 
