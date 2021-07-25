@@ -10,6 +10,9 @@ namespace ToolKits
     {
         private static DrawGridWindow _window;
         private static Vector2 MIN_SIZE = new Vector2(400, 300);
+        private static float MIN_ZOOM = 0.4f;
+        private static float MAX_ZOOM = 7f;
+        private static float mGraphZoomScaler = 0.05f;
 
         private Color backgroundColor;
         private Color gridColor;
@@ -106,6 +109,9 @@ namespace ToolKits
                     }
 
                     break;
+                case EventType.ScrollWheel:
+                    OnMouseZoom();
+                    break;
             }
         }
 
@@ -118,6 +124,13 @@ namespace ToolKits
         {
             drag = delta;
             GUI.changed = true;
+        }
+
+        private void OnMouseZoom()
+        {
+            mGraphZoom += mGraphZoomScaler * Event.current.delta.y;
+            mGraphZoom = Mathf.Clamp(mGraphZoom, MIN_ZOOM, MAX_ZOOM);
+            Event.current.Use();
         }
 
         private void DrawGrid()
