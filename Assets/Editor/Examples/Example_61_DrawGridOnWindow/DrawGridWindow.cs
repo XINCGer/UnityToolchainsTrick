@@ -21,6 +21,8 @@ namespace ToolKits
         private float mGraphZoom = 1f;
         private Material mGridMaterial;
 
+        private bool isDrawWithHandleAPI = true;
+
         [MenuItem("Tools/绘制网格的示例窗口", priority = 61)]
         private static void PopUp()
         {
@@ -48,9 +50,18 @@ namespace ToolKits
             SetUpSize();
             ProcessEvents(Event.current);
             DrawBackground();
-            // DrawGrid(10, 0.2f);
-            // DrawGrid(50, 0.4f);
-            DrawGrid();
+            if (isDrawWithHandleAPI)
+            {
+                DrawGrid(10, 0.2f);
+                DrawGrid(50, 0.4f);
+            }
+            else
+            {
+                DrawGrid();
+            }
+
+            isDrawWithHandleAPI =
+                GUILayout.Toggle(isDrawWithHandleAPI, isDrawWithHandleAPI ? "使用GL API绘制" : "使用Handle API绘制");
             if (GUI.changed) Repaint();
         }
 
