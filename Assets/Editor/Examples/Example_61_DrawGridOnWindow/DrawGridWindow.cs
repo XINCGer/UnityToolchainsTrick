@@ -55,8 +55,8 @@ namespace ToolKits
             DrawBackground();
             if (isDrawWithHandleAPI)
             {
-                DrawGrid(10, 0.2f);
-                DrawGrid(50, 0.4f);
+                DrawGrid(10 * mGraphZoom, 0.2f);
+                DrawGrid(50 * mGraphZoom, 0.4f);
             }
             else
             {
@@ -137,14 +137,14 @@ namespace ToolKits
         {
             mGridMaterial.SetPass((!EditorGUIUtility.isProSkin) ? 1 : 0);
             GL.PushMatrix();
-            GL.Begin(1);
+            GL.Begin(GL.LINES);
             DrawGridLines(10f * mGraphZoom,
                 new Vector2(mGraphOffset.x % 10f * mGraphZoom, mGraphOffset.y % 10f * mGraphZoom));
             GL.End();
             GL.PopMatrix();
             mGridMaterial.SetPass((!EditorGUIUtility.isProSkin) ? 3 : 2);
             GL.PushMatrix();
-            GL.Begin(1);
+            GL.Begin(GL.LINES);
             DrawGridLines(50f * mGraphZoom,
                 new Vector2(mGraphOffset.x % 50f * mGraphZoom, mGraphOffset.y % 50f * mGraphZoom));
             GL.End();
