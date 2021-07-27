@@ -82,6 +82,7 @@
 ### [60.HideScriptObjectName-Inspector上隐藏ScriptableObject的脚本名称](Assets/Editor/Examples/Example_60_HideScriptObjectName)  
 ### [61.在EditorWindow上绘制Grid](Assets/Editor/Examples/Example_61_DrawGridOnWindow)  
 ### [62.ObjectPickerAdvanced](https://github.com/akof1314/ObjectPickerAdvanced)  
+### [63.Unity通用资源预览](Assets/Editor/Examples/Example_63_ObjectPreview)  
 
 ## QQ技术交流群  
 群号：996526739  
