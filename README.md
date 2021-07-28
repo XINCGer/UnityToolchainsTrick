@@ -83,6 +83,7 @@
 ### [61.在EditorWindow上绘制Grid](Assets/Editor/Examples/Example_61_DrawGridOnWindow)  
 ### [62.ObjectPickerAdvanced](https://github.com/akof1314/ObjectPickerAdvanced)  
 ### [63.Unity通用资源预览](Assets/Editor/Examples/Example_63_ObjectPreview)  
+### [64.创建一个接口拖拽资源的区域](Assets/Editor/Examples/Example_64_DragDropArea)  
 
 ## QQ技术交流群  
 群号：996526739  
