@@ -9,7 +9,7 @@ using UnityEngine;
 
 using Object = UnityEngine.Object;
 
-namespace ToolKits
+namespace CZToolKit.Core.Editors
 {
     public static partial class EditorGUILayoutExtension
     {
