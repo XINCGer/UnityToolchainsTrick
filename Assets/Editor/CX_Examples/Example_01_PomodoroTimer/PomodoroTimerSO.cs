@@ -31,7 +31,7 @@ namespace PomodoroTimer
         Start,
         Suspended,
         OverTime,
-        Finish
+        Completed
     }
 
     internal enum ItemPriority
@@ -52,6 +52,12 @@ namespace PomodoroTimer
         [SerializeField] private int _leftTime;
         [SerializeField] private ItemStatus _status;
         public ItemPriority Priority;
+        
+        public bool IsCompleted
+        {
+            get => _status == ItemStatus.Completed;
+            set { _status = value ? ItemStatus.Completed : ItemStatus.Ready; }
+        }
 
         public PomodoroItemData(string desc, int duration, ItemPriority priority)
         {

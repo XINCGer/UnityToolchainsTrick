@@ -62,7 +62,7 @@ namespace PomodoroTimer
                 if (i < count)
                     _items[i].ItemData = datas[i];
                 else
-                    _items.Add(new PomodoroItem {ItemData = datas[i]});
+                    _items.Add(new PomodoroItem { ItemData = datas[i] });
             }
         }
 
@@ -85,22 +85,68 @@ namespace PomodoroTimer
 
     internal class PomodoroItem
     {
-        public PomodoroItemData ItemData { get; set; }
+        private PomodoroItemData _itemData;
+
+        public PomodoroItemData ItemData
+        {
+            get => _itemData;
+            set
+            {
+                _itemData = value;
+                SetGUIStyle();
+            }
+        }
 
         public void Show()
         {
             if (ItemData == null) return;
-            GUILayout.Box(SetBackGround(ItemData.Priority)/*, "FrameBox"*/);
-            GUILayout.Label(ItemData.CreateTime);
+
+            using (new GUILayoutExt.BackgroundColorScope(SetBackGround(ItemData.Priority)))
+            {
+                using (new GUILayout.HorizontalScope("FrameBox"))
+                {
+                    using (new GUILayoutExt.BackgroundColorScope(Color.white))
+                    {
+                        bool isComplete = ItemData.IsCompleted;
+                        ItemData.IsCompleted =
+                            GUILayout.Toggle(isComplete, string.Empty, _toggleStyle, GUILayout.Width(15f));
+                    }
+
+                    GUILayoutExt.Label(new GUIContent(ItemData.Desc), stickShow: ItemData.IsCompleted);
+                    //ItemData.IsCompleted = GUILayout.Toggle();
+                    GUILayout.Label(ItemData.CreateTime, _timeStyle, GUILayout.Width(60f));
+                    GUILayout.Button("Start", GUILayout.MaxWidth(75f));
+                }
+            }
         }
 
-        private Texture2D SetBackGround(ItemPriority priority)
+        private GUIStyle _timeStyle;
+        private GUIStyle _toggleStyle;
+
+        private void SetGUIStyle()
+        {
+            _timeStyle = new GUIStyle
+            {
+                alignment = TextAnchor.MiddleRight,
+                contentOffset = new Vector2 { x = 0, y = 2 },
+                normal =
+                {
+                    textColor = Color.white
+                }
+            };
+
+            _toggleStyle = new GUIStyle("BoldToggle");
+            //_toggleStyle.normal.background = EditorGUIUtility.FindTexture("d_toggle_bg_focus@2x");
+            //_timeStyle.normal.scaledBackgrounds = new Texture2D[] { EditorGUIUtility.FindTexture("d_toggle_bg_focus@2x")};
+        }
+
+        private Color SetBackGround(ItemPriority priority)
         {
             return priority switch
             {
-                ItemPriority.High => Texture2D.redTexture,
-                ItemPriority.Normal => Texture2D.whiteTexture,
-                _ => Texture2D.linearGrayTexture
+                ItemPriority.High => Color.red,
+                ItemPriority.Normal => Color.white,
+                _ => Color.grey
             };
         }
     }
