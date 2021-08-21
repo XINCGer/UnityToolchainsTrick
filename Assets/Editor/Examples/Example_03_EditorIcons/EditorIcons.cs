@@ -215,24 +215,28 @@ namespace ToolKits
                     EditorGUILayout.HelpBox(s, MessageType.None);
                     GUILayout.Space(5);
                     EditorGUILayout.TextField("EditorGUIUtility.IconContent(\"" + iconSelected.tooltip + "\")");
-                    EditorGUILayout.TextField("EditorGUIUtility.FindTexture(\"" + iconSelected.tooltip + "\")");
+                    if (EditorGUIUtility.FindTexture(iconSelected.tooltip))
+                    {
+                        EditorGUILayout.TextField("EditorGUIUtility.FindTexture(\"" + iconSelected.tooltip + "\")");
+                    }
+
                     GUILayout.Space(5);
                     if (GUILayout.Button("Copy to clipboard", EditorStyles.miniButton))
                         EditorGUIUtility.systemCopyBuffer = iconSelected.tooltip;
-                    
+
                     if (GUILayout.Button("Export", GUILayout.Height(32)))
                     {
-                        var path = EditorUtility.SaveFolderPanel("Save Path", Application.dataPath,"");
+                        var path = EditorUtility.SaveFolderPanel("Save Path", Application.dataPath, "");
 
                         if (string.IsNullOrEmpty(path))
                         {
                             return;
                         }
-                        
+
                         path = Path.Combine(path, $"{iconSelected.tooltip}.png");
-                    
+
                         Texture2D icon = iconSelected.image as Texture2D;
-                    
+
                         if (icon)
                         {
                             var png = _toWritableAndRead(icon).EncodeToPNG();
@@ -251,10 +255,11 @@ namespace ToolKits
                 }
             }
         }
-        
+
         Texture2D _toWritableAndRead(Texture2D self)
         {
-            var renderTexture = new RenderTexture(self.width, self.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+            var renderTexture = new RenderTexture(self.width, self.height, 0, RenderTextureFormat.Default,
+                RenderTextureReadWrite.Linear);
             Graphics.Blit(self, renderTexture);
             Texture2D te = new Texture2D(self.width, self.height);
             te.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
