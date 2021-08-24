@@ -30,19 +30,19 @@ namespace PomodoroTimer
             }
         }
 
-        public static void Label(GUIContent guiContent, GUIStyle guiStyle = null, bool stickShow = false,
+        public static void Label(GUIContent guiContent, GUIStyle guiStyle = null, bool strikethrough = false,
             params GUILayoutOption[] options)
         {
             guiStyle ??= GUI.skin.label;
             var rect = GUILayoutUtility.GetRect(guiContent, guiStyle, options);
             GUI.Label(rect, guiContent, guiStyle);
-            if (stickShow)
+            if (strikethrough)
             {
                 Handles.BeginGUI();
                 Handles.color = Color.white;
                 var mid = rect.center.y;
-                Handles.DrawAAPolyLine(3, new Vector3 { x = rect.xMin, y = mid },
-                    new Vector3 { x = rect.xMax, y = mid });
+                Handles.DrawAAPolyLine(3, new Vector3 {x = rect.xMin, y = mid},
+                    new Vector3 {x = rect.xMax, y = mid});
                 Handles.EndGUI();
             }
         }
