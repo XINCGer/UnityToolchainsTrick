@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#define SLN
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -10,9 +12,10 @@ namespace ToolKits
     {
         public override void OnInspectorGUI()
         {
+#if SLN
             EditorGUI.BeginChangeCheck();
             serializedObject.Update();
-
+            
             SerializedProperty property = serializedObject.GetIterator();
             bool expanded = true;
             while (property.NextVisible(expanded))
@@ -22,9 +25,14 @@ namespace ToolKits
                     continue;
                 EditorGUILayout.PropertyField(property, true);
             }
-
+            
             serializedObject.ApplyModifiedProperties();
             EditorGUI.EndChangeCheck();
+#else
+            serializedObject.Update();
+            DrawPropertiesExcluding(serializedObject, "m_Script");
+            serializedObject.ApplyModifiedProperties();
+#endif
         }
 
         public virtual void ApplyChanges()
