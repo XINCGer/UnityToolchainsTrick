@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HideScriptObjectName
   m_EditorClassIdentifier: 
   Name: "\u5F20\u4E09"
-  Age: 29
+  Age: 11
   Readme: "\u9690\u85CFScriptableObject\u7684\u811A\u672C\u4FE1\u606F\u5C55\u793A"
