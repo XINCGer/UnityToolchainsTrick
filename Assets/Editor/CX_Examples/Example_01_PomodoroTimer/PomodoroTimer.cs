@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -49,8 +50,14 @@ namespace PomodoroTimer
             }
         }
 
+        private ActiveTimer _timer;
+
         private void OnGUI()
         {
+            if (_timer == null)
+                _timer = new ActiveTimer(_items[0].ItemData, Repaint);
+            _timer.Show();
+            return;
             if (GUILayout.Button("Create Item"))
             {
                 CreateOREditPopup.ShowWindow();
@@ -82,7 +89,7 @@ namespace PomodoroTimer
         public void Show()
         {
             if (ItemData == null) return;
-
+            
             using (new GUILayoutExt.BackgroundColorScope(SetBackGround(ItemData.Priority)))
             {
                 using (new GUILayout.VerticalScope("FrameBox"))
@@ -223,15 +230,27 @@ namespace PomodoroTimer
     internal class ActiveTimer
     {
         private PomodoroItemData _data;
+        private int count = 100;
 
-        public ActiveTimer(PomodoroItemData data)
+        public ActiveTimer(PomodoroItemData data,Action repaint)
         {
             _data = data;
+            Start(repaint);
+        }
+
+        private async void Start(Action repaint)
+        {
+            while (count > 0)
+            {
+                count--;
+                repaint?.Invoke();
+                await Task.Delay(1000);
+            }
         }
 
         public void Show()
         {
-            
+            GUILayout.Label($"{count}");
         }
     }
 }
