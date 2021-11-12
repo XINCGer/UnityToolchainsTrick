@@ -91,6 +91,7 @@
 ## CX_Example
 ### [2.进度条实现](Assets/Editor/CX_Examples/Example_02_ProgressBar)
 ### [3.mklink实现](Assets/Editor/CX_Examples/Example_03_Mklink)
+### [5.带背景的窗口实现](Assets/Editor/CX_Examples/Example_05_SetBackGround)
 ## QQ技术交流群  
 群号：996526739  
 <img src="https://github.com/XINCGer/UnityToolchainsTrick/blob/main/QQGroupQR.jpg" width="150" height="230" alt="加群二维码"/><br/>  
