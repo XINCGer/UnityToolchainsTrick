@@ -10,7 +10,7 @@ namespace CX_Examples.Example_04
         [SerializeField] private TreeViewState m_treeViewState;
         private FolderSelectView m_TreeView;
         
-        [MenuItem("CX_Tools/FolderSelect")]
+        [MenuItem("CX_Tools/FolderSelect", priority = 3)]
         private static void ShowWindow()
         {
             var window = GetWindow<FolderSelectWindow>();
