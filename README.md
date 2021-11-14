@@ -91,7 +91,9 @@
 ## CX_Example
 ### [2.进度条实现](Assets/Editor/CX_Examples/Example_02_ProgressBar)
 ### [3.mklink实现](Assets/Editor/CX_Examples/Example_03_Mklink)
+### [4.输出选择的文件夹](Assets/Editor/CX_Examples/Example_04_FolderSelectPanel)
 ### [5.带背景的窗口实现](Assets/Editor/CX_Examples/Example_05_SetBackGround)
+### [7.显示整体的网格的包围盒](Assets/Scripts/CX_Example/Example_07_ShowBoundingBox)
 ## QQ技术交流群  
 群号：996526739  
 <img src="https://github.com/XINCGer/UnityToolchainsTrick/blob/main/QQGroupQR.jpg" width="150" height="230" alt="加群二维码"/><br/>  
