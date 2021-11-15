@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Image name="PreviewImage" style="height: 250px; width: 400px; background-color: rgb(46, 45, 45); margin-top: 0; border-left-color: rgb(255, 227, 0); border-right-color: rgb(255, 227, 0); border-top-color: rgb(255, 227, 0); border-bottom-color: rgb(255, 227, 0); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; background-image: none; align-items: center; -unity-background-scale-mode: scale-and-crop; left: 10px;" />
+    <ui:Button text="Reset" display-tooltip-when-elided="true" name="ResetBtn" style="margin-top: 9px; -unity-font-style: bold; font-size: 15px;" />
+    <ui:Label text="Background Setting:" display-tooltip-when-elided="true" style="border-top-width: 2px; white-space: nowrap; -unity-text-align: middle-left; margin-bottom: 4px; font-size: 18px; -unity-font-style: bold-and-italic;" />
+    <uie:ColorField label="BaseColor" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="BgColorField" />
+    <uie:ObjectField label="BgTexture" name="BgTex" type="UnityEngine.Texture2D, UnityEngine.CoreModule" />
+    <uie:ObjectField label="Ground" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" name="GroundObj" />
+    <uie:FloatField label="GroundHeight" value="42.2" name="GroundHeight" />
+    <uie:FloatField label="GroundScale" value="42.2" name="GroundScale" />
+    <ui:Label text="Camera Setting:" display-tooltip-when-elided="true" style="font-size: 18px; -unity-font-style: bold-and-italic; border-top-width: 5px;" />
+    <uie:Vector3Field label="Center Offset" name="CenterOffSet" />
+    <uie:FloatField label="Distance" value="42.2" name="Distance" />
+    <uie:FloatField label="Pitch Angle" value="42.2" name="PitchAngle" />
+    <uie:FloatField label="Start Angle" value="42.2" name="StartAngle" />
+    <ui:Button text="Export" display-tooltip-when-elided="true" name="ExportBtn" style="top: 15px; font-size: 20px;" />
+</ui:UXML>

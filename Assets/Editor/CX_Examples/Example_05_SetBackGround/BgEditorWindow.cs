@@ -59,7 +59,7 @@ public class TestEditorWindow : BgEditorWindow
     private static void ShowWindow()
     {
         var window = GetWindow<TestEditorWindow>();
-        var texBg = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor/CX_Examples/Example_03_PrefabIconCreator/rennka.png");
+        var texBg = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor/CX_Examples/Example_05_SetBackGround/rennka.png");
         window.SetBgImage(texBg);
         window.ScaleMode = ScaleMode.ScaleToFit;
         window.Alpha = 0.3f;

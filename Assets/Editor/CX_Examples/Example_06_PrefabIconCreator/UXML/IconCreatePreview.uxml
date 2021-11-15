@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="PreviewArea" style="flex-direction: row; justify-content: center; margin-top: 10px;">
+        <ui:Image name="PreviewImage" style="height: 256px; width: 256px; background-color: rgb(46, 45, 45); margin-top: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; background-image: none;">
+            <ui:Button text="-" display-tooltip-when-elided="true" name="SubtractZoomBtn" style="margin-top: 8px; position: absolute; top: 52px; right: 2px; width: 20px; height: 40px;" />
+            <ui:Button text="+" display-tooltip-when-elided="true" name="AddZoomBtn" style="margin-top: 8px; position: absolute; top: 1px; right: 2px; width: 20px; height: 40px;" />
+        </ui:Image>
+    </ui:VisualElement>
+    <ui:Button text="Reset" display-tooltip-when-elided="true" name="ResetBtn" style="justify-content: flex-end; flex-direction: column; bottom: auto; position: relative; margin-bottom: 1px; margin-top: 12px; -unity-text-align: lower-center; white-space: nowrap;" />
+    <uie:ColorField label="BackGoundColor" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="BackGroundColor" style="position: relative; top: auto; height: 25px; opacity: 0.61; font-size: 17px; right: auto; width: 312px; margin-top: 13px;" />
+    <ui:Toggle label="是否需要背景" name="CutBgTog" style="margin-bottom: 13px;" />
+    <ui:Label text="粒子控制" display-tooltip-when-elided="true" />
+    <ui:VisualElement name="ParticleArea" style="flex-direction: row; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap;">
+        <ui:Button text="复位" display-tooltip-when-elided="true" name="ResetPBtn" style="width: 100px;" />
+        <ui:Button text="开始" display-tooltip-when-elided="true" name="StartPBtn" style="width: 100px;" />
+        <ui:Button text="暂停" display-tooltip-when-elided="true" name="StopPBtn" style="width: 100px; margin-bottom: 13px;" />
+        <ui:Slider picking-mode="Ignore" label="速度" value="1" high-value="2" name="Speed" style="width: 166px;" />
+    </ui:VisualElement>
+    <ui:Button text="Export" display-tooltip-when-elided="true" name="ExportBtn" style="position: relative; top: auto; height: 33px; opacity: 0.61; font-size: 17px; right: auto; width: 316px; margin-top: 40px;" />
+</ui:UXML>
