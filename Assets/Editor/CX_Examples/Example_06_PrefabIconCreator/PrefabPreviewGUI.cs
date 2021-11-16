@@ -111,7 +111,7 @@ namespace Example_06_PrefabIconCreator
                 _bgTexField.value = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
             
             var groundPath = AssetDatabase.GUIDToAssetPath(setting.GroundGuid);
-            if (string.IsNullOrEmpty(texPath))
+            if (string.IsNullOrEmpty(groundPath))
                 _groundField.value = null;
             else
                 _groundField.value = AssetDatabase.LoadAssetAtPath<GameObject>(groundPath);
