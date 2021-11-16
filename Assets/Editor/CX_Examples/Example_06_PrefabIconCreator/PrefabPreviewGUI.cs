@@ -4,26 +4,31 @@
 // Name: PrefabPreviewUIElement
 //---------------------------------------------------------------------------------------
 
+using System;
+using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
+using Object = UnityEngine.Object;
 
 namespace Example_06_PrefabIconCreator
 {
     public class PrefabPreviewGUI
     {
-        public static readonly Vector2 WindowSize = new Vector2 {x = 420, y = 570};
+        public static readonly Vector2 WindowSize = new Vector2 {x = 420, y = 600};
 
-        private const int width = 800;
-        private const float Aspect = 1.6f;
+        private const int Width = 800;
+        private const int Height = 500;
+        private const float Aspect = (float) Width / Height;
         private const int Iconwidth = 400;
-        private const int PageNum = 15;
+        private const int IconHeight = 250;
         
         public VisualElement PreviewElement { get; private set; }
         private PreviewSettingData _setting;
         private Camera _renderCam;
+        private GameObject _prefab;
         private GameObject _obj;
         private GameObject _groundObj;
         private GameObject _bgObj;
@@ -44,6 +49,7 @@ namespace Example_06_PrefabIconCreator
         private FloatField _pitchAngleField;
         private FloatField _startAngleField;
         private Button _exportBtn;
+        private IntegerField _shotsField;
         #endregion
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace Example_06_PrefabIconCreator
         /// </summary>
         /// <param name="Obj"></param>
         /// <param name="RenderCam"></param>
-        public PrefabPreviewGUI(GameObject obj, Camera renderCam, PreviewSettingData settingData = null)
+        public PrefabPreviewGUI(Object prefab, Camera renderCam)
         {
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/CX_Examples/Example_06_PrefabIconCreator/UXML/PreviewWindow.uxml");
             PreviewElement = visualTree.Instantiate();
@@ -75,18 +81,21 @@ namespace Example_06_PrefabIconCreator
             _pitchAngleField = PreviewElement.Q<FloatField>("PitchAngle");
             _startAngleField = PreviewElement.Q<FloatField>("StartAngle");
             _exportBtn = PreviewElement.Q<Button>("ExportBtn");
+            _shotsField = PreviewElement.Q<IntegerField>("Shots");
             #endregion
             
             //设置初始值
             _renderCam = renderCam;
-            _obj = obj;
+            _prefab = prefab as GameObject;
+            if(_prefab == null) return;
+            _obj = GameObject.Instantiate(_prefab, Vector3.one, Quaternion.identity);
             RegisterCallBack();
             ResetSetting();
         }
 
         private void ResetSetting()
         {
-            var setting = PrefabPreview.CreateDefaultPreviewSetting(_obj, _renderCam);
+            var setting = PrefabPreview.CreateDefaultPreviewSetting(_obj, _renderCam, Aspect);
             InputSetting(setting);
             _isDrity = true;
         }
@@ -113,6 +122,7 @@ namespace Example_06_PrefabIconCreator
             _distanceField.value = setting.Distance;
             _pitchAngleField.value = setting.PitchAngle;
             _startAngleField.value = setting.StartAngle;
+            _shotsField.value = setting.Shots;
         }
 
         private void RegisterCallBack()
@@ -132,7 +142,8 @@ namespace Example_06_PrefabIconCreator
             _groundHeight.RegisterValueChangedCallback(OnGroundHeightChange);
             _groundScale.RegisterValueChangedCallback(OnGroundScaleChange);
             _bgTexField.RegisterValueChangedCallback(OnBgTexChange);
-
+            _exportBtn.RegisterCallback<ClickEvent>(OnExport);
+            _shotsField.RegisterValueChangedCallback(OnShotsChange);
         }
 
         private bool _isMove;
@@ -203,7 +214,7 @@ namespace Example_06_PrefabIconCreator
             _isDrity = true;
             if(evn.newValue == null) return;
             var path = AssetDatabase.GetAssetPath(evn.newValue);
-            _setting.GroundGuid = AssetDatabase.GUIDFromAssetPath(path);
+            _setting.GroundGuid = AssetDatabase.GUIDFromAssetPath(path).ToString();
             var pos = _setting.Bounds.center;
             pos.y -= _setting.Bounds.extents.y + _setting.GroundHeight;
             _groundObj = Object.Instantiate(evn.newValue,pos, Quaternion.identity) as GameObject;
@@ -239,7 +250,7 @@ namespace Example_06_PrefabIconCreator
             }
             _bgObj.SetActive(true);
             var path = AssetDatabase.GetAssetPath(evn.newValue);
-            _setting.BgGuid = AssetDatabase.GUIDFromAssetPath(path);
+            _setting.BgGuid = AssetDatabase.GUIDFromAssetPath(path).ToString();
             var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             _bgMat.SetTexture("_MainTex", tex);
             _isDrity = true;
@@ -297,11 +308,68 @@ namespace Example_06_PrefabIconCreator
             ResetSetting();
         }
 
+        private void OnShotsChange(ChangeEvent<int> evn)
+        {
+            _setting.Shots = evn.newValue;
+        }
+
         public void RefreshPreview()
         {
-            if(!_isDrity) return;
-            _previewImg.image = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, width);
+            if(!_isDrity || _obj == null) return;
+            _previewImg.image = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, Width, Height);
             _isDrity = false;
+        }
+
+        /// <summary>
+        /// 输出一张Icon，一张连图和一个设置json
+        /// </summary>
+        /// <param name="evn"></param>
+        private void OnExport(ClickEvent evn)
+        {
+            if(_obj == null) return;
+            var floderPath = EditorUtility.OpenFolderPanel("Export", "Assets", string.Empty);
+            if(string.IsNullOrEmpty(floderPath)) return;
+            var iconTex = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, Iconwidth, IconHeight);
+            var ShotsTex = PrefabPreview.CreateShotsPreviewTexture(_renderCam, _setting, Width, Height);
+            var settingJson = JsonUtility.ToJson(_setting);
+            var savePath = floderPath + $"/{_prefab.name}";
+            if (!Directory.Exists(savePath))
+                Directory.CreateDirectory(savePath);
+            ExportToPng(iconTex, savePath + "/Icon.png");
+            var longTex = new Texture2D(Width * ShotsTex.Length, Height, TextureFormat.RGBA32, false);
+            for (int i = 0; i < ShotsTex.Length; i++)
+            {
+                var cols = ShotsTex[i].GetPixels();
+                longTex.SetPixels(i * Width, 0, Width, Height, cols);
+            }
+            longTex.Apply();
+            ExportToPng(longTex, savePath + "/feature1.png");
+            
+            var jsonPath = savePath +"/setting.json";
+            if (File.Exists(jsonPath))
+                File.Delete(jsonPath);
+            var fs = File.Create(jsonPath);
+            using (var sw = new StreamWriter(fs))
+            {
+                sw.WriteLine(settingJson);
+                sw.Flush();
+            }
+            fs.Close();
+            EditorUtility.RevealInFinder(savePath);
+        }
+
+        private void ExportToPng(Texture2D tex, string filePath)
+        {
+            byte[] bytes = tex.EncodeToPNG();
+            try
+            {
+                File.WriteAllBytes(filePath, bytes);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                Debug.LogError($"the prefab is Can't.path = {filePath}");
+            }
         }
 
         public void OnDestory()
@@ -310,6 +378,8 @@ namespace Example_06_PrefabIconCreator
                 Object.DestroyImmediate(_bgObj);
             if(_groundObj != null)
                 Object.DestroyImmediate(_groundObj);
+            if(_obj != null)
+                Object.DestroyImmediate(_obj);
         }
     }
 }

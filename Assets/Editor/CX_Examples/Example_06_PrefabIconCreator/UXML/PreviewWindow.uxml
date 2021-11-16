@@ -14,5 +14,6 @@
     <uie:FloatField label="Distance" value="42.2" name="Distance" />
     <uie:FloatField label="Pitch Angle" value="42.2" name="PitchAngle" />
     <uie:FloatField label="Start Angle" value="42.2" name="StartAngle" />
+    <uie:IntegerField label="SHOTS" value="42" name="Shots" />
     <ui:Button text="Export" display-tooltip-when-elided="true" name="ExportBtn" style="top: 15px; font-size: 20px;" />
 </ui:UXML>

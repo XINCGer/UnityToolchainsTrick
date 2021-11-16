@@ -40,9 +40,7 @@ namespace Example_06_PrefabIconCreator
                 return signedDistance;
             }
         }
-
-        private const float defaultAspect = 1.6f;
-
+        
         /// <summary>
         /// 计算包围盒
         /// </summary>
@@ -72,7 +70,7 @@ namespace Example_06_PrefabIconCreator
         /// <param name="bounds"></param>
         /// <param name="renderCam"></param>
         /// <returns></returns>
-        private static (float distance, float size) CalculateBestDistance(Bounds bounds, Camera renderCam)
+        private static (float distance, float size) CalculateBestDistance(Bounds bounds, Camera renderCam, float aspect)
         {
             //计算第一象限8个点的世界坐标
             var poss = new List<Vector3>();
@@ -112,7 +110,7 @@ namespace Example_06_PrefabIconCreator
                         maxY = localPoint.y;
                 }
 
-                return (bounds.extents.magnitude + 1f, Mathf.Max(maxY - minY, (maxX - minX) / defaultAspect) * 0.5f);
+                return (bounds.extents.magnitude + 1f, Mathf.Max(maxY - minY, (maxX - minX) / aspect) * 0.5f);
             }
             else
             {
@@ -126,7 +124,7 @@ namespace Example_06_PrefabIconCreator
                     float verticalDistance = projectionPlaneVertical.GetDistanceToPoint(poss[i]);
                     // Credit: https://docs.unity3d.com/Manual/FrustumSizeAtDistance.html
                     float distanceV = verticalDistance / Mathf.Tan(renderCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                    var hfieldOfView = Camera.VerticalToHorizontalFieldOfView(renderCam.fieldOfView, defaultAspect);
+                    var hfieldOfView = Camera.VerticalToHorizontalFieldOfView(renderCam.fieldOfView, aspect);
                     float distanceH = horizontalDistance / Mathf.Tan(hfieldOfView * 0.5f * Mathf.Deg2Rad);
                     var distance = Mathf.Max(distanceH,distanceV);
                     float distanceToCenter = (intersectionPoint - renderCam.transform.forward * distance - bounds.center).sqrMagnitude;
@@ -137,27 +135,40 @@ namespace Example_06_PrefabIconCreator
             }
         }
 
-        public static PreviewSettingData CreateDefaultPreviewSetting(GameObject obj, Camera renderCam)
+        public static PreviewSettingData CreateDefaultPreviewSetting(GameObject obj, Camera renderCam, float aspect)
         {
-            var setting = new PreviewSettingData();
+            var setting = PreviewSettingData.GetDefaultData();
             renderCam.transform.rotation = Quaternion.Euler(setting.PitchAngle, setting.StartAngle, 0);
             setting.Bounds = CalculateBounds(obj);
-            var (dis,size) = CalculateBestDistance(setting.Bounds, renderCam);
+            var (dis,size) = CalculateBestDistance(setting.Bounds, renderCam, aspect);
             setting.Distance = dis;
             return setting;
         }
 
-        public static Texture2D CreatePreviewTexture(Camera renderCam, PreviewSettingData setting, int width)
+        public static Texture2D CreatePreviewTexture(Camera renderCam, PreviewSettingData setting, int width, int height)
         {
             //经验参数
-            var offsetting = 1+ (defaultAspect <= 1 ? 0 : defaultAspect * 0.04f);
+            var aspect = (float) width / height;
+            var offsetting = 1+ (aspect <= 1 ? 0 : aspect * 0.04f);
             //相机设定
             renderCam.transform.rotation = Quaternion.Euler(setting.PitchAngle, setting.StartAngle, 0);
             var camPos = setting.Bounds.center + setting.CenterOffSet - offsetting *  setting.Distance * renderCam.transform.forward;
             renderCam.transform.position = camPos;
             renderCam.clearFlags = CameraClearFlags.SolidColor;
             renderCam.backgroundColor = setting.BgColor;
-            return CreateTextureFromCam(renderCam, width);
+            return CreateTextureFromCam(renderCam, width, height);
+        }
+
+        public static Texture2D[] CreateShotsPreviewTexture(Camera renderCam, PreviewSettingData setting, int width, int height)
+        {
+            var res = new Texture2D[setting.Shots];
+            var stepAngle = 360f / setting.Shots;
+            for (int i = 0; i < res.Length; i++)
+            {
+                res[i] = CreatePreviewTexture(renderCam, setting, width, height);
+                setting.StartAngle += stepAngle;
+            }
+            return res;
         }
 
         /// <summary>
@@ -166,12 +177,11 @@ namespace Example_06_PrefabIconCreator
         /// <param name="renderCam"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public static Texture2D CreateTextureFromCam(Camera renderCam, int width)
+        public static Texture2D CreateTextureFromCam(Camera renderCam, int width, int height)
         {
             //拍摄
             Texture2D result = null;
             RenderTexture temp = RenderTexture.active;
-            var height = (int) (width / defaultAspect);
             RenderTexture renderTex = new RenderTexture(width, height, 16)
             {
                 antiAliasing = 2

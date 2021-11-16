@@ -12,11 +12,11 @@ using UnityEngine.Serialization;
 namespace Example_06_PrefabIconCreator
 {
     [Serializable]
-    public class PreviewSettingData
+    public struct PreviewSettingData
     {
         public Color BgColor;
-        public GUID BgGuid; 
-        public GUID GroundGuid;
+        public string BgGuid; 
+        public string GroundGuid;
         public float GroundHeight;
         public float GroundScale;
 
@@ -25,13 +25,19 @@ namespace Example_06_PrefabIconCreator
         public float Distance;
         public float PitchAngle;
         public float StartAngle;
+        public int Shots;
 
-        public PreviewSettingData()
+        public static PreviewSettingData GetDefaultData()
         {
-            PitchAngle = 25;
-            StartAngle = 24;
-            BgColor = Color.grey;
-            GroundScale = 1;
+            return new PreviewSettingData
+            {
+                PitchAngle = 25,
+                StartAngle = 24,
+                BgColor = Color.grey,
+                GroundScale = 1,
+                Shots = 15
+            };
+            
         }
     }
 }

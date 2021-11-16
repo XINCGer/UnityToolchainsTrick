@@ -15,7 +15,6 @@ namespace Example_06_PrefabIconCreator
     public class PrefabPreviewWindow : EditorWindow
     {
         private static string _frontScenePath;
-        private GameObject _obj;
         private PrefabPreviewGUI _preview;
         [MenuItem("Assets/PrefabIconCreator")]
         private static void ShowWindow()
@@ -28,8 +27,7 @@ namespace Example_06_PrefabIconCreator
             var FrontScene = EditorSceneManager.GetActiveScene();
             _frontScenePath = FrontScene.path;
             EditorSceneManager.OpenScene("Assets/Editor/CX_Examples/Example_06_PrefabIconCreator/PreviePrefabScene.unity", OpenSceneMode.Single);
-            window._obj = Instantiate<GameObject>(select as GameObject, Vector3.zero, Quaternion.identity);
-            window._preview = new PrefabPreviewGUI(window._obj, Camera.main);
+            window._preview = new PrefabPreviewGUI(select, Camera.main);
             window.rootVisualElement.Add(window._preview.PreviewElement);
             window.maxSize = PrefabPreviewGUI.WindowSize;
             window.minSize = PrefabPreviewGUI.WindowSize;
@@ -39,8 +37,6 @@ namespace Example_06_PrefabIconCreator
         private void OnDestroy()
         {
             EditorSceneManager.OpenScene(_frontScenePath, OpenSceneMode.Single);
-            if (_obj != null)
-                DestroyImmediate(_obj);
             _preview.OnDestory();
         }
 
