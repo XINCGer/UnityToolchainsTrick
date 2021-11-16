@@ -65,6 +65,8 @@ public static class OpenExtension
                 throw new Exception(string.Format("Not support open folder on '{0}' platform.",
                     Application.platform.ToString()));
         }
+        //unity自带API
+        //EditorUtility.RevealInFinder(folder);
     }
 
     [MenuItem("Assets/Open Files/OpenExcel")]
