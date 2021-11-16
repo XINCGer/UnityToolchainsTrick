@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Button text="Reset" display-tooltip-when-elided="true" name="ResetBtn" style="margin-top: 9px; -unity-font-style: bold; font-size: 15px;" />
+    <ui:Label text="Background Setting:" display-tooltip-when-elided="true" style="border-top-width: 2px; white-space: nowrap; -unity-text-align: middle-left; margin-bottom: 4px; font-size: 18px; -unity-font-style: bold-and-italic;" />
+    <uie:ColorField label="BaseColor" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="BgColorField" />
+    <uie:ObjectField label="BgTexture" name="BgTex" type="UnityEngine.Texture2D, UnityEngine.CoreModule" />
+    <uie:ObjectField label="Ground" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" name="GroundObj" />
+    <uie:FloatField label="GroundHeight" value="42.2" name="GroundHeight" />
+    <uie:FloatField label="GroundScale" value="42.2" name="GroundScale" />
+    <ui:Label text="Camera Setting:" display-tooltip-when-elided="true" style="font-size: 18px; -unity-font-style: bold-and-italic; border-top-width: 5px;" />
+    <uie:FloatField label="Pitch Angle" value="42.2" name="PitchAngle" />
+    <uie:FloatField label="Start Angle" value="42.2" name="StartAngle" />
+    <uie:IntegerField label="SHOTS" value="42" name="Shots" />
+    <ui:Button text="ExportAll" display-tooltip-when-elided="true" name="ExportBtn" style="top: 15px; font-size: 20px;" />
+</ui:UXML>
