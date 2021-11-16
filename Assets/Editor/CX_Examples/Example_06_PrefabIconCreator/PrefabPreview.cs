@@ -137,14 +137,14 @@ namespace Example_06_PrefabIconCreator
             }
         }
 
-        public static (Texture2D, PreviewSettingData) CreatePreviewTexture(GameObject obj, Camera renderCam, int width)
+        public static PreviewSettingData CreateDefaultPreviewSetting(GameObject obj, Camera renderCam)
         {
             var setting = new PreviewSettingData();
             renderCam.transform.rotation = Quaternion.Euler(setting.PitchAngle, setting.StartAngle, 0);
             setting.Bounds = CalculateBounds(obj);
             var (dis,size) = CalculateBestDistance(setting.Bounds, renderCam);
             setting.Distance = dis;
-            return (CreatePreviewTexture(renderCam, setting, width), setting);
+            return setting;
         }
 
         public static Texture2D CreatePreviewTexture(Camera renderCam, PreviewSettingData setting, int width)
@@ -153,7 +153,7 @@ namespace Example_06_PrefabIconCreator
             var offsetting = 1+ (defaultAspect <= 1 ? 0 : defaultAspect * 0.04f);
             //相机设定
             renderCam.transform.rotation = Quaternion.Euler(setting.PitchAngle, setting.StartAngle, 0);
-            var camPos = setting.Bounds.center - offsetting *  setting.Distance * renderCam.transform.forward;
+            var camPos = setting.Bounds.center + setting.CenterOffSet - offsetting *  setting.Distance * renderCam.transform.forward;
             renderCam.transform.position = camPos;
             renderCam.clearFlags = CameraClearFlags.SolidColor;
             renderCam.backgroundColor = setting.BgColor;

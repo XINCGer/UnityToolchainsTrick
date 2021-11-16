@@ -31,6 +31,7 @@ namespace Example_06_PrefabIconCreator
             PitchAngle = 25;
             StartAngle = 24;
             BgColor = Color.grey;
+            GroundScale = 1;
         }
     }
 }
