@@ -87,6 +87,7 @@
 ### [65.绘制一个滚动显示List的区域](Assets/Editor/Examples/Example_65_ScrollList)  
 ### [66.编辑器下的多语言实现](/Assets/Editor/Examples/Example_66_LocalizationInEditorMode)  
 ### [68.TreeviewExamples官方案例](Assets/Editor/Examples/Example_68_TreeViewExamples)  
+### [69.TitleContent](./Assets/Editor/Examples/Example_69_TitleContent)  
 
 ## QQ技术交流群  
 群号：996526739  
