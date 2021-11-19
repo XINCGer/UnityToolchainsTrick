@@ -108,16 +108,22 @@ namespace Example_06_PrefabIconCreator
             if (string.IsNullOrEmpty(texPath))
                 _bgTexField.value = null;
             else
+            {
                 _bgTexField.value = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
-            
+                SetBgTex(_bgTexField.value as Texture2D);
+            }
+
+            _groundHeight.value = setting.GroundHeight;
+            _groundScale.value = setting.GroundScale;
             var groundPath = AssetDatabase.GUIDToAssetPath(setting.GroundGuid);
             if (string.IsNullOrEmpty(groundPath))
                 _groundField.value = null;
             else
+            {
                 _groundField.value = AssetDatabase.LoadAssetAtPath<GameObject>(groundPath);
-
-            _groundHeight.value = setting.GroundHeight;
-            _groundScale.value = setting.GroundScale;
+                SetGroundObj(_groundField.value as GameObject);
+            }
+            
             _centerOffsetField.value = setting.CenterOffSet;
             _distanceField.value = setting.Distance;
             _pitchAngleField.value = setting.PitchAngle;
@@ -209,21 +215,31 @@ namespace Example_06_PrefabIconCreator
 
         private void OnGroundObjChange(ChangeEvent<Object> evn)
         {
+            SetGroundObj(evn.newValue as GameObject);
+        }
+
+        private void SetGroundObj(GameObject obj)
+        {
             if(_groundObj != null)
                 Object.DestroyImmediate(_groundObj);
             _isDrity = true;
-            if(evn.newValue == null) return;
-            var path = AssetDatabase.GetAssetPath(evn.newValue);
+            if(obj == null) return;
+            var path = AssetDatabase.GetAssetPath(obj);
             _setting.GroundGuid = AssetDatabase.GUIDFromAssetPath(path).ToString();
             var pos = _setting.Bounds.center;
             pos.y -= _setting.Bounds.extents.y + _setting.GroundHeight;
-            _groundObj = Object.Instantiate(evn.newValue,pos, Quaternion.identity) as GameObject;
+            _groundObj = Object.Instantiate(obj,pos, Quaternion.identity);
             _groundObj.transform.localScale = Vector3.one * _groundScale.value;
         }
 
         private void OnBgTexChange(ChangeEvent<Object> evn)
         {
-            if (evn.newValue == null)
+            SetBgTex(evn.newValue as Texture2D);
+        }
+
+        private void SetBgTex(Texture2D bgTex)
+        {
+            if (bgTex == null)
             {
                 if (_bgObj != null)
                 {
@@ -249,10 +265,9 @@ namespace Example_06_PrefabIconCreator
                 _bgObj.transform.localScale = scale;
             }
             _bgObj.SetActive(true);
-            var path = AssetDatabase.GetAssetPath(evn.newValue);
+            var path = AssetDatabase.GetAssetPath(bgTex);
             _setting.BgGuid = AssetDatabase.GUIDFromAssetPath(path).ToString();
-            var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            _bgMat.SetTexture("_MainTex", tex);
+            _bgMat.SetTexture("_MainTex", bgTex);
             _isDrity = true;
         }
 
