@@ -54,11 +54,20 @@ namespace Example_06_PrefabIconCreator
                 return res;
             }
 
+            bool isNew = true;
             for (int i = 0; i < renderList.Length; i++)
             {
                 if (!renderList[i].enabled)
                     continue;
-                res.Encapsulate(renderList[i].bounds);
+                if (isNew)
+                {
+                    res = renderList[i].bounds;
+                    isNew = false;
+                }
+                else
+                {
+                    res.Encapsulate(renderList[i].bounds);
+                }
             }
 
             return res;

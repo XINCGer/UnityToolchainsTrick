@@ -21,10 +21,16 @@ namespace Example_07_ShowBoundingBox
             var renderList = obj.GetComponentsInChildren<Renderer>();
             if (renderList == null || renderList.Length <= 0)
                 return res;
+            bool isNew = true;
             for (int i = 0; i < renderList.Length; i++)
             {
                 if (!renderList[i].enabled)
                     continue;
+                if (isNew)
+                {
+                    res = renderList[i].bounds;
+                    isNew = false;
+                }
                 res.Encapsulate(renderList[i].bounds);
             }
     
