@@ -32,7 +32,7 @@ namespace Example_06_PrefabIconCreator
             return new PreviewSettingData
             {
                 PitchAngle = 25,
-                StartAngle = 24,
+                StartAngle = -114,
                 BgColor = Color.grey,
                 GroundScale = 1,
                 Shots = 15

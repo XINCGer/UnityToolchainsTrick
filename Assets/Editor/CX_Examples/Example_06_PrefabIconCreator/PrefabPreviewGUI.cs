@@ -351,14 +351,18 @@ namespace Example_06_PrefabIconCreator
             if (!Directory.Exists(savePath))
                 Directory.CreateDirectory(savePath);
             ExportToPng(iconTex, savePath + "/Icon.png");
-            var longTex = new Texture2D(Width * ShotsTex.Length, Height, TextureFormat.RGBA32, false);
+            // var longTex = new Texture2D(Width * ShotsTex.Length, Height, TextureFormat.RGBA32, false);
+            // for (int i = 0; i < ShotsTex.Length; i++)
+            // {
+            //     var cols = ShotsTex[i].GetPixels();
+            //     longTex.SetPixels(i * Width, 0, Width, Height, cols);
+            // }
+            // longTex.Apply();
+            // ExportToPng(longTex, savePath + "/feature1.png");
             for (int i = 0; i < ShotsTex.Length; i++)
             {
-                var cols = ShotsTex[i].GetPixels();
-                longTex.SetPixels(i * Width, 0, Width, Height, cols);
+                ExportToPng(ShotsTex[i], savePath + $"/feature{i}.png");
             }
-            longTex.Apply();
-            ExportToPng(longTex, savePath + "/feature1.png");
             
             var jsonPath = savePath +"/setting.json";
             if (File.Exists(jsonPath))
