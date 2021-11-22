@@ -19,12 +19,6 @@ namespace Example_06_PrefabIconCreator
     {
         public static readonly Vector2 WindowSize = new Vector2 {x = 420, y = 600};
 
-        private const int Width = 800;
-        private const int Height = 500;
-        private const float Aspect = (float) Width / Height;
-        private const int Iconwidth = 400;
-        private const int IconHeight = 250;
-        
         public VisualElement PreviewElement { get; private set; }
         private PreviewSettingData _setting;
         private Camera _renderCam;
@@ -95,12 +89,12 @@ namespace Example_06_PrefabIconCreator
 
         private void ResetSetting()
         {
-            var setting = PrefabPreview.CreateDefaultPreviewSetting(_obj, _renderCam, Aspect);
+            var setting = PrefabPreview.CreateDefaultPreviewSetting(_obj, _renderCam, _setting.Aspect);
             InputSetting(setting);
             _isDrity = true;
         }
         
-        private void InputSetting(PreviewSettingData setting)
+        public void InputSetting(PreviewSettingData setting)
         {
             _setting = setting;
             _bgColorField.value = setting.BgColor;
@@ -260,7 +254,7 @@ namespace Example_06_PrefabIconCreator
                 _bgObj.GetComponent<MeshRenderer>().sharedMaterial = _bgMat;
                 var height = 2 * _renderCam.farClipPlane * Mathf.Tan(_renderCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
                 var scale = _bgObj.transform.localScale;
-                scale.x *= height * Aspect;
+                scale.x *= height * _setting.Aspect;
                 scale.y *= height;
                 _bgObj.transform.localScale = scale;
             }
@@ -331,7 +325,7 @@ namespace Example_06_PrefabIconCreator
         public void RefreshPreview()
         {
             if(!_isDrity || _obj == null) return;
-            _previewImg.image = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, Width, Height);
+            _previewImg.image = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, _setting.Width, _setting.Height);
             _isDrity = false;
         }
 
@@ -344,8 +338,8 @@ namespace Example_06_PrefabIconCreator
             if(_obj == null) return;
             var floderPath = EditorUtility.OpenFolderPanel("Export", "Assets", string.Empty);
             if(string.IsNullOrEmpty(floderPath)) return;
-            var iconTex = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, Iconwidth, IconHeight);
-            var ShotsTex = PrefabPreview.CreateShotsPreviewTexture(_renderCam, _setting, Width, Height);
+            var iconTex = PrefabPreview.CreatePreviewTexture(_renderCam, _setting, _setting.IconWidth, _setting.IconHeight);
+            var ShotsTex = PrefabPreview.CreateShotsPreviewTexture(_renderCam, _setting, _setting.Width, _setting.Height);
             var settingJson = JsonUtility.ToJson(_setting);
             var savePath = floderPath + $"/{_prefab.name}";
             if (!Directory.Exists(savePath))

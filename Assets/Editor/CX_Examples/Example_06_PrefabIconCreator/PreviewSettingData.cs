@@ -15,7 +15,7 @@ namespace Example_06_PrefabIconCreator
     public struct PreviewSettingData
     {
         public Color BgColor;
-        public string BgGuid; 
+        public string BgGuid;
         public string GroundGuid;
         public float GroundHeight;
         public float GroundScale;
@@ -26,6 +26,11 @@ namespace Example_06_PrefabIconCreator
         public float PitchAngle;
         public float StartAngle;
         public int Shots;
+        public int Width;
+        public int Height;
+        public int IconWidth;
+        public int IconHeight;
+        public float Aspect => (float) Width / Height;
 
         public static PreviewSettingData GetDefaultData()
         {
@@ -35,9 +40,12 @@ namespace Example_06_PrefabIconCreator
                 StartAngle = -114,
                 BgColor = Color.grey,
                 GroundScale = 1,
-                Shots = 15
+                Shots = 15,
+                Width = 800,
+                Height = 500,
+                IconWidth = 400,
+                IconHeight = 250,
             };
-            
         }
     }
 }

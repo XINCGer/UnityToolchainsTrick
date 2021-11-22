@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -43,6 +44,19 @@ namespace Example_06_PrefabIconCreator
         private void OnGUI()
         {
             _preview.RefreshPreview();
+        }
+        
+        private void ShowButton(Rect rect)
+        {
+            if (UnityEngine.GUI.Button(rect, EditorGUIUtility.IconContent("d_Toolbar Plus More@2x")))
+            {
+                var path = EditorUtility.OpenFilePanel("Import Json", "Assets", "json");
+                if (string.IsNullOrEmpty(path)) return;
+                var json = File.ReadAllText(path);
+                var settingData = JsonUtility.FromJson(json, typeof(PreviewSettingData));
+                if (settingData == null) return;
+                _preview.InputSetting((PreviewSettingData) settingData);
+            }
         }
     }
 }
