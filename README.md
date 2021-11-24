@@ -94,7 +94,11 @@
 ### [4.输出选择的文件夹](Assets/Editor/CX_Examples/Example_04_FolderSelectPanel)
 ### [5.带背景的窗口实现](Assets/Editor/CX_Examples/Example_05_SetBackGround)
 ### [6.制作预览图标实现](Assets/Editor/CX_Examples/Example_06_PrefabIconCreator)
-### [7.显示整体的网格的包围盒](Assets/Scripts/CX_Example/Example_07_ShowBoundingBox)
+### [7.复制到剪贴板API演示](Assets/Editor/CX_Examples/Example_07_CopyIntoClipBoard)
+### [8.在场景里显示GameObject的名字](Assets/Editor/CX_Examples/Example_08_DrawInScene)
+### [9.显示整体的网格的包围盒](Assets/Editor/CX_Examples/Example_09_ShowBoundsBox)
+### [10.监听组件增加和删除](Assets/Editor/CX_Examples/Example_10_ListenAddMoveComponent)
+### [11.继承Unity内置组件的Editor](Assets/Editor/CX_Examples/Example_11_InheritDefaultEditor)
 
 ## UIELement_example
 ### [1.回调事件测试](Assets/Editor/UIElement_Examples/Example_01_CallBack)
