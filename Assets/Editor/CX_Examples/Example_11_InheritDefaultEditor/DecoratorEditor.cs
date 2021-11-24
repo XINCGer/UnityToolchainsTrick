@@ -56,7 +56,7 @@ public abstract class DecoratorEditor : Editor
 	{
 		this.decoratedEditorType = editorAssembly.GetTypes().Where(t => t.Name == editorTypeName).FirstOrDefault();
 		
-		Init ();
+		Init();
 		
 		// Check CustomEditor types.
 		var originalEditedType = GetCustomEditorType(decoratedEditorType);
@@ -87,6 +87,8 @@ public abstract class DecoratorEditor : Editor
 		var field = attributes.Select(editor => editor.GetType().GetField("m_InspectedType", flags)).First();
 		
 		editedObjectType = field.GetValue(attributes[0]) as System.Type;
+		_tryGetOnSceneGUI = false;
+		_tryGetOnHeaderGUI = false;
 	}
  
 	void OnDisable()
@@ -117,7 +119,7 @@ public abstract class DecoratorEditor : Editor
 			}
 			else
 			{
-				Debug.LogError(string.Format("Could not find method {0}", method));
+				Debug.LogWarning(string.Format("Could not find method {0}", method));
 			}
 		}
 		else
@@ -130,15 +132,27 @@ public abstract class DecoratorEditor : Editor
 			method.Invoke(EditorInstance, EMPTY_ARRAY);
 		}
 	}
- 
+
+	private bool _tryGetOnSceneGUI;
 	public void OnSceneGUI()
 	{
-		CallInspectorMethod("OnSceneGUI");
+		if (!_tryGetOnSceneGUI)
+		{
+			CallInspectorMethod("OnSceneGUI");
+			_tryGetOnSceneGUI = true;
+		}
+
 	}
  
+	private bool _tryGetOnHeaderGUI;
 	protected override void OnHeaderGUI ()
 	{
-		CallInspectorMethod("OnHeaderGUI");
+		if (!_tryGetOnHeaderGUI)
+		{
+			CallInspectorMethod("OnHeaderGUI");
+			_tryGetOnHeaderGUI = true;
+		}
+		
 	}
 	
 	public override void OnInspectorGUI ()
