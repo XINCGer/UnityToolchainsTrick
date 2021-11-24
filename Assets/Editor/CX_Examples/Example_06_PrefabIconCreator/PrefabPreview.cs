@@ -128,19 +128,19 @@ namespace Example_06_PrefabIconCreator
                 var maxDistance = Mathf.NegativeInfinity;
                 for (int i = 0; i < poss.Count; i++)
                 {
-                    Vector3 intersectionPoint = projectionPlaneHorizontal.ClosestPointOnPlane(poss[i]);
+                    //Vector3 intersectionPoint = projectionPlaneHorizontal.ClosestPointOnPlane(poss[i]);
                     float horizontalDistance = projectionPlaneHorizontal.GetDistanceToPoint(poss[i]);
                     float verticalDistance = projectionPlaneVertical.GetDistanceToPoint(poss[i]);
                     // Credit: https://docs.unity3d.com/Manual/FrustumSizeAtDistance.html
-                    float distanceV = verticalDistance / Mathf.Tan(renderCam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                    var hfieldOfView = Camera.VerticalToHorizontalFieldOfView(renderCam.fieldOfView, aspect);
-                    float distanceH = horizontalDistance / Mathf.Tan(hfieldOfView * 0.5f * Mathf.Deg2Rad);
+                    float distanceV = verticalDistance / Mathf.Tan(renderCam.fieldOfView * 0.5f * Mathf.Deg2Rad) + horizontalDistance;
+                    //var hfieldOfView = Camera.VerticalToHorizontalFieldOfView(renderCam.fieldOfView, aspect);
+                    float distanceH = horizontalDistance / Mathf.Tan(renderCam.fieldOfView * 0.5f * Mathf.Deg2Rad) + verticalDistance;
                     var distance = Mathf.Max(distanceH,distanceV);
-                    float distanceToCenter = (intersectionPoint - renderCam.transform.forward * distance - bounds.center).sqrMagnitude;
-                    if (distanceToCenter > maxDistance)
-                        maxDistance = distanceToCenter;
+                    //float distanceToCenter = (intersectionPoint - renderCam.transform.forward * distance - bounds.center).sqrMagnitude;
+                    if (distance > maxDistance)
+                        maxDistance = distance;
                 }
-                return (Mathf.Sqrt(maxDistance), 0f);
+                return (maxDistance, 0f);
             }
         }
 
@@ -157,11 +157,11 @@ namespace Example_06_PrefabIconCreator
         public static Texture2D CreatePreviewTexture(Camera renderCam, PreviewSettingData setting, int width, int height)
         {
             //经验参数
-            var aspect = (float) width / height;
-            var offsetting = 1+ (aspect <= 1 ? 0 : aspect * 0.04f);
+            //var aspect = (float) width / height;
+            //var offsetting = 1+ (aspect <= 1 ? 0 : aspect * 0.04f);
             //相机设定
             renderCam.transform.rotation = Quaternion.Euler(setting.PitchAngle, setting.StartAngle, 0);
-            var camPos = setting.Bounds.center + setting.CenterOffSet - offsetting *  setting.Distance * renderCam.transform.forward;
+            var camPos = setting.Bounds.center + setting.CenterOffSet - setting.Distance * renderCam.transform.forward;
             renderCam.transform.position = camPos;
             renderCam.clearFlags = CameraClearFlags.SolidColor;
             renderCam.backgroundColor = setting.BgColor;
