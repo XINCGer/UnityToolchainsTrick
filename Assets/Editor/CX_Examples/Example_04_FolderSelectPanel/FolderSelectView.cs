@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -145,6 +146,24 @@ namespace CX_Examples.Example_04
             }
             // Text
             base.RowGUI(args);
+        }
+
+        protected override void SelectionChanged(IList<int> selectedIds)
+        {
+            base.SelectionChanged(selectedIds);
+            var folderDatas = selectedIds.Select(val => GetFolderData(val));
+            foreach (var data in folderDatas)
+            {
+                var root = Path.GetDirectoryName(Application.dataPath);
+                var path = data.FullPath.Replace(root + '\\', string.Empty);
+                var go = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+                if (go != null)
+                {
+                    Selection.activeObject = go;
+                    break;
+                }
+            }
+
         }
 
         private void SetSelectFolder(FolderData data, bool isSelected)
