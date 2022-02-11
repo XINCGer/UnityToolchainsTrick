@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Example_08_ReorderableList
+namespace Example_12_ReorderableList
 {
     public class ReorderableListWindow : EditorWindow
     {
@@ -37,7 +37,7 @@ namespace Example_08_ReorderableList
             if (_reorderableList == null)
                 _reorderableList = new ReorderableList(TestList, typeof(TestItem));
             //是否能改变顺序
-            _reorderableList.draggable = true;
+            _reorderableList.draggable = false;
             //title
             _reorderableList.drawHeaderCallback = rect => GUI.Label(rect, "标题");
             //设定整个列表元素的高度
