@@ -8,7 +8,7 @@ namespace Example_12_ReorderableList
 {
     public class ReorderableListWindow : EditorWindow
     {
-        [MenuItem("CX_Tools/ReorderableList")]
+        [MenuItem("CX_Tools/ReorderableList", priority = 5)]
         private static void ShowWindow()
         {
             var window = GetWindow<ReorderableListWindow>();
