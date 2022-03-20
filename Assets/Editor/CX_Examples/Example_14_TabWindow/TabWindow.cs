@@ -19,6 +19,7 @@ namespace Example_12_TabWindow
 
         private List<DataSetting> _originDatas;
         private Dictionary<string, List<DataSetting>> _fullDataDict;
+        private List<string> _tabNameList;
         private string _activeTabName;
         private TabBar _tabBar;
 
@@ -40,7 +41,9 @@ namespace Example_12_TabWindow
             {
                 new DataSetting{Name = "AA", TabName = null},
                 new DataSetting{Name = "BB", TabName = "01"},
-                new DataSetting{Name = "CC", TabName = "0244444444444444444444444444444444444444444444"},
+                new DataSetting{Name = "CC", TabName = "02"},
+                new DataSetting{Name = "sss", TabName = "02"},
+                new DataSetting{Name = "dsds", TabName = "02"},
                 new DataSetting{Name = "CC", TabName = "ddddd"}
             };
             _fullDataDict = new Dictionary<string, List<DataSetting>>();
@@ -64,12 +67,18 @@ namespace Example_12_TabWindow
                     }
                 }
             }
-            _tabBar = new TabBar(new List<string>(_fullDataDict.Keys), 0);
+            _tabNameList = new List<string>(_fullDataDict.Keys);
+            _tabBar = new TabBar(_tabNameList, 0);
         }
 
         private void OnGUI()
         {
             _tabBar.Draw();
+            var datas = _fullDataDict[_tabNameList[_tabBar.SelectedIndex]];
+            foreach (var data in datas)
+            {
+                GUILayout.Label(data.Name);
+            }
         }
     }
 }

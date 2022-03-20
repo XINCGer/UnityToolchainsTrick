@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace Example_12_TabWindow
         private readonly GUIStyle _dragtabFirst = "dragtab first";
         private readonly GUIStyle _dragTab = "dragtab";
         private int _startIndex;
-        
+
 
 
         public TabBar(List<string> tabData, int defaultSelectedIndex)
@@ -20,43 +20,30 @@ namespace Example_12_TabWindow
             SelectedIndex = defaultSelectedIndex;
         }
 
-        public void Draw(params GUILayoutOption[] tabOption)
+        private Vector2 _scroll = Vector2.zero;
+        public void Draw()
         {
-            using (new GUILayout.HorizontalScope())
+            using (var scroll = new GUILayout.ScrollViewScope(_scroll,(GUIStyle)"horizontalscrollbar", GUILayout.Height(30f)))
             {
-                if (_startIndex > 0)
+                _scroll = scroll.scrollPosition;
+                using (new GUILayout.HorizontalScope())
                 {
-                    GUILayout.Button("<",GUILayout.Width(25));
-                }
-                var maxWid = EditorGUIUtility.currentViewWidth;
-                var width = 0f;
-                var rect = new Rect();
-                for (var i = _startIndex; i < _datas.Count; i++)
-                {
-                    if (width > maxWid)
+                    var maxWid = EditorGUIUtility.currentViewWidth;
+                    var width = 0f;
+                    var rect = new Rect();
+                    for (var i = _startIndex; i < _datas.Count; i++)
                     {
-                        var left = rect.width - (width - maxWid);
-                        rect.x += left - 25;
-                        rect.width = 25;
-                        GUI.Button(rect, ">");
-                        if (Event.current.isMouse)
+                        GUIStyle style = i == 0 ? _dragtabFirst : _dragTab;
+                        rect = GUILayoutUtility.GetRect(new GUIContent(_datas[i]), style);
+                        width += rect.width;
+                        var val = GUI.Toggle(rect, i == SelectedIndex, _datas[i], style);
+                        if (val)
                         {
-                            _startIndex++;
-                            Debug.Log("aaa");
+                            SelectedIndex = i;
                         }
-                        
-                        break;
-                    }
-                    
-                    GUIStyle style = i == 0 ? _dragtabFirst : _dragTab;
-                    rect = GUILayoutUtility.GetRect(new GUIContent(_datas[i]),style, tabOption);
-                    width += rect.width;
-                    var val = GUI.Toggle(rect,i == SelectedIndex,_datas[i], style);
-                    if (val)
-                    {
-                        SelectedIndex = i;
                     }
                 }
+
             }
         }
     }
