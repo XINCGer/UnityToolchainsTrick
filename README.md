@@ -104,6 +104,7 @@
 ### [12.ReorderableList简单案例](Assets/Editor/CX_Examples/Example_12_ReorderableList)
 ### [13.Materail相关的工具](Assets/Editor/CX_Examples/Example_13_MaterialUtil)
 ### [14.TabWindow的实现](Assets/Editor/CX_Examples/Example_14_TabWindow)
+### [15.TakeVFXIcon的实现](Assets/Editor/CX_Examples/Example_15_TakeVFXIcon)
 
 ## UIELement_example
 ### [1.回调事件测试](Assets/Editor/UIElement_Examples/Example_01_CallBack)
