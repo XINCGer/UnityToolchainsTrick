@@ -11,5 +11,7 @@ namespace ToolKits
         
         public static readonly GUIStyle preBackgroundSolid = "PreBackgroundSolid";
         public const string PREVIRE_TAG = "PREVIRE_TAG";
+
+        public const string DuplicateEventListen = "__DUPLICATE_EVENT_LISTEN__";
     }
 }

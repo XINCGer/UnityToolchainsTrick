@@ -10,6 +10,7 @@ namespace ToolKits
         private static bool loaded = false;
         private static string context = "";
         private static bool sceneviewSwitch;
+        private static bool duplicateEventListen = false;
         private const string KEY = "__ToolChainsTrick_Context__";
         private static bool globalInputEventEnable = false;
 
@@ -56,6 +57,14 @@ namespace ToolKits
                 EditorPrefs.SetBool(Constants.GLOBAL_INPUT_ENEVT_ENABLE,globalInputEventEnable);
                 GlobalInputEvent.EditorInitialize();
             }
+            
+            EditorGUI.BeginChangeCheck();
+            duplicateEventListen = EditorGUILayout.Toggle("是否监听Hierarchy的Ctrl+D事件", duplicateEventListen);
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorPrefs.SetBool(Constants.DuplicateEventListen,duplicateEventListen);
+                Example_71_UnityDuplicateEvent.EditorInitialize();
+            }
         }
 
         private static void Load()
@@ -63,6 +72,7 @@ namespace ToolKits
             context = EditorPrefs.GetString(KEY, "");
             sceneviewSwitch = EditorPrefs.GetBool(Constants.SCENE_VIEW_EXTENSITON_SWITH, false);
             loaded = true;
+            duplicateEventListen = EditorPrefs.GetBool(Constants.DuplicateEventListen, false);
         }
     }
 }
