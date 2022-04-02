@@ -89,6 +89,7 @@
 ### [68.TreeviewExamples官方案例](Assets/Editor/Examples/Example_68_TreeViewExamples)  
 ### [69.TitleContent](./Assets/Editor/Examples/Example_69_TitleContent)  
 ### [70.ScrollViewWithOdinAttribute](./Assets/Editor/Examples/Example_70_ScrollViewWithOdinAttribute)  
+### [71.UnityDuplicateEvent](./Assets/Editor/Examples/Example_71_UnityDuplicateEvent)  
 
 ## QQ技术交流群  
 群号：996526739  
