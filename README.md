@@ -91,6 +91,7 @@
 ### [70.ScrollViewWithOdinAttribute](./Assets/Editor/Examples/Example_70_ScrollViewWithOdinAttribute)  
 ### [71.UnityDuplicateEvent](./Assets/Editor/Examples/Example_71_UnityDuplicateEvent)  
 ### [72.GetLocalIdentifierInFile](./Assets/Editor/Examples/Example_72_GetLocalIdentifierInFile)  
+### [73.SetAppIcon](./Assets/Editor/Examples/Example_73_SetAppIcon)  
 
 ## QQ技术交流群  
 群号：996526739  
