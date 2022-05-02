@@ -105,6 +105,8 @@
 ### [13.Materail相关的工具](Assets/Editor/CX_Examples/Example_13_MaterialUtil)
 ### [14.TabWindow的实现](Assets/Editor/CX_Examples/Example_14_TabWindow)
 ### [15.TakeVFXIcon的实现](Assets/Editor/CX_Examples/Example_15_TakeVFXIcon)
+### [16.显示Avatar骨骼](Assets/Scripts/CX_Example/Example_16_BoneShow)
+### [16.反射LODGroupGUI](Assets/Editor/CX_Examples/Example_17_LODGroupGUI)
 
 ## UIELement_example
 ### [1.回调事件测试](Assets/Editor/UIElement_Examples/Example_01_CallBack)
