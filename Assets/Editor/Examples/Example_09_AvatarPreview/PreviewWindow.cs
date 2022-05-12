@@ -18,7 +18,7 @@ namespace ToolKits
             "Assets/GameAssets/Arts/AnimatorControllers/PreviewController.controller";
 
         private const string AVATAR_PATH = "Assets/GameAssets/Arts/Prefabs/Warrior.prefab";
-        private const string CLIP_PATH = "Assets/GameAssets/Arts/Models/AnimationClips/Female/1HCombatRunF.anim";
+        private const string CLIP_PATH = "Assets/GameAssets/Arts/Models/AnimationClips/Female/1HIdle.anim";
 
         private AvatarPreview _avatarPreview;
         private AnimationClip _animationClip;
@@ -67,6 +67,7 @@ namespace ToolKits
                 _avatarPreview.fps = Mathf.RoundToInt(_animationClip.frameRate);
                 _avatarPreview.ShowIKOnFeetButton = (_animationClip as Motion).isHumanMotion;
                 _avatarPreview.ResetPreviewFocus();
+                _avatarPreview.timeControl.stopTime = _animationClip.length;
 
                 // force an update on timeControl if AvatarPreviewer is closed when creating/editing animation curves
                 // prevent from having a nomralizedTime == -inf
