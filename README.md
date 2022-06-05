@@ -94,6 +94,7 @@
 ### [73.SetAppIcon](./Assets/Editor/Examples/Example_73_SetAppIcon)  
 ### [74.GUISkin](./Assets/Editor/Examples/Example_74_GUISkin)  
 ### [75.FadeGroup](./Assets/Editor/Examples/Example_75_FadeGroup)  
+### [76.RendererExplorer](./Assets/Editor/Examples/Example_76_RendererExplorer)  
 
 ## QQ技术交流群  
 群号：996526739  
