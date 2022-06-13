@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
+using NUnit.Framework;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -39,13 +42,45 @@ namespace CX_Example_18
             window.Show();
         }
         
-        private Object _originObj;
+        private List<Object> _originObjs;
+        private ReorderableList _originObjList;
+        private bool _buildSingle;
+
+        private void OnEnable()
+        {
+            _originObjs = new List<Object>();
+            _originObjList = new ReorderableList(_originObjs, typeof(Object))
+                    {
+                        //是否能改变顺序
+                        draggable = true,
+                        //title
+                        drawHeaderCallback = rect => GUI.Label(rect, "Objects"),
+                        //set elementHeight
+                        elementHeightCallback = index => EditorGUIUtility.singleLineHeight,
+                        //set element layout
+                        drawElementCallback = (rect, index, isActive, isFocused) =>
+                        {
+                            _originObjs[index] = EditorGUI.ObjectField(rect,new GUIContent("Origin Object:"), _originObjs[index], typeof(Object), false);
+                        },
+                        //set add callback
+                        onAddCallback = list =>
+                        {
+                            list.list.Add(null);
+                        },
+                        //Set remove callback
+                        onRemoveCallback = list =>
+                        {
+                            list.list.RemoveAt(list.index);
+                        }
+                    };
+        }
 
         private void OnGUI()
         {
             using (new GUILayout.VerticalScope("Box"))
             {
-                _originObj = EditorGUILayout.ObjectField(new GUIContent("Origin Object:"), _originObj, typeof(Object), false);
+                _originObjList.DoLayoutList();
+                _buildSingle = GUILayout.Toggle(_buildSingle, "Single Build");
             }
             ShowDependencies();
 
@@ -53,12 +88,12 @@ namespace CX_Example_18
             
             using (new GUILayout.VerticalScope("Box"))
             {
-                if (GUILayout.Button("Collect Dependencies!") && _originObj != null)
+                if (GUILayout.Button("Collect Dependencies!"))
                 {
                     CollectDependencies();
                 }
 
-                if (GUILayout.Button("Create AssetBundle!") && _originObj != null)
+                if ( _dependItems != null && _dependItems.Count == _originObjs.Count && GUILayout.Button("Create AssetBundle!"))
                 {
                     CreateAssetBundle();
                 }
@@ -74,7 +109,7 @@ namespace CX_Example_18
             }
         }
 
-        private List<DependItem> _dependItems;
+        private Dictionary<string, List<DependItem>> _dependItems;
 
         private void ShowDependencies()
         {
@@ -82,12 +117,18 @@ namespace CX_Example_18
             using (new GUILayout.VerticalScope("Box"))
             {
                 GUILayout.Label("Dependencies:");
-                foreach (var item in _dependItems)
+                foreach (var pair in _dependItems)
                 {
+                    GUILayout.Label(pair.Key + ":");
+                    var items = pair.Value;
+                    if (items.Count <= 0) continue;
                     using (new GUILayout.HorizontalScope("Box"))
                     {
-                        GUILayout.Label(item.ItemName);
-                        item.PackType = (PackType)EditorGUILayout.EnumPopup(item.PackType, GUILayout.Width(100f));
+                        foreach (var item in items)
+                        {
+                            GUILayout.Label(item.ItemName);
+                            item.PackType = (PackType)EditorGUILayout.EnumPopup(item.PackType, GUILayout.Width(100f));
+                        }
                     }
                 }
             }
@@ -95,61 +136,130 @@ namespace CX_Example_18
 
         private void CollectDependencies()
         {
-            _dependItems = new List<DependItem>();
-            var path = AssetDatabase.GetAssetPath(_originObj);
-            if (string.IsNullOrEmpty(path))
+            _dependItems = new Dictionary<string, List<DependItem>>();
+            foreach (var originObj in _originObjs)
             {
-                Debug.LogError("Not found Path!");
-                return;
-            }
-
-            var dep = AssetDatabase.GetDependencies(path, true);
-            for (int i = 0; i < dep.Length; i++)
-            {
-                if(dep[i] == path) continue;
-                var item = new DependItem
+                var items = new List<DependItem>();
+                var path = AssetDatabase.GetAssetPath(originObj);
+                if (string.IsNullOrEmpty(path))
                 {
-                    PackType = PackType.Include,
-                    ItemPath = dep[i],
-                    ItemName = Path.GetFileName(dep[i])
-                };
-                _dependItems.Add(item);
+                    Debug.LogError("Not found Path!");
+                    return;
+                }
+
+                var dep = AssetDatabase.GetDependencies(path, true);
+                for (int i = 0; i < dep.Length; i++)
+                {
+                    if(dep[i] == path) continue;
+                    var item = new DependItem
+                    {
+                        PackType = PackType.Include,
+                        ItemPath = dep[i],
+                        ItemName = Path.GetFileName(dep[i])
+                    };
+                    items.Add(item);
+                }
+                _dependItems.Add(path, items);
             }
             Repaint();
         }
-        
-        private void CreateAssetBundle()
+
+        private Dictionary<string, AssetBundleBuild> GetAllAssetBundle()
         {
-            var path = AssetDatabase.GetAssetPath(_originObj);
             var abbList = new Dictionary<string, AssetBundleBuild>();
-            var mainABPaths = new List<string>{path};
-            foreach (var item in _dependItems)
+            var mainABPaths = new HashSet<string>();
+            foreach (var itemPair in _dependItems)
             {
-                switch (item.PackType)
+                var path = itemPair.Key;
+                mainABPaths.Add(path);
+                foreach (var item in itemPair.Value)
                 {
-                    case PackType.Include:
-                        mainABPaths.Add(item.ItemPath);
-                        break;
-                    case PackType.Independent:
-                        var newAB = new AssetBundleBuild
-                        {
-                            assetBundleName = GetAssetBundleName(item.ItemPath),
-                            assetNames = new []{item.ItemPath}
-                        };
-                        abbList[item.ItemPath] = newAB;
-                        break;
-                    case PackType.Unpack:
-                        break;
+                    switch (item.PackType)
+                    {
+                        case PackType.Include:
+                            mainABPaths.Add(item.ItemPath);
+                            break;
+                        case PackType.Independent:
+                            var newAB = new AssetBundleBuild
+                            {
+                                assetBundleName = GetAssetBundleName(item.ItemPath),
+                                assetNames = new []{item.ItemPath}
+                            };
+                            abbList[item.ItemPath] = newAB;
+                            break;
+                        case PackType.Unpack:
+                            break;
+                    }
                 }
             }
-            
+
+            foreach (var path in abbList.Keys)
+            {
+                if (mainABPaths.Contains(path))
+                {
+                    mainABPaths.Remove(path);
+                }
+            }
+
             var mainAB = new AssetBundleBuild
             {
-                assetBundleName = GetAssetBundleName(path),
+                assetBundleName = "MainBundle",
+                assetNames = mainABPaths.ToArray()
             };
-            mainAB.assetNames = mainABPaths.ToArray();
-            abbList[path] = mainAB;
-            
+            abbList["MainBundle"] = mainAB;
+            return abbList;
+        }
+
+        private Dictionary<string, AssetBundleBuild> GetSingleAssetBundle()
+        {
+            var abbList = new Dictionary<string, AssetBundleBuild>();
+            foreach (var itemPair in _dependItems)
+            {
+                var mainABPaths = new HashSet<string>();
+                foreach (var item in itemPair.Value)
+                {
+                    switch (item.PackType)
+                    {
+                        case PackType.Include:
+                            mainABPaths.Add(item.ItemPath);
+                            break;
+                        case PackType.Independent:
+                            var newAB = new AssetBundleBuild
+                            {
+                                assetBundleName = GetAssetBundleName(item.ItemPath),
+                                assetNames = new []{item.ItemPath}
+                            };
+                            abbList[item.ItemPath] = newAB;
+                            break;
+                        case PackType.Unpack:
+                            break;
+                    }
+                }
+                
+                foreach (var path in abbList.Keys)
+                {
+                    if (mainABPaths.Contains(path))
+                    {
+                        mainABPaths.Remove(path);
+                    }
+                }
+
+                mainABPaths.Add(itemPair.Key);
+                var mainAB = new AssetBundleBuild
+                {
+                    assetBundleName = GetAssetBundleName(itemPair.Key),
+                    assetNames = mainABPaths.ToArray()
+                };
+                abbList[mainAB.assetBundleName] = mainAB;
+            }
+
+            return abbList;
+        }
+
+        private void CreateAssetBundle()
+        {
+            var abbList = _buildSingle ? GetSingleAssetBundle() : GetAllAssetBundle();
+
             if (!Directory.Exists(Application.streamingAssetsPath))
             {
                 Directory.CreateDirectory(Application.streamingAssetsPath);
@@ -168,7 +278,7 @@ namespace CX_Example_18
                 {
                     Path = bundlePath,
                     Name = fileInfo.Name,
-                    Size = fileInfo.Length / 1000f
+                    Size = fileInfo.Length / 1024f
                 };
                 _BundleInfos.Add(bundleInfo);
             }
