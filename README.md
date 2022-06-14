@@ -108,6 +108,8 @@
 ### [16.显示Avatar骨骼](Assets/Scripts/CX_Example/Example_16_BoneShow)
 ### [17.反射LODGroupGUI](Assets/Editor/CX_Examples/Example_17_LODGroupGUI)
 ### [18.简易的AssetBundle打包和加载流程](Assets/Editor/CX_Examples/Example_18_AssetBundleCreator)
+### [19.加了就能直接引用Internal类和方法的程序集](Assets/Editor/CX_Examples/Example_19_MagicAssembly)
+### [20.UserCustomDrawMode](Assets/Editor/CX_Examples/Example_20_CustomDrawMode)
 
 ## UIELement_example
 ### [1.回调事件测试](Assets/Editor/UIElement_Examples/Example_01_CallBack)
