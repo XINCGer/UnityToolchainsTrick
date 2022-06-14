@@ -45,6 +45,7 @@ namespace CX_Example_18
         private List<Object> _originObjs;
         private ReorderableList _originObjList;
         private bool _buildSingle;
+        public string _oneABRName = "mainBundle";
 
         private void OnEnable()
         {
@@ -81,6 +82,8 @@ namespace CX_Example_18
             {
                 _originObjList.DoLayoutList();
                 _buildSingle = GUILayout.Toggle(_buildSingle, "Single Build");
+                if (!_buildSingle)
+                    _oneABRName = EditorGUILayout.TextField("ABName:", _oneABRName);
             }
             ShowDependencies();
 
@@ -203,10 +206,10 @@ namespace CX_Example_18
 
             var mainAB = new AssetBundleBuild
             {
-                assetBundleName = "MainBundle",
+                assetBundleName = _oneABRName,
                 assetNames = mainABPaths.ToArray()
             };
-            abbList["MainBundle"] = mainAB;
+            abbList[_oneABRName] = mainAB;
             return abbList;
         }
 
