@@ -125,13 +125,15 @@ namespace CX_Example_18
                     GUILayout.Label(pair.Key + ":");
                     var items = pair.Value;
                     if (items.Count <= 0) continue;
-                    using (new GUILayout.HorizontalScope("Box"))
+                    foreach (var item in items)
                     {
-                        foreach (var item in items)
+                        using (new GUILayout.HorizontalScope("Box"))
                         {
+                                
                             GUILayout.Label(item.ItemName);
                             item.PackType = (PackType)EditorGUILayout.EnumPopup(item.PackType, GUILayout.Width(100f));
                         }
+
                     }
                 }
             }

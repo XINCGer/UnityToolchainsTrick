@@ -110,6 +110,10 @@
 ### [18.简易的AssetBundle打包和加载流程](Assets/Editor/CX_Examples/Example_18_AssetBundleCreator)
 ### [19.加了就能直接引用Internal类和方法的程序集](Assets/Editor/CX_Examples/Example_19_MagicAssembly)
 ### [20.UserCustomDrawMode](Assets/Editor/CX_Examples/Example_20_CustomDrawMode)
+### [21.CollectShaderInfo](Assets/Editor/CX_Examples/Example_21_CollectShaderInfo)
+### [22.拆分模型文件成单个mesh](Assets/Editor/CX_Examples/Example_22_SplitModelAsset)
+### [23.设置贴图格式](Assets/Editor/CX_Examples/Example_23_TextureSetting)
+### [24.清理Material中无用的shader属性](Assets/Editor/CX_Examples/Example_24_CleanShaderProperty)
 
 ## UIELement_example
 ### [1.回调事件测试](Assets/Editor/UIElement_Examples/Example_01_CallBack)
