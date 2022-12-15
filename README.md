@@ -97,6 +97,7 @@
 ### [76.RendererExplorer](./Assets/Editor/Examples/Example_76_RendererExplorer)  
 ### [77.Find In Hierarchy](/Assets/Editor/Examples/Example_77_HierarchyDataBase)  
 ### [78.Reference Collector](/Assets/Scripts/Example_78_ReferenceCollector)  
+### [79.Unity 编写通用的窗口编辑器](https://github.com/994935108/Unity-RuntimeEditorWindow)  
 
 ## QQ技术交流群  
 群号：996526739  
