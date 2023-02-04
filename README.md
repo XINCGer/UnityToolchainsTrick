@@ -8,6 +8,7 @@
 
 ## 博客  
 * [Unity编辑器拓展Wiki开源项目，装得下，世界都是你的-By 烟雨](https://zhuanlan.zhihu.com/p/364250160)  
+* [Unity编辑器扩展小百科](https://zhuanlan.zhihu.com/p/515963907)  
 
 ## OverViewWindow
 本项目提供了一个用于预览所有编辑器拓展样式的EditorWindow，可通过Tools-AllTrickOverView进行打开，使用教程参见[Unity编辑器拓展Wiki开源项目，装得下，世界都是你的-By 烟雨](https://zhuanlan.zhihu.com/p/364250160)
