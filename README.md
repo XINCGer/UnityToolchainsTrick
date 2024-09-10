@@ -184,7 +184,8 @@
 
 ### [79.EnableTitleContentRichText](/Assets/Scripts/Example_79_EnableTitleContentRichText)
 
-![](./Assets/Editor/Examples/Example_79_EnableTitleContentRichText/Preview.gif)
+![](./Assets/Editor/Examples/Example_79_EnableTitleContentRichText/Preview.gif)  
+### [80.EditorGUISplitView](https://github.com/miguel12345/EditorGUISplitView)  
 
 ## QQ技术交流群
 
