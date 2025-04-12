@@ -187,6 +187,8 @@
 ![](./Assets/Editor/Examples/Example_79_EnableTitleContentRichText/Preview.gif)  
 ### [80.EditorGUISplitView](https://github.com/miguel12345/EditorGUISplitView)  
 
+### [81.AppWindowUtility](https://github.com/sator-imaging/AppWindowUtility)  
+
 ## QQ技术交流群
 
 群号：996526739  
