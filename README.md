@@ -130,7 +130,7 @@
 
 ### [51.射线检测](Assets/Editor/Examples/Example_51_RaycastTargetChecker)
 
-### [52.反射信息缓存](Assets/Editor/Examples/Example_52_Utility_TypeCache_Attribute)
+### [52.反射信息缓存](Assets/Scripts/Example_52_Utility_TypeCache_Attribute)  
 
 ### [53.自定义资产图标](Assets/Editor/Examples/Example_53_CustomAssetsIcon)
 
